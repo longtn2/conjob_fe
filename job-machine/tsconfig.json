@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@*": ["src/*"],
+      "@/*": ["src/*"],
       "@/components/*": ["src/components/*"],
       "@/redux/*": ["src/redux/*"],
       "@/router/*": ["src/router/*"],
@@ -17,6 +17,7 @@
       "@/constants/*": ["src/constants/*"],
       "@/api/*": ["src/api/*"],
       "@/helper/*": ["src/helper/*"],
+      "@/style/*": ["src/style/*"],
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

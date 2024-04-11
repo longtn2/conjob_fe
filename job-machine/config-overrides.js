@@ -17,5 +17,6 @@ module.exports = override(
     '@/constants': resolve(__dirname, 'src/constants'),
     '@/api': resolve(__dirname, 'src/api'),
     '@/helper': resolve(__dirname, 'src/helper'),
+    "@/style/*": resolve(__dirname, 'src/style'),
   })
 );

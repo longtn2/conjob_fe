@@ -12,10 +12,8 @@ const TableCategory: React.FC = () => {
   const [editingKey, setEditingKey] = useState('');
 
   const rowSelection = {
-    onChange: (
-      selectedRowKeys: React.Key[],
-      selectedRows: CategoryData[]
-    ) => {},
+    onChange: (selectedRowKeys: React.Key[], selectedRows: CategoryData[]) => {
+    },
     getCheckboxProps: (record: CategoryData) => ({
       disabled: record.name === 'Disabled User',
       name: record.name,
@@ -52,7 +50,8 @@ const TableCategory: React.FC = () => {
         setData(newData);
         setEditingKey('');
       }
-    } catch (errInfo) {}
+    } catch (errInfo) {
+    }
   };
   const handleDelete = (key: React.Key) => {
     const newData = originData.filter(item => item.key !== key);

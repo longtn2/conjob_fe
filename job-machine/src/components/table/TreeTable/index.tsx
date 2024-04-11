@@ -1,14 +1,13 @@
-
 import React, { useCallback, useEffect, useState } from "react";
-import { BaseTable } from "../../common/BaseTable";
+import { BaseTable } from "@/components/common/BaseTable";
 import { TableRowSelection } from "antd/es/table/interface";
 import {
   TreeTableRow,
   Pagination,
   getTreeTableData,
-} from "../../../api/mock/table.api";
+} from "@/api/mock/table.api";
 import { useMounted } from "@/hooks/useMounted";
-import { ColumnTable } from "../ColumnTable";
+import { ColumnTable } from "@/components/table/ColumnTable";
  
 const initialPagination: Pagination = {
   current: 1,
