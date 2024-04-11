@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,22 +15,24 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src",
-    "paths": {
-      "@components": ["components/*"],
-      "@api": ["api/*"],
-      "@assets": ["assets/*"],
-      "@constants": ["constants/*"],
-      "@helper": ["helper/*"],
-      "@hooks": ["hook/*"],
-      "@layout": ["layout/*"],
-      "@redux": ["redux/*"],
-      "@routers": ["routers/*"],
-      "@service": ["service/*"],
-      "@utils": ["utils/*"],
-    }
+    "baseUrl": "src"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src", "styled/**/*"]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

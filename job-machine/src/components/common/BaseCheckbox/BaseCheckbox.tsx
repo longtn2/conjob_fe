@@ -1,23 +1,20 @@
 import React from 'react';
 import { CheckboxProps, CheckboxRef } from 'antd';
-import { CheckboxCustom } from './BaseCheckbox.styles';
+import * as S from './BaseCheckbox.styles';
 
 export type BaseCheckboxRef = CheckboxRef;
 
 export type BaseCheckboxProps = CheckboxProps;
 
-const Checkbox = React.forwardRef<BaseCheckboxRef, BaseCheckboxProps>(
-  (props, ref) => {
-    return <CheckboxCustom {...props} ref={ref} />;
-  }
-);
+const Checkbox = React.forwardRef<BaseCheckboxRef, BaseCheckboxProps>((props, ref) => {
+  return <S.Checkbox {...props} ref={ref} />;
+});
 
 type CheckboxForwardRef = typeof Checkbox;
 
 interface BaseCheckboxInterface extends CheckboxForwardRef {
-  Group: typeof CheckboxCustom.Group;
+  Group: typeof S.CheckboxGroup;
 }
 
 export const BaseCheckbox = Checkbox as BaseCheckboxInterface;
 
-BaseCheckbox.Group = CheckboxCustom.Group;

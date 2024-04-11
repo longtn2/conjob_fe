@@ -11,8 +11,10 @@ import {
 } from '../actions/authAction';
 
 function* loginSaga(action: LoginSuccessAction): SagaIterator {
+  console.log('Đã vào đây login');
   try {
     const { email, password } = action.payload;
+    console.log(email, password);
 
     const response = yield call(fakeCallApi, { email, password });
     const user = response.data;
@@ -23,9 +25,11 @@ function* loginSaga(action: LoginSuccessAction): SagaIterator {
 }
 
 function* registerSaga(action: RegisterSuccessAction): SagaIterator {
+  console.log('Đã vào đây');
+
   try {
     const { name, email, password } = action.payload;
-
+    console.log(name, email, password);
     const response = yield call(fakeCallApiRegister, {
       name,
       email,

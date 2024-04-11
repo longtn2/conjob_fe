@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
-import { TypeActivePanel } from '../../interfaces/interfaces';
-import WebFont from 'webfontloader';
-import FormContainer from 'components/auth/FormCommon/FormContainer';
-import TooglePanel from 'components/auth/ToogleCommon/TooglePanel';
-import { Body, Container } from './Auth.styled';
-import { SIGN_IN, SIGN_UP } from 'constants/constants';
+import { useEffect, useState } from "react";
+import { TypeActivePanel } from "../../interfaces/interfaces";
+import WebFont from "webfontloader";
+import FormContainer from "components/auth/FormCommon/FormContainer";
+import TooglePanel from "components/auth/ToogleCommon/TooglePanel";
+import { Body, Container } from "./Auth.styled";
+import { SIGN_IN } from "constants/constants";
 const AuthPage = () => {
-  const [typePanel, setTypePanel] = useState<TypeActivePanel>('sign-in');
-  // const isSignIn = typePanel === 'sign-in';
+  const [typePanel, setTypePanel] = useState<TypeActivePanel>("sign-in");
+  const isSignIn = typePanel === "sign-in";
   const handleChange = () => {
-    setTypePanel(prevPanel => (prevPanel === SIGN_IN ? SIGN_UP : SIGN_IN));
+    setTypePanel((prevPanel) =>
+      prevPanel === "sign-in" ? "sign-up" : "sign-in"
+    );
   };
   const returnTypeActive = () => {
     return typePanel;
@@ -18,14 +20,14 @@ const AuthPage = () => {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ['Montserrat', 'Roboto'],
+        families: ["Montserrat", "Roboto"],
       },
     });
   }, []);
   return (
     <Body>
       <Container>
-        <div className={`${typePanel === SIGN_IN || 'active'}`}>
+        <div className={`${typePanel === SIGN_IN || "active"}`}>
           <FormContainer state={typePanel} />
           <TooglePanel
             handleChange={handleChange}

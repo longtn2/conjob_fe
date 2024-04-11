@@ -8,7 +8,6 @@ import {
   CalendarOutlined,
 } from '@ant-design/icons';
 import Slider from 'antd/es/layout/Sider';
-import { ContainerSider } from './Content.styled';
 
 const SliderComponent = () => {
   const navigator = useNavigate();
@@ -25,7 +24,7 @@ const SliderComponent = () => {
   };
 
   return (
-    <ContainerSider>
+    <>
       <Slider
         style={{ marginTop: 13 }}
         breakpoint='lg'
@@ -45,64 +44,42 @@ const SliderComponent = () => {
         >
           <Menu.Item
             key='/'
-            style={page === '' ? { background: '#fff', color: 'black' } : {}}
+            icon={<AppstoreOutlined />}
+            style={getMenuStyle('')}
           >
-            <span className='icon' style={getMenuStyle('')}>
-              {<AppstoreOutlined />}
-            </span>
-            <span>DashBoard</span>
+            Dashboard
           </Menu.Item>
           <Menu.Item
             key='/category'
-            style={
-              page === 'category' ? { background: '#fff', color: 'black' } : {}
-            }
+            icon={<CalendarOutlined />}
+            style={getMenuStyle('category')}
           >
-            <span className='icon' style={getMenuStyle('category')}>
-              {<CalendarOutlined />}
-            </span>
-            <span className='label'>Category</span>
+            Category
           </Menu.Item>
           <Menu.Item
             key='/post'
-            style={
-              page === 'post' ? { background: '#fff', color: 'black' } : {}
-            }
+            icon={<HomeOutlined />}
+            style={getMenuStyle('post')}
           >
-            <span className='icon' style={getMenuStyle('post')}>
-              {<HomeOutlined />}
-            </span>
-            <span className='label'>Post</span>
+            Video Management
           </Menu.Item>
           <Menu.Item
-            key='/video-history'
-            style={
-              page === 'video-history'
-                ? { background: '#fff', color: 'black' }
-                : {}
-            }
+            key='/userManager'
+            icon={<UserOutlined />}
+            style={getMenuStyle('userManager')}
           >
-            <span className='icon' style={getMenuStyle('video-history')}>
-              {<UserOutlined />}
-            </span>
-            <span className='label'>History Video</span>
+            History Video
           </Menu.Item>
           <Menu.Item
-            key='/history-video-delete'
-            style={
-              page === 'history-video-delete'
-                ? { background: '#fff', color: 'black' }
-                : {}
-            }
+            key='/bookingManager'
+            icon={<SelectOutlined />}
+            style={getMenuStyle('bookingManager')}
           >
-            <span className='icon' style={getMenuStyle('history-video-delete')}>
-              {<SelectOutlined />}
-            </span>
-            <span className='label'>History Delete Video</span>
+            History Video Delete
           </Menu.Item>
         </Menu>
       </Slider>
-    </ContainerSider>
+    </>
   );
 };
 
