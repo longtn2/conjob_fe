@@ -68,3 +68,9 @@ export interface AuthState {
 }
 
 export type FormData = FormLoginType | FormRegisterType;
+
+export interface axiosApi {
+  status: number;
+  message: string;
+  user: FormRegisterType;
+}

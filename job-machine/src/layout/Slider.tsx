@@ -57,23 +57,23 @@ const SliderComponent = () => {
             Category
           </Menu.Item>
           <Menu.Item
-            key='/roomManager'
+            key='/post'
             icon={<HomeOutlined />}
-            style={getMenuStyle('roomManager')}
+            style={getMenuStyle('post')}
           >
             Video Management
           </Menu.Item>
           <Menu.Item
-            key='/userManager'
+            key='/history-video'
             icon={<UserOutlined />}
-            style={getMenuStyle('userManager')}
+            style={getMenuStyle('history-video')}
           >
             History Video
           </Menu.Item>
           <Menu.Item
-            key='/bookingManager'
+            key='/push-video'
             icon={<SelectOutlined />}
-            style={getMenuStyle('bookingManager')}
+            style={getMenuStyle('push-video')}
           >
             History Video Delete
           </Menu.Item>

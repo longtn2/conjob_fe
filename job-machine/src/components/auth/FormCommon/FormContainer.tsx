@@ -19,6 +19,9 @@ import {
   loginRequest,
   registerRequest,
 } from '../../../redux/actions/authAction';
+import { AuthApi } from 'api/auth/AuthApi';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 
@@ -27,6 +30,7 @@ type FormContainerProps = {
 };
 
 const FormContainer = ({ state }: FormContainerProps) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<Data>(dataSignIn);
   const checkSignIn = state === 'sign-in';
   const schema = yup.object().shape({
@@ -64,8 +68,6 @@ const FormContainer = ({ state }: FormContainerProps) => {
     });
   }
 
-  console.log(errors);
-
   useEffect(() => {
     returnData().then(data => {
       setFormData(data);
@@ -76,13 +78,24 @@ const FormContainer = ({ state }: FormContainerProps) => {
     };
   }, [state]);
 
-  const handleSubmitForm = (values: FormRegisterType | FormLoginType) => {
+  const handleSubmitForm = async (values: FormRegisterType | FormLoginType) => {
     if (checkSignIn) {
-      dispatch(loginRequest(values));
-      console.log(dispatch(loginRequest(values)));
+      const { email, password } = values;
+      const valuesLogin = {
+        email: email,
+        password: password,
+      };
+      await AuthApi.apiLogin(valuesLogin)
+        .then((res: any) => {
+          Cookies.set('token', res.data.token);
+          Cookies.set('refreshToken', res.data.refreshToken);
+          localStorage.setItem('firstName', res.data.firstName);
+          localStorage.setItem('lastName', res.data.lastName);
+          navigate('/');
+        })
+        .catch(err => {});
     } else {
       dispatch(registerRequest(values as FormRegisterType));
-      console.log(dispatch(registerRequest(values as FormRegisterType)));
     }
   };
 
@@ -103,6 +116,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
                   <Form.Item
                     validateStatus={fieldState.error?.message ? 'error' : ''}
                     help={fieldState.error?.message || null}
+                    style={{ padding: 0 }}
                   >
                     {value.name === 'password' ? (
                       <Input.Password {...field} placeholder={value.label} />

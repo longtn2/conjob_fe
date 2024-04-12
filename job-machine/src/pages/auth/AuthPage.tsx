@@ -4,6 +4,8 @@ import WebFont from 'webfontloader';
 import FormContainer from 'components/auth/FormCommon/FormContainer';
 import TooglePanel from 'components/auth/ToogleCommon/TooglePanel';
 import { Body, Container } from './Auth.styled';
+import { getCookie } from 'utils/utils';
+import { useNavigate } from 'react-router-dom';
 const AuthPage = () => {
   const [typePanel, setTypePanel] = useState<TypeActivePanel>('sign-in');
   const isSignIn = typePanel === 'sign-in';
@@ -23,6 +25,17 @@ const AuthPage = () => {
       },
     });
   }, []);
+
+  const token = getCookie('token');
+  const refreshToken = getCookie('refreshToken');
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token && refreshToken) {
+      navigate('/');
+    }
+  }, []);
+
   return (
     <Body>
       <Container>

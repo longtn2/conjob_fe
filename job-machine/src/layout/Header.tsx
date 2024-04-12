@@ -6,13 +6,26 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Button, Dropdown, Menu, MenuProps, Modal, Space } from 'antd';
 import { Header } from 'antd/es/layout/layout';
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 const HeaderComponent = () => {
   const navigator = useNavigate();
 
   const handleNavigate = (key: string) => {
-    navigator(key);
+    if (key === 'logout') {
+      handleLogout();
+    } else {
+      navigator(key);
+    }
+  };
+
+  const handleLogout = () => {
+    const cookies = Cookies.get();
+    for (const cookie in cookies) {
+      Cookies.remove(cookie);
+    }
+    navigator('/login');
   };
   const items: MenuProps['items'] = [
     {

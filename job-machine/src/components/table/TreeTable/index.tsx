@@ -66,14 +66,14 @@ export const TreeTable: React.FC = () => {
       selectedRows: TreeTableRow[],
       info
     ) => {
-      console.log(selectedRowKeys, selectedRows, info);
+
     },
     onSelect: (
       record: TreeTableRow,
       selected: boolean,
       selectedRows: TreeTableRow[]
     ) => {
-      console.log(record, selected, selectedRows);
+
     },
   };
 

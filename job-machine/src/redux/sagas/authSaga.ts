@@ -1,22 +1,26 @@
 // sagas.js
 import { take, call, put } from 'redux-saga/effects';
-import { LoginSuccessAction, RegisterSuccessAction } from '../../interfaces';
+import {
+  LoginSuccessAction,
+  LogoutAction,
+  RegisterSuccessAction,
+} from '../../interfaces';
 import { fakeCallApi, fakeCallApiRegister } from '../../helper';
 import { SagaIterator } from 'redux-saga';
 import {
   loginFail,
   loginSuccess,
+  logout,
   registerFail,
   registerSuccess,
 } from '../actions/authAction';
+import { AuthApi } from 'api/auth/AuthApi';
 
 function* loginSaga(action: LoginSuccessAction): SagaIterator {
-  console.log('Đã vào đây login');
   try {
     const { email, password } = action.payload;
-    console.log(email, password);
 
-    const response = yield call(fakeCallApi, { email, password });
+    const response = yield call(AuthApi.apiLogin, { email, password });
     const user = response.data;
     yield put(loginSuccess(user));
   } catch (error: any) {
@@ -25,11 +29,9 @@ function* loginSaga(action: LoginSuccessAction): SagaIterator {
 }
 
 function* registerSaga(action: RegisterSuccessAction): SagaIterator {
-  console.log('Đã vào đây');
-
   try {
     const { name, email, password } = action.payload;
-    console.log(name, email, password);
+
     const response = yield call(fakeCallApiRegister, {
       name,
       email,
@@ -44,11 +46,14 @@ function* registerSaga(action: RegisterSuccessAction): SagaIterator {
 
 function* authSaga(): SagaIterator {
   while (true) {
-    const action = yield take(['LOGIN_REQUEST', 'REGISTER_REQUEST']);
+    const action = yield take(['LOGIN_REQUEST', 'REGISTER_REQUEST', 'LOGOUT']);
     if (action.type === 'LOGIN_REQUEST') {
       yield call(loginSaga, action);
     } else if (action.type === 'REGISTER_REQUEST') {
       yield call(registerSaga, action);
+    } else if (action.type === 'LOGOUT') {
+      yield call(AuthApi.apiLogout);
+      yield put(logout);
     }
   }
 }
