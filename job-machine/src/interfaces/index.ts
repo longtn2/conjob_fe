@@ -1,3 +1,4 @@
+import { START_LOADING } from './../constants/constants';
 import { Action } from 'redux';
 import { FormLoginType, FormRegisterType } from './interfaces';
 export interface User {
@@ -19,6 +20,30 @@ export enum AuthActionTypes {
   REGISTER_FAILURE = 'REGISTER_FAILURE',
   LOGOUT = 'LOGOUT',
 }
+
+interface ReduxAction<T> {
+  type: string;
+  payload?: T;
+}
+
+export enum LoadingType {
+  START_LOADING = 'START_LOADING',
+  FETCH_LOADING = 'FETCH_LOADING',
+  FETCH_ERROR = 'FETCH_ERROR',
+}
+
+export interface startLoading extends ReduxAction<void> {
+  type: LoadingType.START_LOADING;
+}
+
+export interface endLoading extends ReduxAction<void> {
+  type: LoadingType.FETCH_LOADING;
+}
+
+export interface errorLoading extends ReduxAction<void> {
+  type: LoadingType.FETCH_ERROR;
+}
+
 export interface LoginRequestAction
   extends Action<AuthActionTypes.LOGIN_REQUEST> {
   payload: FormLoginType;
@@ -66,7 +91,6 @@ export interface AuthState {
   error: string | null;
   isLoggedIn: boolean;
 }
-
 export type FormData = FormLoginType | FormRegisterType;
 
 export interface axiosApi {

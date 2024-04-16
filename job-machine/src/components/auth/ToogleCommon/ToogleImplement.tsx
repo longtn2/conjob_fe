@@ -1,5 +1,4 @@
 import { Typography } from 'antd';
-import { BaseButton } from '../../common/BaseButton/BaseButton';
 import { useEffect, useState } from 'react';
 import { ContainerToogleImplement } from './ToogleImplement.styled';
 import { DataToogle, TypeActivePanel } from '@/interfaces/interfaces';
@@ -8,6 +7,7 @@ import {
   dataToogleSignIn,
   dataToogleSignUp,
 } from '@/constants/constants';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 const { Title, Paragraph } = Typography;
 
 interface ToogleImplementProps {
@@ -36,7 +36,7 @@ const ToogleImplement = ({
     >
       <Title>{toogleData.titleToogle}</Title>
       <Paragraph>{toogleData.subTitleToogle}</Paragraph>
-      <BaseButton onClick={handleClick} className='hidden'>
+      <BaseButton onClick={handleClick} className='ant-btn-secondary'>
         {toogleData.buttonToogle}
       </BaseButton>
     </ContainerToogleImplement>

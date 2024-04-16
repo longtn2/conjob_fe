@@ -1,4 +1,4 @@
-import { TreeTable } from '../../components/table/treeTable';
+import { TreeTable } from '@/components/table/TreeTable';
 import { Card } from 'antd';
 
 const Post = () => {

@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { ApiError } from '../api/ApiError';
+import { ApiError } from '@/api/ApiError';
 
 export interface ApiErrorData {
   message: string;
@@ -8,21 +8,22 @@ export interface ApiErrorData {
 const readToken = undefined;
 
 export const httpApi = axios.create({
-  baseURL: 'https://maggot-intent-cicada.ngrok-free.app',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'https://maggot-intent-cicada.ngrok-free.app/',
 });
 
-httpApi.interceptors.request.use(config => {
-  const headers = config.headers;
-  if (readToken) {
-    headers['Authorization'] = `Bearer ${readToken}`;
+httpApi.interceptors.request.use(
+  function (config) {
+    let token = readToken;
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    config.headers['Access-Control-Allow-Origin'] = '*';
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
   }
-  headers['ngrok-skip-browser-warning'] = true;
-  headers['Accept'] = 'application/json';
-  return config;
-});
+);
 
 httpApi.interceptors.response.use(undefined, (error: AxiosError) => {
   if (error.response) {

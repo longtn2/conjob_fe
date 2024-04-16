@@ -3,8 +3,8 @@ import type { TableProps } from 'antd';
 import { Form, Popconfirm, Table } from 'antd';
 import { originData } from '@/constants/constants';
 import { CategoryData } from '@/interfaces/interfaces';
-import { BaseButton } from '../common/BaseButton/BaseButton';
 import EditableCell from './EditableCell';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 
 const TableCategory: React.FC = () => {
   const [form] = Form.useForm();

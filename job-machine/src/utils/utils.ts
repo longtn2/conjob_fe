@@ -14,7 +14,6 @@ export const getTokenAsync = async () => {
   } catch (error) {
     handleErrorShow(error);
   }
-  // fix
 };
 
 export const getCookie = (str: string) => {

@@ -26,6 +26,10 @@ export const LOADING = 'LOADING';
 export const IS_AUTHENTICATING = 'IS_AUTHENTICATING';
 export const SET_REQUEST_STATUS = 'SET_REQUEST_STATUS';
 
+export const START_LOADING = 'START_LOADING';
+export const FETCH_LOADING = 'FETCH_LOADING';
+export const FETCH_ERROR = 'FETCH_ERROR';
+
 export const dataSignIn: Data = {
   title: 'Sign In',
   subTitle1: 'or use your email password',
@@ -126,3 +130,5 @@ export const columns = [
 ];
 
 export const COLOR = 'linear-gradient(180deg, #C5091F 0%, #870413 100%)';
+export const URL_LOGIN = 'api/v1/auth/login';
+export const URL_LOGOUT = 'api/v1/auth/logout';

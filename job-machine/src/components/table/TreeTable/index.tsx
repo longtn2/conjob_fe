@@ -1,19 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { BaseTable } from '../../common/BaseTable';
+import { BaseTable } from '@/components/common/BaseTable';
 import { TableRowSelection } from 'antd/es/table/interface';
 import {
   TreeTableRow,
   Pagination,
   getTreeTableData,
-} from '../../../api/mock/table.api';
-import { useMounted } from '../../../hooks/useMounted';
-import { Col, Flex } from 'antd';
-import Card from 'antd/lib/card';
-import TextArea from 'antd/es/input/TextArea';
-import { BaseModal } from '@/components/common/BaseModel';
-import { BaseAvatar } from '@/components/common/BaseAvatar/BaseAvatar';
-import { BaseInput } from '@/components/common/BaseInput';
-import { BaseButton } from '@/components/common/BaseButton/BaseButton';
+} from '@/api/mock/table.api';
+import { useMounted } from '@/hooks/useMounted';
+import { ColumnTable } from '../ColumnTable';
 
 const initialPagination: Pagination = {
   current: 1,
@@ -21,10 +15,6 @@ const initialPagination: Pagination = {
 };
 
 export const TreeTable: React.FC = () => {
-  const [isShowAcceptModal, setIsShowAcceptModal] = useState<boolean>(false);
-  const [isShowRejectModal, setIsShowRejectModal] = useState<boolean>(false);
-  const [isShowViewModal, setIsShowViewModal] = useState<boolean>(false);
-
   const [tableData, setTableData] = useState<{
     data: TreeTableRow[];
     pagination: Pagination;
@@ -97,70 +87,7 @@ export const TreeTable: React.FC = () => {
       dataIndex: 'actions',
       width: '15%',
       render: () => {
-        return (
-          <>
-            <div>
-              <BaseModal
-                title={'Accept'}
-                open={isShowAcceptModal}
-                onOk={() => setIsShowAcceptModal(false)}
-                onCancel={() => setIsShowAcceptModal(false)}
-              >
-                <p>Are you sure</p>
-              </BaseModal>
-              <BaseModal
-                title={'Reject'}
-                open={isShowRejectModal}
-                onOk={() => setIsShowRejectModal(false)}
-                onCancel={() => setIsShowRejectModal(false)}
-              >
-                <p>Are you sure</p>
-              </BaseModal>
-              <BaseModal
-                title={'View Video/Image'}
-                open={isShowViewModal}
-                onOk={() => setIsShowViewModal(false)}
-                onCancel={() => setIsShowViewModal(false)}
-              >
-                <Flex gap={30}>
-                  <Col span={12}>
-                    <Card style={{ height: '200px' }}>
-                      <Flex gap={20}>
-                        <BaseAvatar />
-                        <Flex vertical gap={10}>
-                          <div>User name</div>
-                          <div>Designer</div>
-                        </Flex>
-                      </Flex>
-                    </Card>
-                  </Col>
-                  <Col span={10}>
-                    <Flex gap={20} vertical>
-                      <BaseInput placeholder='User name' />
-                      <BaseInput placeholder='Email' />
-                      <TextArea
-                        rows={4}
-                        placeholder='Description'
-                        maxLength={6}
-                      />
-                    </Flex>
-                  </Col>
-                </Flex>
-              </BaseModal>
-            </div>
-            <Flex gap={5}>
-              <BaseButton onClick={() => setIsShowViewModal(true)}>
-                View
-              </BaseButton>
-              <BaseButton onClick={() => setIsShowAcceptModal(true)}>
-                Accept
-              </BaseButton>
-              <BaseButton onClick={() => setIsShowRejectModal(true)}>
-                Reject
-              </BaseButton>
-            </Flex>
-          </>
-        );
+        return <ColumnTable />;
       },
     },
   ];
