@@ -114,7 +114,9 @@ const FormContainer = ({ state }: FormContainerProps) => {
           ))}
         </WrapperFormItem>
         <a href='#a'>{formData.subTitle2}</a>
-        <BaseButton htmlType='submit'>{formData.contentButton}</BaseButton>
+        <BaseButton htmlType='submit' className='ant-btn-primary'>
+          {formData.contentButton}
+        </BaseButton>
       </Form>
     </ContainerForm>
   );

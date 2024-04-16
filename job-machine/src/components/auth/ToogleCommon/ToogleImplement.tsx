@@ -36,7 +36,7 @@ const ToogleImplement = ({
     >
       <Title>{toogleData.titleToogle}</Title>
       <Paragraph>{toogleData.subTitleToogle}</Paragraph>
-      <BaseButton onClick={handleClick} className='hidden'>
+      <BaseButton onClick={handleClick} className='ant-btn-secondary'>
         {toogleData.buttonToogle}
       </BaseButton>
     </ContainerToogleImplement>

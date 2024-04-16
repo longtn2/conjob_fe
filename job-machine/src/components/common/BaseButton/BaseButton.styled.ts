@@ -8,13 +8,24 @@ export const Button = styled(AntdButton)`
   padding: 0.5rem;
   gap: 0.3rem;
   transition-duration: 0.3s;
-  background-color: #f44336;
   color: #fff;
   .ant-btn {
     border: 5px solid #fff;
   }
-  &:hover {
-    background-color: #ff5722 !important;
-    color: #b71c1c !important;
+  &.ant-btn-primary {
+    background-color: #b71c1c;
+    &.ant-btn-primary:hover {
+      background-color: #ff5722;
+      color: #ffffff;
+      border: 3px solid #ffffff;
+    }
+  }
+
+  &.ant-btn-secondary {
+    background-color: #18b528;
+    &.ant-btn-secondary:hover {
+      background-color: #50b528;
+      color: #ffffff;
+    }
   }
 `;
