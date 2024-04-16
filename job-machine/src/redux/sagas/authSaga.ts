@@ -14,7 +14,7 @@ import {
   registerFail,
   registerSuccess,
 } from '../actions/authAction';
-import { AuthApi } from 'api/auth/AuthApi';
+import { AuthApi } from '../../api/auth/AuthApi';
 
 function* loginSaga(action: LoginSuccessAction): SagaIterator {
   try {

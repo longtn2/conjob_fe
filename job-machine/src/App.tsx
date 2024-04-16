@@ -1,15 +1,5 @@
-import CustomLayout from 'Layout';
-import CustomForm from 'components/common/BaseForm';
-import { ConfigProvider } from 'antd';
-import Category from 'pages/Admin/Category/Category';
-import AuthPage from 'pages/auth/AuthPage';
-import LayoutApp from 'layout/Layout';
-import { Route, RouterProvider, Routes } from 'react-router-dom';
-import Post from 'pages/postManagement';
-import 'layout/main.css';
-import AdminRoute from 'routers/AdminRoute';
-import NotAuth from 'routers/NotAuth';
-import { router } from 'route';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routers/route';
 
 const App = () => {
   return (

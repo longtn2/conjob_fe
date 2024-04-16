@@ -2,26 +2,23 @@ import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Typography, Form, Input } from 'antd';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import FormIcon from './FormIcon';
 import { ContainerForm } from './FormContainer.styled';
-import { BaseButton } from 'components/common/BaseButton/BaseButton';
+import { WrapperFormItem } from './WrapperFormItem.styled';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import {
   Data,
   FormLoginType,
   FormRegisterType,
   TypeActivePanel,
-} from 'interfaces/interfaces';
-import { EMAIL_REGEX, dataSignIn, dataSignUp } from 'constants/constants';
-import { WrapperFormItem } from './WrapperFormItem.styled';
-import { useDispatch } from 'react-redux';
-import {
-  loginRequest,
-  registerRequest,
-} from '../../../redux/actions/authAction';
-import { AuthApi } from 'api/auth/AuthApi';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+} from '@/interfaces/interfaces';
+import { schemaLogin, schemaRegister } from '@/utils/yup';
+import { SIGN_IN, dataSignIn, dataSignUp } from '@/constants/constants';
+import { AuthApi } from '@/api/auth/AuthApi';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
+import { registerRequest } from '@/redux/actions/authAction';
 
 const { Title } = Typography;
 
@@ -30,40 +27,27 @@ type FormContainerProps = {
 };
 
 const FormContainer = ({ state }: FormContainerProps) => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<Data>(dataSignIn);
-  const checkSignIn = state === 'sign-in';
-  const schema = yup.object().shape({
-    name: checkSignIn ? yup.string() : yup.string().min(8).max(32).required(),
-    email: yup
-      .string()
-      .required('Email is required')
-      .matches(EMAIL_REGEX, 'Email invalid '),
-
-    password: yup.string().min(8).max(32).required(),
-  });
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<FormLoginType | FormRegisterType>({
+  const { handleSubmit, control, reset } = useForm<
+    FormLoginType | FormRegisterType
+  >({
     defaultValues: {
       name: '',
       email: '',
       password: '',
     },
-    resolver: yupResolver<FormLoginType | FormRegisterType>(schema),
+    resolver: yupResolver<FormLoginType | FormRegisterType>(
+      state === SIGN_IN ? schemaLogin : schemaRegister
+    ),
   });
   let timeoutId: NodeJS.Timeout;
 
   function returnData(): Promise<Data> {
     return new Promise(resolve => {
       timeoutId = setTimeout(() => {
-        const data = state === 'sign-in' ? dataSignIn : dataSignUp;
-        resolve(data);
+        resolve(state === 'sign-in' ? dataSignIn : dataSignUp);
       }, 300);
     });
   }
@@ -79,7 +63,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
   }, [state]);
 
   const handleSubmitForm = async (values: FormRegisterType | FormLoginType) => {
-    if (checkSignIn) {
+    if (state === 'sign-in') {
       const { email, password } = values;
       const valuesLogin = {
         email: email,
@@ -130,7 +114,6 @@ const FormContainer = ({ state }: FormContainerProps) => {
           ))}
         </WrapperFormItem>
         <a href='#a'>{formData.subTitle2}</a>
-
         <BaseButton htmlType='submit'>{formData.contentButton}</BaseButton>
       </Form>
     </ContainerForm>

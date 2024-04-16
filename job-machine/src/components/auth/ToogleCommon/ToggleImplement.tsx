@@ -1,10 +1,14 @@
 import { Typography } from 'antd';
 
-import { BaseButton } from 'components/common/BaseButton/BaseButton';
 import { useEffect, useState } from 'react';
-import { DataToogle, TypeActivePanel } from 'interfaces/interfaces';
-import { dataToogleSignIn, dataToogleSignUp } from 'constants/constants';
 import { ContainerToogleImplement } from './ToogleImplement.styled';
+import { DataToogle, TypeActivePanel } from '@/interfaces/interfaces';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
+import {
+  SIGN_IN,
+  dataToogleSignIn,
+  dataToogleSignUp,
+} from '@/constants/constants';
 const { Title, Paragraph } = Typography;
 
 interface ToogleImplementProps {
@@ -18,18 +22,15 @@ const ToogleImplement = ({
   handleClick,
   isActive,
 }: ToogleImplementProps) => {
-  const [toogleData, setToogleData] = useState<DataToogle>(returnData());
+  const [toogleData, setToogleData] = useState<DataToogle>(dataToogleSignUp);
 
-  function returnData(): DataToogle {
-    return state === 'sign-in' ? dataToogleSignIn : dataToogleSignUp;
-  }
   useEffect(() => {
-    setToogleData(returnData());
+    setToogleData(state === SIGN_IN ? dataToogleSignIn : dataToogleSignUp);
   }, [state]);
   return (
     <ContainerToogleImplement
-      className={`${state === 'sign-in' ? 'toogle-left' : 'toogle-right'} ${
-        isActive ? '' : 'active'
+      className={`${state === SIGN_IN ? 'toogle-left' : 'toogle-right'} ${
+        isActive || 'active'
       }`}
     >
       <Title>{toogleData.titleToogle}</Title>

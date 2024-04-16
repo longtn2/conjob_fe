@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   Button as AntButton,
   ButtonProps as AntButtonProps,
   Button,
-} from "antd";
-import type { Severity } from "interfaces/interfaces";
-import { BtnContainer } from "./CustomButton.styled";
+} from 'antd';
+import { BtnContainer } from './CustomButton.styled';
+import { Severity } from '@/interfaces/interfaces';
 
 interface BaseButtonProps extends AntButtonProps {
   severity?: Severity;
@@ -19,7 +19,7 @@ export const BaseButton: React.FC<BaseButtonProps> = ({
   ...props
 }) => (
   <BtnContainer>
-    <AntButton className="custom-button-content" {...props}>
+    <AntButton className='custom-button-content' {...props}>
       {children}
     </AntButton>
   </BtnContainer>

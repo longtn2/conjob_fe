@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import { TypeActivePanel } from '../../interfaces/interfaces';
 import WebFont from 'webfontloader';
-import FormContainer from 'components/auth/FormCommon/FormContainer';
-import TooglePanel from 'components/auth/ToogleCommon/TooglePanel';
 import { Body, Container } from './Auth.styled';
-import { getCookie } from 'utils/utils';
 import { useNavigate } from 'react-router-dom';
+import FormContainer from '@/components/auth/FormCommon/FormContainer';
+import TooglePanel from '@/components/auth/ToogleCommon/TooglePanel';
+import { getCookie } from '@/utils/utils';
+import { SIGN_IN, SIGN_UP } from '@/constants/constants';
 const AuthPage = () => {
   const [typePanel, setTypePanel] = useState<TypeActivePanel>('sign-in');
-  const isSignIn = typePanel === 'sign-in';
+  // const isSignIn = typePanel === 'sign-in';
   const handleChange = () => {
-    setTypePanel(prevPanel =>
-      prevPanel === 'sign-in' ? 'sign-up' : 'sign-in'
-    );
+    setTypePanel(prevPanel => (prevPanel === SIGN_IN ? SIGN_UP : SIGN_IN));
   };
   const returnTypeActive = () => {
     return typePanel;
@@ -39,7 +38,7 @@ const AuthPage = () => {
   return (
     <Body>
       <Container>
-        <div className={isSignIn ? '' : 'active'}>
+        <div className={typePanel === 'sign-in' ? '' : 'active'}>
           <FormContainer state={typePanel} />
           <TooglePanel
             handleChange={handleChange}

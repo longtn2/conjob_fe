@@ -61,6 +61,9 @@ export const dataToogleSignUp: DataToogle = {
   buttonToogle: 'Sign Up',
 };
 
+export const SIGN_IN = 'sign-in';
+export const SIGN_UP = 'sign-up';
+
 export const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 export const originData: CategoryData[] = [
@@ -121,3 +124,5 @@ export const columns = [
     key: 'count',
   },
 ];
+
+export const COLOR = 'linear-gradient(180deg, #C5091F 0%, #870413 100%)';

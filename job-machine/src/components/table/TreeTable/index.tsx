@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { BaseTable } from "../../common/BaseTable";
-import { TableRowSelection } from "antd/es/table/interface";
+import React, { useCallback, useEffect, useState } from 'react';
+import { BaseTable } from '../../common/BaseTable';
+import { TableRowSelection } from 'antd/es/table/interface';
 import {
   TreeTableRow,
   Pagination,
   getTreeTableData,
-} from "../../../api/mock/table.api";
-import { useMounted } from "../../../hooks/useMounted";
-import { BaseButton } from "components/common/BaseButton/BaseButton";
-import { Col, Flex } from "antd";
-import { BaseModal } from "components/common/BaseModel";
-import { BaseAvatar } from "components/common/BaseAvatar/BaseAvatar";
-import { BaseInput } from "components/common/BaseInput";
-import Card from "antd/lib/card";
-import TextArea from "antd/es/input/TextArea";
+} from '../../../api/mock/table.api';
+import { useMounted } from '../../../hooks/useMounted';
+import { Col, Flex } from 'antd';
+import Card from 'antd/lib/card';
+import TextArea from 'antd/es/input/TextArea';
+import { BaseModal } from '@/components/common/BaseModel';
+import { BaseAvatar } from '@/components/common/BaseAvatar/BaseAvatar';
+import { BaseInput } from '@/components/common/BaseInput';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 
 const initialPagination: Pagination = {
   current: 1,
@@ -38,8 +38,8 @@ export const TreeTable: React.FC = () => {
 
   const fetch = useCallback(
     (pagination: Pagination) => {
-      setTableData((tableData) => ({ ...tableData, loading: true }));
-      getTreeTableData(pagination).then((res) => {
+      setTableData(tableData => ({ ...tableData, loading: true }));
+      getTreeTableData(pagination).then(res => {
         if (isMounted.current) {
           setTableData({
             data: res.data,
@@ -65,47 +65,43 @@ export const TreeTable: React.FC = () => {
       selectedRowKeys: React.Key[],
       selectedRows: TreeTableRow[],
       info
-    ) => {
-
-    },
+    ) => {},
     onSelect: (
       record: TreeTableRow,
       selected: boolean,
       selectedRows: TreeTableRow[]
-    ) => {
-
-    },
+    ) => {},
   };
 
   const columns = [
     {
-      title: "Image or Video",
-      dataIndex: "name",
-      key: "name",
-      width: "100px",
+      title: 'Image or Video',
+      dataIndex: 'name',
+      key: 'name',
+      width: '100px',
     },
     {
-      title: "Title",
-      dataIndex: "age",
-      key: "age",
-      width: "12%",
+      title: 'Title',
+      dataIndex: 'age',
+      key: 'age',
+      width: '12%',
     },
     {
-      title: "Category",
-      dataIndex: "address",
-      width: "30%",
-      key: "address",
+      title: 'Category',
+      dataIndex: 'address',
+      width: '30%',
+      key: 'address',
     },
     {
-      title: "Action",
-      dataIndex: "actions",
-      width: "15%",
+      title: 'Action',
+      dataIndex: 'actions',
+      width: '15%',
       render: () => {
         return (
           <>
             <div>
               <BaseModal
-                title={"Accept"}
+                title={'Accept'}
                 open={isShowAcceptModal}
                 onOk={() => setIsShowAcceptModal(false)}
                 onCancel={() => setIsShowAcceptModal(false)}
@@ -113,7 +109,7 @@ export const TreeTable: React.FC = () => {
                 <p>Are you sure</p>
               </BaseModal>
               <BaseModal
-                title={"Reject"}
+                title={'Reject'}
                 open={isShowRejectModal}
                 onOk={() => setIsShowRejectModal(false)}
                 onCancel={() => setIsShowRejectModal(false)}
@@ -121,14 +117,14 @@ export const TreeTable: React.FC = () => {
                 <p>Are you sure</p>
               </BaseModal>
               <BaseModal
-                title={"View Video/Image"}
+                title={'View Video/Image'}
                 open={isShowViewModal}
                 onOk={() => setIsShowViewModal(false)}
                 onCancel={() => setIsShowViewModal(false)}
               >
                 <Flex gap={30}>
                   <Col span={12}>
-                    <Card style={{height: '200px'}}>
+                    <Card style={{ height: '200px' }}>
                       <Flex gap={20}>
                         <BaseAvatar />
                         <Flex vertical gap={10}>
@@ -140,11 +136,11 @@ export const TreeTable: React.FC = () => {
                   </Col>
                   <Col span={10}>
                     <Flex gap={20} vertical>
-                      <BaseInput placeholder="User name" />
-                      <BaseInput placeholder="Email" />
+                      <BaseInput placeholder='User name' />
+                      <BaseInput placeholder='Email' />
                       <TextArea
                         rows={4}
-                        placeholder="Description"
+                        placeholder='Description'
                         maxLength={6}
                       />
                     </Flex>

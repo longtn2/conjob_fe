@@ -1,5 +1,5 @@
+import { axiosApi } from '@/interfaces/index';
 import { AxiosResponse } from 'axios';
-import { axiosApi } from 'interfaces';
 import Cookies from 'js-cookie';
 
 export const getTokenAsync = async () => {

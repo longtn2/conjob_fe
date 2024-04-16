@@ -1,5 +1,5 @@
-import { Form, Input, Button, Checkbox } from "antd";
-import React from "react";
+import { Form, Input, Button, Checkbox } from 'antd';
+import React from 'react';
 
 interface FormProps {
   values: string;
@@ -7,17 +7,13 @@ interface FormProps {
 }
 
 const CustomForm: React.FC<FormProps> = () => {
-  const onFinish = (values: any) => {
+  const onFinish = (values: any) => {};
 
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-
-  };
+  const onFinishFailed = (errorInfo: any) => {};
 
   return (
     <Form
-      name="basic"
+      name='basic'
       labelCol={{
         span: 8,
       }}
@@ -29,15 +25,15 @@ const CustomForm: React.FC<FormProps> = () => {
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      autoComplete="off"
+      autoComplete='off'
     >
       <Form.Item
-        label="Username"
-        name="username"
+        label='Username'
+        name='username'
         rules={[
           {
             required: true,
-            message: "Please input your username!",
+            message: 'Please input your username!',
           },
         ]}
       >
@@ -45,12 +41,12 @@ const CustomForm: React.FC<FormProps> = () => {
       </Form.Item>
 
       <Form.Item
-        label="Password"
-        name="password"
+        label='Password'
+        name='password'
         rules={[
           {
             required: true,
-            message: "Please input your password!",
+            message: 'Please input your password!',
           },
         ]}
       >
@@ -58,8 +54,8 @@ const CustomForm: React.FC<FormProps> = () => {
       </Form.Item>
 
       <Form.Item
-        name="remember"
-        valuePropName="checked"
+        name='remember'
+        valuePropName='checked'
         wrapperCol={{
           offset: 8,
           span: 16,
@@ -74,7 +70,7 @@ const CustomForm: React.FC<FormProps> = () => {
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           Submit
         </Button>
       </Form.Item>

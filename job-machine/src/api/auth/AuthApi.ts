@@ -1,5 +1,5 @@
-import { FormLoginType } from 'interfaces/interfaces';
-import { httpApi } from 'service/customize_axios';
+import { FormLoginType } from '@/interfaces/interfaces';
+import { httpApi } from '@/service/customize_axios';
 
 export const AuthApi = {
   apiLogin: (values: FormLoginType): Promise<FormLoginType> => {

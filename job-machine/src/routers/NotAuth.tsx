@@ -1,6 +1,6 @@
-import { getCookie } from 'utils/utils';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { getCookie } from '../utils/utils';
 
 const NotAuth = () => {
   const token = getCookie('token');

@@ -1,10 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import Category from 'pages/Admin/Category/Category';
-import AuthPage from 'pages/auth/AuthPage';
-import LayoutApp from 'layout/Layout';
-import AdminRoute from 'routers/AdminRoute';
-import NotAuth from 'routers/NotAuth';
-import Post from 'pages/postManagement';
+import NotAuth from './NotAuth';
+import AuthPage from '../pages/auth/AuthPage';
+import LayoutApp from '../layout/Layout';
+import Category from '../pages/Admin/Category/Category';
+import Post from '../pages/postManagement';
 
 const AdminLayout = () => {
   return <NotAuth></NotAuth>;

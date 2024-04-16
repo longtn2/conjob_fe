@@ -1,5 +1,5 @@
 import { Flex, Form, Input } from 'antd';
-import { BaseButton } from 'components/common/BaseButton/BaseButton';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 const { Item } = Form;
 
 interface FormType {
@@ -13,7 +13,9 @@ interface FormAddCategoryProps {
 }
 
 const FormAddCategory = ({ className = '' }: FormAddCategoryProps) => {
-  const handleAction = (values: FormType | undefined) => {};
+  const handleAction = (values: FormType | undefined) => {
+    //TODO: handleAction
+  };
   return (
     <div className={`${className}`}>
       <h2>Thêm Category</h2>

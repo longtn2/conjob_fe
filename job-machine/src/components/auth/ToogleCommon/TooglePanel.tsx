@@ -1,6 +1,8 @@
 import ToogleImplement from './ToogleImplement';
 import { ContainerToogle } from './Toogle.styled';
-import { TypeActivePanel } from 'interfaces/interfaces';
+import { SIGN_IN } from '@/constants/constants';
+import { TypeActivePanel } from '@/interfaces/interfaces';
+
 interface TooglePanelProps {
   returnTypePanel: () => TypeActivePanel;
   handleChange: () => void;
@@ -8,21 +10,20 @@ interface TooglePanelProps {
 
 const TooglePanel = ({ handleChange, returnTypePanel }: TooglePanelProps) => {
   const onChange = () => handleChange();
-
   const state = returnTypePanel();
-  const isSignIn = state === 'sign-in';
+
   return (
-    <ContainerToogle className={`${isSignIn ? '' : 'active'}`}>
+    <ContainerToogle className={`${state === SIGN_IN || 'active'}`}>
       <div className={`toogle`}>
         <ToogleImplement
-          state='sign-in'
+          state={SIGN_IN}
           handleClick={onChange}
-          isActive={isSignIn}
+          isActive={state === SIGN_IN}
         />
         <ToogleImplement
           state='sign-up'
           handleClick={onChange}
-          isActive={isSignIn}
+          isActive={state === SIGN_IN}
         />
       </div>
     </ContainerToogle>

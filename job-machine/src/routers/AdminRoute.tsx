@@ -1,5 +1,5 @@
+import { getCookie } from '@/utils/utils';
 import { Outlet } from 'react-router-dom';
-import { getCookie } from 'utils/utils';
 import { Navigate } from 'react-router-dom';
 
 const AdminRoute = () => {
