@@ -1,15 +1,20 @@
-import axios, { AxiosError } from 'axios';
-import { ApiError } from '../api/ApiError';
+import axios, { AxiosError } from "axios";
+import { ApiError } from "../api/ApiError";
+import { responseData } from "api/mock/news.api";
 
-const readToken = '';
+const readToken = "";
 
 export const httpApi = axios.create({
-  baseURL: '',
+  baseURL: "",
 });
 
-httpApi.interceptors.request.use(config => {
+export const sightengineApi = axios.create({
+  baseURL: "",
+});
+
+httpApi.interceptors.request.use((config) => {
   const headers = config.headers;
-  headers['Authorization'] = `Bearer ${readToken}`;
+  headers["Authorization"] = `Bearer ${readToken}`;
   return config;
 });
 
@@ -28,3 +33,28 @@ httpApi.interceptors.response.use(undefined, (error: AxiosError) => {
 export interface ApiErrorData {
   message: string;
 }
+
+export interface ImageUrlItem {
+  img: string;
+}
+
+export const checkPost2 = () => {
+  responseData.map(async (response) => {
+    const responseAPI = await axios.get(
+      "https://api.sightengine.com/1.0/check-workflow.json",
+      {
+        params: {
+          url: response.img,
+          workflow: "wfl_g5IE1sK45fvgtphGpahhV",
+          api_user: "268568153",
+          api_secret: "Rqcp8zjVp4tcwjoygwfEmUwWuqiipqrk",
+        },
+      }
+    );
+    if (responseAPI.data.summary.reject_reason[0]) {
+      response.status = responseAPI.data.summary.reject_reason[0].id;
+    }
+
+    console.log("aaaaaa tôi đã ở đây rồi hello ", response.status);
+  });
+};

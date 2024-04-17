@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TypeActivePanel } from '../../interfaces/interfaces';
-import WebFont from 'webfontloader';
+// import WebFont from 'webfontloader';
 import FormContainer from 'components/auth/FormCommon/FormContainer';
 import TooglePanel from 'components/auth/ToogleCommon/TooglePanel';
 import { Body, Container } from './Auth.styled';
@@ -15,13 +15,13 @@ const AuthPage = () => {
     return typePanel;
   };
 
-  useEffect(() => {
-    WebFont.load({
-      google: {
-        families: ['Montserrat', 'Roboto'],
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   WebFont.load({
+  //     google: {
+  //       families: ['Montserrat', 'Roboto'],
+  //     },
+  //   });
+  // }, []);
   return (
     <Body>
       <Container>

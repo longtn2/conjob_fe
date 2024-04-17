@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Typography, Form, Input } from 'antd';
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import FormIcon from './FormIcon';
 import { ContainerForm } from './FormContainer.styled';
 import { BaseButton } from 'components/common/BaseButton/BaseButton';
@@ -38,9 +39,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
       email: '',
       password: '',
     },
-    resolver: yupResolver<FormLoginType | FormRegisterType>(
-      state === SIGN_IN ? schemaLogin : schemaRegister
-    ),
+    // resolver: yupResolver<FormLoginType | FormRegisterType>(schema),
   });
   let timeoutId: NodeJS.Timeout;
 
