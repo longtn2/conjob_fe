@@ -26,8 +26,9 @@ export const LOADING = 'LOADING';
 export const IS_AUTHENTICATING = 'IS_AUTHENTICATING';
 export const SET_REQUEST_STATUS = 'SET_REQUEST_STATUS';
 
-export const START_LOADING = "START_LOADING";
-export const FETCH_LOADING = "FETCH_LOADING";
+export const START_LOADING = 'START_LOADING';
+export const FETCH_LOADING = 'FETCH_LOADING';
+export const FETCH_ERROR = 'FETCH_ERROR';
 
 export const dataSignIn: Data = {
   title: 'Sign In',

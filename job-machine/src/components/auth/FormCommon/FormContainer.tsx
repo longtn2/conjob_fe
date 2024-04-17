@@ -28,6 +28,7 @@ type FormContainerProps = {
 
 const FormContainer = ({ state }: FormContainerProps) => {
   const [formData, setFormData] = useState<Data>(dataSignIn);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { handleSubmit, control, reset } = useForm<
@@ -63,6 +64,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
   }, [state]);
 
   const handleSubmitForm = async (values: FormRegisterType | FormLoginType) => {
+    setLoading(true);
     if (state === 'sign-in') {
       const { email, password } = values;
       const valuesLogin = {
@@ -77,7 +79,10 @@ const FormContainer = ({ state }: FormContainerProps) => {
           localStorage.setItem('lastName', res.data.lastName);
           navigate('/');
         })
-        .catch(err => {});
+        .catch(err => {})
+        .finally(() => {
+          setLoading(false);
+        });
     } else {
       dispatch(registerRequest(values as FormRegisterType));
     }
@@ -114,7 +119,11 @@ const FormContainer = ({ state }: FormContainerProps) => {
           ))}
         </WrapperFormItem>
         <a href='#a'>{formData.subTitle2}</a>
-        <BaseButton htmlType='submit' className='ant-btn-primary'>
+        <BaseButton
+          htmlType='submit'
+          className='ant-btn-primary'
+          loading={loading}
+        >
           {formData.contentButton}
         </BaseButton>
       </Form>
