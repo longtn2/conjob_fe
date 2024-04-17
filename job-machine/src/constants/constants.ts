@@ -130,3 +130,5 @@ export const columns = [
 ];
 
 export const COLOR = 'linear-gradient(180deg, #C5091F 0%, #870413 100%)';
+export const URL_LOGIN = 'api/v1/auth/login';
+export const URL_LOGOUT = 'api/v1/auth/logout';

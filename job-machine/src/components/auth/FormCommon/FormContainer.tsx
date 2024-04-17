@@ -103,7 +103,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
               render={({ field, fieldState }) => {
                 return (
                   <Form.Item
-                    validateStatus={fieldState.error?.message ? 'error' : ''}
+                    validateStatus={fieldState.error?.message && 'error'}
                     help={fieldState.error?.message || null}
                     style={{ padding: 0 }}
                   >
