@@ -9,7 +9,6 @@ export interface PaymentCard {
   expiry: string;
   name: string;
   number: string;
-  // eslint-disable-next-line
   focused: any;
   background: string;
   isEdit: boolean;

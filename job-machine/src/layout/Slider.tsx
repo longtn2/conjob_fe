@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import Slider from 'antd/es/layout/Sider';
 import { ContainerSider } from './Content.styled';
+import { PATH_URL_ROUTER } from '@/constants/constants';
 
 const SliderComponent = () => {
   const navigator = useNavigate();
@@ -44,7 +45,7 @@ const SliderComponent = () => {
           mode='inline'
         >
           <Menu.Item
-            key='/'
+            key={PATH_URL_ROUTER.home}
             style={page === '' ? { background: '#fff', color: 'black' } : {}}
           >
             <span className='icon' style={getMenuStyle('')}>
@@ -53,7 +54,7 @@ const SliderComponent = () => {
             <span>DashBoard</span>
           </Menu.Item>
           <Menu.Item
-            key='/category'
+            key={PATH_URL_ROUTER.category}
             style={
               page === 'category' ? { background: '#fff', color: 'black' } : {}
             }
@@ -64,7 +65,7 @@ const SliderComponent = () => {
             <span className='label'>Category</span>
           </Menu.Item>
           <Menu.Item
-            key='/post'
+            key={PATH_URL_ROUTER.post}
             style={
               page === 'post' ? { background: '#fff', color: 'black' } : {}
             }
@@ -75,7 +76,7 @@ const SliderComponent = () => {
             <span className='label'>Post</span>
           </Menu.Item>
           <Menu.Item
-            key='/video-history'
+            key={PATH_URL_ROUTER.historyVideo}
             style={
               page === 'video-history'
                 ? { background: '#fff', color: 'black' }
@@ -88,7 +89,7 @@ const SliderComponent = () => {
             <span className='label'>History Video</span>
           </Menu.Item>
           <Menu.Item
-            key='/history-video-delete'
+            key={PATH_URL_ROUTER.historyVideo}
             style={
               page === 'history-video-delete'
                 ? { background: '#fff', color: 'black' }

@@ -74,6 +74,10 @@ export const ContainerSider = styled.div`
   background-color: #f2f0f5;
   ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.menu.css-dev-only-do-not-override-1kuana8 {
     background: #f2f0f5;
+    padding: 10px;
+  }
+  .li .ant-menu-item {
+    padding: 30px;
   }
   .anticon .anticon-calendar .ant-menu-item-icon {
     background-color: transparent;

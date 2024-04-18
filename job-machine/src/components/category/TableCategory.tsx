@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import type { TableProps } from 'antd';
 import { Form, Popconfirm, Table } from 'antd';
-import { BaseButton } from 'components/common/BaseButton/BaseButton';
+import { originData } from '@/constants/constants';
+import { CategoryData } from '@/interfaces/interfaces';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 import EditableCell from './EditableCell';
-import { originData } from 'constants/constants';
-import { CategoryData } from 'interfaces/interfaces';
 
 const TableCategory: React.FC = () => {
   const [form] = Form.useForm();
