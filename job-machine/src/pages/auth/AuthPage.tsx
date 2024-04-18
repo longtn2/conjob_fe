@@ -7,7 +7,6 @@ import { Body, Container } from "./Auth.styled";
 import { SIGN_IN } from "constants/constants";
 const AuthPage = () => {
   const [typePanel, setTypePanel] = useState<TypeActivePanel>("sign-in");
-  const isSignIn = typePanel === "sign-in";
   const handleChange = () => {
     setTypePanel((prevPanel) =>
       prevPanel === "sign-in" ? "sign-up" : "sign-in"

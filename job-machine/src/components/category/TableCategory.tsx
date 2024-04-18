@@ -13,11 +13,6 @@ const TableCategory: React.FC = () => {
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: CategoryData[]) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        'selectedRows: ',
-        selectedRows
-      );
     },
     getCheckboxProps: (record: CategoryData) => ({
       disabled: record.name === 'Disabled User',
@@ -56,7 +51,6 @@ const TableCategory: React.FC = () => {
         setEditingKey('');
       }
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
     }
   };
   const handleDelete = (key: React.Key) => {

@@ -3,7 +3,7 @@ import { Checkbox as AntCheckbox } from 'antd';
 
 const { Group } = AntCheckbox;
 
-export const Checkbox = styled(AntCheckbox)`
+export const CheckboxItem = styled(AntCheckbox)`
   & .ant-checkbox-inner {
     border-radius: 0.1875rem;
     height: 1.25rem;

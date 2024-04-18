@@ -7,7 +7,7 @@ export interface InternalSelectProps {
   $shadow?: boolean;
 }
 
-export const Select = styled(AntSelect)<InternalSelectProps>`
+export const SelectContainer = styled(AntSelect)<InternalSelectProps>`
   width: 20%;
 
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {

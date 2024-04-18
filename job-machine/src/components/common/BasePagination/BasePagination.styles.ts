@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Pagination as AntPagination } from 'antd';
 
-export const Pagination = styled(AntPagination)`
+export const PaginationContainer = styled(AntPagination)`
   ${(props) =>
     !props.disabled &&
     css`
