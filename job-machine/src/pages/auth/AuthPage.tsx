@@ -10,9 +10,7 @@ import { PATH_URL_ROUTER, SIGN_IN, SIGN_UP } from '@/constants/constants';
 const AuthPage = () => {
   const [typePanel, setTypePanel] = useState<TypeActivePanel>('sign-in');
   const handleChange = () => {
-    setTypePanel((prevPanel) =>
-      prevPanel === "sign-in" ? "sign-up" : "sign-in"
-    );
+    setTypePanel(prevPanel => (prevPanel === SIGN_IN ? SIGN_UP : SIGN_IN));
   };
   const returnTypeActive = () => {
     return typePanel;
@@ -21,7 +19,7 @@ const AuthPage = () => {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ["Montserrat", "Roboto"],
+        families: ['Montserrat', 'Roboto'],
       },
     });
   }, []);

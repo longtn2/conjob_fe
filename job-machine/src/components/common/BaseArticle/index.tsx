@@ -33,11 +33,13 @@ export const BaseArticle: React.FC<BaseArticleProps> = ({
 }) => {
   const [isShowFullText, setIsShowFullText] = useState(false);
 
-  const getTruncatedDescription = (description: string) => {
-    return description.length > 200
-      ? `${description.substring(0, 200)}...`
-      : description;
-  };
+  const getTruncatedDescription = (
+    description: string,
+    isShowFullText: boolean
+  ) =>
+    isShowFullText || !(description.length > 200)
+      ? description
+      : `${description.substring(0, 200)}...`;
 
   const toggleReadMore = () => {
     return setIsShowFullText(!isShowFullText);
@@ -68,7 +70,7 @@ export const BaseArticle: React.FC<BaseArticleProps> = ({
           <Title>{title}</Title>
         </InfoHeader>
         <p id="read-more">
-          {isShowFullText ? description : getTruncatedDescription(description)}
+          {getTruncatedDescription(description, isShowFullText)}
         </p>
         <p onClick={() => toggleReadMore()} className="read-more">
           {isShowFullText ? "Ẩn bớt" : "Xem thêm"}
