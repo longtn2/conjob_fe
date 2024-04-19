@@ -45,8 +45,6 @@ export const BaseArticle: React.FC<BaseArticleProps> = ({
     return setIsShowFullText(!isShowFullText);
   };
 
-  console.log(isShowFullText);
-
   return (
     <Wrapper className={className}>
       <Header>
