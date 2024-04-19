@@ -1,8 +1,8 @@
-import React, { ComponentProps } from 'react';
-import { Select as AntSelect } from 'antd';
-import { RefSelectProps } from 'antd/lib/select';
-import {SelectContainer} from './BaserSelect.styled';
-import { Dimension } from '../../../interfaces/interfaces';
+import React, { ComponentProps } from "react";
+import { Select as AntSelect } from "antd";
+import { RefSelectProps } from "antd/lib/select";
+import * as S from "./BaserSelect.styled";
+import { Dimension } from "@/interfaces/interfaces";
 
 export const { Option } = AntSelect;
 
@@ -10,12 +10,12 @@ export interface BaseSelectProps extends ComponentProps<typeof AntSelect> {
   width?: Dimension;
   shadow?: boolean;
   className?: string;
-  ref?: ((instance: RefSelectProps | null) => void)
+  ref?: (instance: RefSelectProps | null) => void;
 }
 
 export const BaseSelect = React.forwardRef<RefSelectProps, BaseSelectProps>(
   ({ className, width, shadow, children, ...props }, ref) => (
-    <SelectContainer
+    <S.SelectContainer
       getPopupContainer={(triggerNode) => triggerNode}
       ref={ref}
       className={className}
@@ -24,6 +24,6 @@ export const BaseSelect = React.forwardRef<RefSelectProps, BaseSelectProps>(
       {...props}
     >
       {children}
-    </SelectContainer>
-  ),
+    </S.SelectContainer>
+  )
 );

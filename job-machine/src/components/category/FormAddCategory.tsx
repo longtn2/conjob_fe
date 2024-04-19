@@ -1,5 +1,5 @@
 import { Flex, Form, Input } from 'antd';
-import { BaseButton } from 'components/common/BaseButton/BaseButton';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 const { Item } = Form;
 
 interface FormType {

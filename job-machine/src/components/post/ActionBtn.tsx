@@ -1,5 +1,5 @@
 import { Popconfirm } from "antd";
-import { BaseButton } from "components/common/BaseButton/BaseButton";
+import { BaseButton } from "@/components/common/BaseButton/BaseButton";
 interface ActionBtnProps {
   handleDelete: (key: string | number) => void;
   itemKey: string | number;

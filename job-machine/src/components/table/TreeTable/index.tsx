@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { BaseTable } from "../../common/BaseTable";
+import { BaseTable } from "@/components/common/BaseTable";
 import { TableRowSelection } from "antd/es/table/interface";
 import {
   TreeTableRow,
   Pagination,
   getTreeTableData,
-} from "../../../api/mock/table.api";
-import { useMounted } from "../../../hooks/useMounted";
-import { ColumnTable } from "../ColumnTable";
-
+} from "@/api/mock/table.api";
+import { useMounted } from "@/hooks/useMounted";
+import { ColumnTable } from "@/components/table/ColumnTable";
+ 
 const initialPagination: Pagination = {
   current: 1,
   pageSize: 4,
 };
-
+ 
 export const TreeTable: React.FC = () => {
   const [tableData, setTableData] = useState<{
     data: TreeTableRow[];
@@ -25,7 +25,7 @@ export const TreeTable: React.FC = () => {
     loading: false,
   });
   const { isMounted } = useMounted();
-
+ 
   const fetch = useCallback(
     (pagination: Pagination) => {
       setTableData((tableData) => ({ ...tableData, loading: true }));
@@ -41,15 +41,15 @@ export const TreeTable: React.FC = () => {
     },
     [isMounted]
   );
-
+ 
   useEffect(() => {
     fetch(initialPagination);
   }, [fetch]);
-
+ 
   const handleTableChange = (pagination: Pagination) => {
     fetch(pagination);
   };
-
+ 
   const rowSelection: TableRowSelection<TreeTableRow> = {
     onChange: (
       selectedRowKeys: React.Key[],
@@ -62,7 +62,7 @@ export const TreeTable: React.FC = () => {
       selectedRows: TreeTableRow[]
     ) => {},
   };
-
+ 
   const columns = [
     {
       title: "Image or Video",
@@ -91,7 +91,7 @@ export const TreeTable: React.FC = () => {
       },
     },
   ];
-
+ 
   return (
     <BaseTable
       columns={columns}
@@ -104,3 +104,4 @@ export const TreeTable: React.FC = () => {
     />
   );
 };
+ 

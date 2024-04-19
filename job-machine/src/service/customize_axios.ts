@@ -1,17 +1,29 @@
 import axios, { AxiosError } from 'axios';
-import { ApiError } from '../api/ApiError';
+import { ApiError } from '@/api/ApiError';
 
-const readToken = '';
+export interface ApiErrorData {
+  message: string;
+}
+
+const readToken = undefined;
 
 export const httpApi = axios.create({
-  baseURL: '',
+  baseURL: 'https://maggot-intent-cicada.ngrok-free.app/',
 });
 
-httpApi.interceptors.request.use(config => {
-  const headers = config.headers;
-  headers['Authorization'] = `Bearer ${readToken}`;
-  return config;
-});
+httpApi.interceptors.request.use(
+  function (config) {
+    let token = readToken;
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    config.headers['Access-Control-Allow-Origin'] = '*';
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 httpApi.interceptors.response.use(undefined, (error: AxiosError) => {
   if (error.response) {
@@ -24,7 +36,3 @@ httpApi.interceptors.response.use(undefined, (error: AxiosError) => {
     throw new ApiError<ApiErrorData>(error.message, undefined);
   }
 });
-
-export interface ApiErrorData {
-  message: string;
-}

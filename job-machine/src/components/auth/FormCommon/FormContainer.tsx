@@ -4,21 +4,21 @@ import { Typography, Form, Input } from 'antd';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormIcon from './FormIcon';
 import { ContainerForm } from './FormContainer.styled';
-import { BaseButton } from 'components/common/BaseButton/BaseButton';
+import { WrapperFormItem } from './WrapperFormItem.styled';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import {
   Data,
   FormLoginType,
   FormRegisterType,
   TypeActivePanel,
-} from 'interfaces/interfaces';
-import { SIGN_IN, dataSignIn, dataSignUp } from 'constants/constants';
-import { WrapperFormItem } from './WrapperFormItem.styled';
-import { useDispatch } from 'react-redux';
-import {
-  loginRequest,
-  registerRequest,
-} from '../../../redux/actions/authAction';
-import { schemaLogin, schemaRegister } from 'utils/yup';
+} from '@/interfaces/interfaces';
+import { schemaLogin, schemaRegister } from '@/utils/yup';
+import { PATH_URL_ROUTER, SIGN_IN, dataSignIn, dataSignUp } from '@/constants/constants';
+import { AuthApi } from '@/api/auth/AuthApi';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
+import { registerRequest } from '@/redux/actions/authAction';
 
 const { Title } = Typography;
 
@@ -28,7 +28,8 @@ type FormContainerProps = {
 
 const FormContainer = ({ state }: FormContainerProps) => {
   const [formData, setFormData] = useState<Data>(dataSignIn);
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { handleSubmit, control, reset } = useForm<
     FormLoginType | FormRegisterType
@@ -62,9 +63,29 @@ const FormContainer = ({ state }: FormContainerProps) => {
     };
   }, [state]);
 
-  const handleSubmitForm = (values: FormRegisterType | FormLoginType) => {
-    if (state === SIGN_IN) {
-      dispatch(loginRequest(values));
+  const handleSubmitForm = async (values: FormRegisterType | FormLoginType) => {
+    setLoading(true);
+    if (state === 'sign-in') {
+      const { email, password } = values;
+      const valuesLogin = {
+        email: email,
+        password: password,
+      };
+      await AuthApi.apiLogin(valuesLogin)
+        .then((res: any) => {
+          Cookies.set('token', res.data.token);
+          Cookies.set('refreshToken', res.data.refreshToken);
+          localStorage.setItem('firstName', res.data.firstName);
+          localStorage.setItem('lastName', res.data.lastName);
+          navigate(PATH_URL_ROUTER.home);
+        })
+        .catch(err => {
+          // TODO show error.
+        })
+        .finally(() => {
+          setLoading(false);
+        })
+        ;
     } else {
       dispatch(registerRequest(values as FormRegisterType));
     }
@@ -85,8 +106,9 @@ const FormContainer = ({ state }: FormContainerProps) => {
               render={({ field, fieldState }) => {
                 return (
                   <Form.Item
-                    validateStatus={fieldState.error?.message ? 'error' : ''}
+                    validateStatus={fieldState.error?.message && 'error' }
                     help={fieldState.error?.message || null}
+                    style={{ padding: 0 }}
                   >
                     {value.name === 'password' ? (
                       <Input.Password {...field} placeholder={value.label} />
@@ -100,7 +122,9 @@ const FormContainer = ({ state }: FormContainerProps) => {
           ))}
         </WrapperFormItem>
         <a href='#a'>{formData.subTitle2}</a>
-        <BaseButton htmlType='submit'>{formData.contentButton}</BaseButton>
+        <BaseButton htmlType='submit' className='ant-btn-primary' loading={loading}>
+          {formData.contentButton}
+        </BaseButton>
       </Form>
     </ContainerForm>
   );

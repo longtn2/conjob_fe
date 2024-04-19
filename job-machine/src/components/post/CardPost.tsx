@@ -1,8 +1,8 @@
 import { Flex, Popconfirm, Typography } from "antd";
-import { BaseSelect, Option } from "components/common/BaseSelect";
-import { BaseButton } from "components/common/BaseButton/BaseButton";
-import { CardCustom } from "../../pages/Admin/PostManage/PostManagement.styled";
-import { BaseInput } from "../common/BaseInput/index";
+import { BaseSelect, Option } from "@/components/common/BaseSelect";
+import { BaseButton } from "@/components/common/BaseButton/BaseButton";
+import { CardCustom } from "@/pages/Admin/PostManage/PostManagement.styled";
+import { BaseInput } from "@/components/common/BaseInput/index";
 
 const FilterPost = () => {
   return (

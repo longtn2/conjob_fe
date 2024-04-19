@@ -1,4 +1,4 @@
-import { FormLoginType, FormRegisterType } from 'interfaces/interfaces';
+import { FormLoginType, FormRegisterType } from '@/interfaces/interfaces';
 
 export const fakeCallApi = ({
   email,
