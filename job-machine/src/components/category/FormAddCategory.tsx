@@ -13,9 +13,7 @@ interface FormAddCategoryProps {
 }
 
 const FormAddCategory = ({ className = '' }: FormAddCategoryProps) => {
-  const handleAction = (values: FormType | undefined) => {
-    //TODO: handleAction
-  };
+  const handleAction = (values: FormType | undefined) => {};
   return (
     <div className={`${className}`}>
       <h2>Thêm Category</h2>

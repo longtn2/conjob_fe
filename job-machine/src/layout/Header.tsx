@@ -9,10 +9,10 @@ import { Avatar, Button, Dropdown, Menu, MenuProps, Modal, Space } from 'antd';
 import { Header } from 'antd/es/layout/layout';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-
+ 
 const HeaderComponent = () => {
   const navigator = useNavigate();
-
+ 
   const handleNavigate = (key: string) => {
     if (key === 'logout') {
       handleLogout();
@@ -20,7 +20,7 @@ const HeaderComponent = () => {
       navigator(key);
     }
   };
-
+ 
   const handleLogout = () => {
     const cookies = Cookies.get();
     localStorage.removeItem("firstName");
@@ -56,7 +56,7 @@ const HeaderComponent = () => {
     <>
       <Header className='header-layout'>
         <h1>ADMIN SITE</h1>
-
+ 
         <div style={{ display: 'flex' }}>
           <Dropdown
             overlay={
@@ -87,5 +87,5 @@ const HeaderComponent = () => {
     </>
   );
 };
-
+ 
 export default HeaderComponent;
