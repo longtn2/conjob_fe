@@ -1,11 +1,11 @@
 import { Col, Row } from "antd";
 import { ContainerPost, CardCustom } from "./PostManagement.styled";
-import { getNews, Post } from "../../../api/mock/news.api";
+import { getNews, Post } from "@/api/mock/news.api";
 import { useEffect, useState } from "react";
-import { BaseArticle } from "components/common/BaseArticle";
-import FilterPost from "../../../components/post/CardPost";
-import ActionBtn from "components/post/ActionBtn";
-import VideoPlayer from "components/post/VideoPlayer";
+import { BaseArticle } from "@/components/common/BaseArticle";
+import FilterPost from "@/components/post/CardPost";
+import ActionBtn from "@/components/post/ActionBtn";
+import VideoPlayer from "@/components/post/VideoPlayer";
 
 const PostContent = () => {
   const [news, setNews] = useState<Post[]>([]);

@@ -1,16 +1,16 @@
 import { Card, Col, Flex } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { BaseAvatar } from "components/common/BaseAvatar/BaseAvatar";
-import { BaseButton } from "components/common/BaseButton/BaseButton";
-import { BaseInput } from "components/common/BaseInput";
-import { BaseModal } from "components/common/BaseModel";
+import { BaseAvatar } from "@/components/common/BaseAvatar/BaseAvatar";
+import { BaseButton } from "@/components/common/BaseButton/BaseButton";
+import { BaseInput } from "@/components/common/BaseInput";
+import { BaseModal } from "@/components/common/BaseModel";
 import { useState } from "react";
-
+ 
 export const ColumnTable = () => {
   const [isShowAcceptModal, setIsShowAcceptModal] = useState<boolean>(false);
   const [isShowRejectModal, setIsShowRejectModal] = useState<boolean>(false);
   const [isShowViewModal, setIsShowViewModal] = useState<boolean>(false);
-
+ 
   return (
     <>
       <div>
@@ -69,7 +69,7 @@ export const ColumnTable = () => {
         <BaseButton onClick={() => setIsShowAcceptModal(true)}>
           Accept
         </BaseButton>
-        <BaseButton onClick={() => setIsShowRejectModal(true)}>  
+        <BaseButton onClick={() => setIsShowRejectModal(true)}>
           Reject
         </BaseButton>
       </Flex>

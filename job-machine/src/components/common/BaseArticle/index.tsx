@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BaseAvatar } from "../BaseAvatar/BaseAvatar";
+import { BaseAvatar } from "@/components/common/BaseAvatar/BaseAvatar";
 import {
   Header,
   Author,
@@ -10,7 +10,7 @@ import {
   Title,
   Wrapper,
 } from "./BaseArticle.styled";
-import { BaseCheckbox } from "../BaseCheckbox/BaseCheckbox";
+import { BaseCheckbox } from "@/components/common/BaseCheckbox/BaseCheckbox";
 import { Col, Flex } from "antd";
 
 export interface BaseArticleProps {

@@ -1,4 +1,5 @@
-import { Priority } from '../../constants/enums/priorities';
+import { Priority } from "@/constants/enums/priorities";
+
 
 export interface Tag {
   value: string;

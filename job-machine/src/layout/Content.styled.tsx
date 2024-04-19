@@ -69,3 +69,35 @@ export const ContainerSlider = styled.div`
     content: '';
   }
 `;
+
+export const ContainerSider = styled.div`
+  background-color: #f2f0f5;
+  ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.menu.css-dev-only-do-not-override-1kuana8 {
+    background: #f2f0f5;
+    padding: 10px;
+  }
+  .li .ant-menu-item {
+    padding: 30px;
+  }
+  .anticon .anticon-calendar .ant-menu-item-icon {
+    background-color: transparent;
+  }
+  span.anticon {
+    height: 20px;
+    padding: 10px 0;
+  }
+  span.icon {
+    padding: 10px;
+    margin: 5px 5px 0 0;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  span.anticon > svg {
+    font-size: 22px;
+  }
+  li.ant-menu-item {
+    margin-bottom: 20px;
+  }
+`;

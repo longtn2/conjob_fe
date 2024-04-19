@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Select as AntSelect } from 'antd';
-import { Dimension } from 'interfaces/interfaces';
+import { Dimension } from '@/interfaces/interfaces';
 
 export interface InternalSelectProps {
   $width?: Dimension;

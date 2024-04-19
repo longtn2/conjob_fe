@@ -1,4 +1,4 @@
-import { Post } from "api/mock/news.api";
+import { Post } from "@/api/mock/news.api";
 import React from "react";
 
 interface VideoProps {

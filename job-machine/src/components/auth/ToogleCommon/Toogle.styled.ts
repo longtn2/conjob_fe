@@ -13,7 +13,7 @@ export const ContainerToogle = styled.div`
 
   .toogle {
     height: 100%;
-    background: linear-gradient(to right, #512da8, #5c6bc0);
+    background: linear-gradient(180deg, #c5091f 0%, #870413 100%);
     color: #fff;
     position: relative;
     left: -100%;
@@ -21,10 +21,6 @@ export const ContainerToogle = styled.div`
     width: 200%;
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
-  }
-
-  .ant-typography {
-    padding: 10px 30px;
   }
 
   &.active {
