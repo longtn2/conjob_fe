@@ -6,13 +6,16 @@ import Category from '@/pages/Admin/Category/Category';
 import { PATH_URL_ROUTER } from '@/constants/constants';
 import PostContent from '@/pages/Admin/PostManage/Post';
 
+
 const AdminLayout = () => {
   return <NotAuth></NotAuth>;
 };
 
+;
+
 export const router = createBrowserRouter([
   {
-    path:PATH_URL_ROUTER.login,
+    path: PATH_URL_ROUTER.login,
     element: <AuthPage />,
   },
   {

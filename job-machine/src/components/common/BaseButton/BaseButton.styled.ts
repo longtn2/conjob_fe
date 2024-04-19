@@ -50,17 +50,18 @@ export const CustomButton = styled(AntdButton)`
   &.ant-btn-primary {
     background-color: var(--button-primary-color);
     &.ant-btn-primary:hover {
-      background-color: var(--hover-primary-color);
-      color: var(--text-color)fff;
-      border: 3px solid var(--text-color);
+      background-color: red;
+      color: #ffffff;
     }
   }
 
   &.ant-btn-secondary {
-    background-color: var(--button-secondary-color);
+    background-color: #ffffff;
+    border: #000000;
+    color: #000000;
     &.ant-btn-secondary:hover {
-      background-color: var(--hover-secondary-color);
-      color: var(--text-color)fff;
+      background-color: #dadada;
+      color: #ffffff;
     }
   }
 `;

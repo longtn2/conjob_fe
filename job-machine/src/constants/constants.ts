@@ -26,8 +26,8 @@ export const LOADING = "LOADING";
 export const IS_AUTHENTICATING = "IS_AUTHENTICATING";
 export const SET_REQUEST_STATUS = "SET_REQUEST_STATUS";
 
-export const START_LOADING = "START_LOADING";
-export const FETCH_LOADING = "FETCH_LOADING";
+export const START_LOADING = 'START_LOADING';
+export const FETCH_LOADING = 'FETCH_LOADING';
 
 export const dataSignIn: Data = {
   title: "Sign In",
@@ -131,14 +131,22 @@ export const columns = [
 export const COLOR = 'linear-gradient(180deg, #C5091F 0%, #870413 100%)';
 
 export const PATH_URL_ROUTER = {
-  login: "/login",
-  home: "/",
-  post: "/post",
-  category: "/category",
-  historyVideo: "/history",
-}
+  login: '/login',
+  home: '/',
+  post: '/post',
+  category: '/category',
+  historyVideo: '/history',
+};
 
 export const PATH_URL_AUTH_API = {
   login: 'api/v1/auth/login',
   logout: 'api/v1/auth/logout',
-}
+  refreshToken: 'api/v1/auth/refresh',
+};
+
+export const CONSTANT_COOKIES = {
+  token: 'token',
+  refreshToken: 'refreshToken',
+};
+
+
