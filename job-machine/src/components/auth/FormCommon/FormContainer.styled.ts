@@ -34,6 +34,6 @@ export const ContainerForm = styled.div`
     height: 40px;
   }
   .social-icons a:hover {
-    background-color: #face;
+    background-color: #ccc;
   }
 `;

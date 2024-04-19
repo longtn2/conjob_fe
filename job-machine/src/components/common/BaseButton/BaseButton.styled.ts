@@ -8,23 +8,59 @@ export const CustomButton = styled(AntdButton)`
   padding: 0.5rem;
   gap: 0.3rem;
   transition-duration: 0.3s;
-  color: #fff;
+  outline: none;
+  border: none;
+
+  &.btn-delete{
+    background-color: var(--button-primary-color) !important;
+    color: var(--text-color) !important;
+  }
+  &.btn-delete:hover {
+    background-color: var(--hover-primary-color) !important;
+    color: var(--text-color) !important;
+  }
+  &.btn-accept{
+    background-color: var(--button-secondary-color) !important;
+    color: var(--text-color) !important;
+  }
+  &.btn-accept:hover {
+    background-color: var(--hover-secondary-color) !important;
+    color: var(--text-color) !important;
+  }
+  &.btn-reset{
+    background-color: var(---container-color) !important;
+    color: var(--text-color-btn) !important;
+  }
+  &.btn-reset:hover {
+    background-color: var(--border-color) !important;
+    color: var(--text-color) !important;
+  }
+  &.btn-find{
+    background-color: var(--button-secondary-color) !important;
+    color: var(--text-color) !important;
+  }
+  &.btn-find:hover {
+    background-color: var(--hover-secondary-color) !important;
+    color: var(--text-color) !important;
+  }
+  color: var(--text-color);
   .ant-btn {
-    border: 5px solid #fff;
+    border: 5px solid var(--text-color);
   }
   &.ant-btn-primary {
-    background-color: #b71c1c;
+    background-color: var(--button-primary-color);
     &.ant-btn-primary:hover {
-      background-color: #ff5722;
+      background-color: red;
       color: #ffffff;
-      border: 3px solid #ffffff;
     }
   }
 
   &.ant-btn-secondary {
-    background-color: #18b528;
+    background-color: #ffffff;
+    border: #000000;
+    color: #000000;
     &.ant-btn-secondary:hover {
-      background-color: #50b528;
+      background-color: #dadada;
       color: #ffffff;
     }
   }

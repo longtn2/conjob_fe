@@ -10,12 +10,12 @@ import {
 import Slider from 'antd/es/layout/Sider';
 import { ContainerSider } from './Content.styled';
 import { PATH_URL_ROUTER } from '@/constants/constants';
-
+ 
 const SliderComponent = () => {
   const navigator = useNavigate();
   const { pathname } = useLocation();
   const page = pathname.replace('/', '');
-
+ 
   const getMenuStyle = (key: string) => {
     return page === key
       ? {
@@ -24,7 +24,7 @@ const SliderComponent = () => {
         }
       : {};
   };
-
+ 
   return (
     <ContainerSider>
       <Slider
@@ -106,5 +106,5 @@ const SliderComponent = () => {
     </ContainerSider>
   );
 };
-
+ 
 export default SliderComponent;

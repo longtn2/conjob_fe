@@ -12,7 +12,7 @@ import {
   logout,
   registerFail,
   registerSuccess,
-} from '../actions/authAction';
+} from '@/redux/actions/authAction';
 import { AuthApi } from '@/api/auth/AuthApi';
 
 function* loginSaga(action: LoginSuccessAction): SagaIterator {
@@ -28,9 +28,9 @@ function* loginSaga(action: LoginSuccessAction): SagaIterator {
 }
 
 function* registerSaga(action: RegisterSuccessAction): SagaIterator {
+
   try {
     const { name, email, password } = action.payload;
-
     const response = yield call(fakeCallApiRegister, {
       name,
       email,

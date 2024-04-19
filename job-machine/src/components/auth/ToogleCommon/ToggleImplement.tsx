@@ -1,5 +1,4 @@
 import { Typography } from 'antd';
-
 import { useEffect, useState } from 'react';
 import { ContainerToogleImplement } from './ToogleImplement.styled';
 import { DataToogle, TypeActivePanel } from '@/interfaces/interfaces';
@@ -29,8 +28,8 @@ const ToogleImplement = ({
   }, [state]);
   return (
     <ContainerToogleImplement
-      className={`${state === SIGN_IN ? 'toogle-left' : 'toogle-right'} ${
-        isActive || 'active'
+      className={`${state === SIGN_IN ? "toogle-left" : "toogle-right"} ${
+        isActive || "active"
       }`}
     >
       <Title>{toogleData.titleToogle}</Title>
