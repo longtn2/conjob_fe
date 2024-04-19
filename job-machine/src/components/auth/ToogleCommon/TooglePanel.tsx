@@ -1,7 +1,7 @@
 import ToogleImplement from './ToogleImplement';
 import { ContainerToogle } from './Toogle.styled';
-import { TypeActivePanel } from 'interfaces/interfaces';
-import { SIGN_IN } from 'constants/constants';
+import { SIGN_IN } from '@/constants/constants';
+import { TypeActivePanel } from '@/interfaces/interfaces';
 
 interface TooglePanelProps {
   returnTypePanel: () => TypeActivePanel;

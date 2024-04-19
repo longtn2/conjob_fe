@@ -1,4 +1,4 @@
-import { EMAIL_REGEX } from 'constants/constants';
+import { EMAIL_REGEX } from '@/constants/constants';
 import * as yup from 'yup';
 
 export const schemaRegister = yup.object().shape({

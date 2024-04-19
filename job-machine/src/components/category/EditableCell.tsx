@@ -1,6 +1,5 @@
+import { CategoryData } from '@/interfaces/interfaces';
 import { Form, Input, InputNumber } from 'antd';
-import { CategoryData } from 'interfaces/interfaces';
-
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
   dataIndex: string;

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { StyledCard } from './Card.styled';
 import { CardType } from 'antd/es/card/Card';
-import { BaseButton } from '../BaseButton/BaseButton';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 
 interface CardProps {
   children?: React.ReactNode;

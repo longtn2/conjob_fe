@@ -1,4 +1,4 @@
-import { AuthState } from '../interfaces';
+import { AuthState } from '@/interfaces';
 
 export const authInitialState: AuthState = {
   user: null,
