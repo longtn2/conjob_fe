@@ -62,9 +62,7 @@ export const BaseArticle: React.FC<BaseArticleProps> = ({
               </DateTime>
             </AuthorWrapper>
           </Col>
-          <Col>
-            <BaseCheckbox className="btn-checkbox" />
-          </Col>
+          <Col>{/* <BaseCheckbox className="btn-checkbox" /> */}</Col>
         </Flex>
       </Header>
       <InfoWrapper>
@@ -72,10 +70,19 @@ export const BaseArticle: React.FC<BaseArticleProps> = ({
           <Title>{title}</Title>
         </InfoHeader>
         <p id="read-more">
+<<<<<<< Updated upstream
           {getTruncatedDescription(description, isShowFullText)}
         </p>
         <p onClick={() => toggleReadMore()} className="read-more">
           {isShowFullText ? "Ẩn bớt" : "Xem thêm"}
+=======
+          {isShowFullText ? description : getTruncatedDescription(description)}
+          {description.length > 200 && (
+            <p onClick={toggleReadMore} style={{ color: "#619cff" }}>
+              {isShowFullText ? "Ẩn bớt" : "Xem thêm"}
+            </p>
+          )}
+>>>>>>> Stashed changes
         </p>
       </InfoWrapper>
     </Wrapper>

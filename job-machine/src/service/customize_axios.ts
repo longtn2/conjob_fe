@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import axios, { AxiosError } from 'axios';
 import { ApiError } from '@/api/ApiError';
 
@@ -24,6 +25,26 @@ httpApi.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+=======
+import axios, { AxiosError } from "axios";
+import { ApiError } from "../api/ApiError";
+
+const readToken = "";
+
+export const httpApi = axios.create({
+  baseURL: "",
+});
+
+export const sightengineApi = axios.create({
+  baseURL: "",
+});
+
+httpApi.interceptors.request.use((config) => {
+  const headers = config.headers;
+  headers["Authorization"] = `Bearer ${readToken}`;
+  return config;
+});
+>>>>>>> Stashed changes
 
 httpApi.interceptors.response.use(undefined, (error: AxiosError) => {
   if (error.response) {
@@ -36,3 +57,13 @@ httpApi.interceptors.response.use(undefined, (error: AxiosError) => {
     throw new ApiError<ApiErrorData>(error.message, undefined);
   }
 });
+<<<<<<< Updated upstream
+=======
+export interface ApiErrorData {
+  message: string;
+}
+export interface ImageUrlItem {
+  img: string;
+}
+
+>>>>>>> Stashed changes

@@ -128,6 +128,7 @@ export const columns = [
   },
 ];
 
+<<<<<<< Updated upstream
 export const COLOR = 'linear-gradient(180deg, #C5091F 0%, #870413 100%)';
 
 export const PATH_URL_ROUTER = {
@@ -142,3 +143,15 @@ export const PATH_URL_AUTH_API = {
   login: 'api/v1/auth/login',
   logout: 'api/v1/auth/logout',
 }
+=======
+export const COLOR = "linear-gradient(180deg, #C5091F 0%, #870413 100%)";
+
+export const SIGHTENGINE = {
+  workflow: "wfl_g6c1q8D6B2qzr8qeAjRly",
+  api_user: "1183910546",
+  api_secret: "FCjC8gn4YuDJwDomf2LuppXBKPrjyNMW",
+};
+
+export const URL_IMG_API_SIGHTENGINE =
+  "https://api.sightengine.com/1.0/check-workflow.json";
+>>>>>>> Stashed changes

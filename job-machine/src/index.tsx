@@ -14,9 +14,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
+<<<<<<< Updated upstream
     <React.StrictMode>
       <App />
     </React.StrictMode>
+=======
+    <BrowserRouter>
+      {/* <React.StrictMode> */}
+        <App />
+      {/* </React.StrictMode> */}
+    </BrowserRouter>
+>>>>>>> Stashed changes
   </Provider>
 );
 

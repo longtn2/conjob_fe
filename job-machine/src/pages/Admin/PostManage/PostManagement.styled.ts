@@ -84,4 +84,8 @@ export const CardCustom = styled(Card)`
   .search {
     margin-top: 10px;
   }
+
+  :where(.css-dev-only-do-not-override-1kuana8).ant-tag.ant-tag-red {
+    border-radius: 10px;
+  }
 `;
