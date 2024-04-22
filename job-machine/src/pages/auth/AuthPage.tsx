@@ -19,8 +19,8 @@ const AuthPage = () => {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ['Montserrat', 'Roboto'],
-      },
+        families: ['Montserrat', 'Roboto']
+      }
     });
   }, []);
 

@@ -14,9 +14,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
+<<<<<<< HEAD
     <React.StrictMode>
       <App />
     </React.StrictMode>
+=======
+    <BrowserRouter>
+      {/* <React.StrictMode> */}
+        <App />
+      {/* </React.StrictMode> */}
+    </BrowserRouter>
+>>>>>>> 13ecb2a603866ebde2c6ffc92728890f619f0dda
   </Provider>
 );
 
