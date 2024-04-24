@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 import { FormLoginType, FormRegisterType } from './interfaces';
+import { GetProp, UploadProps } from 'antd';
 export interface User {
   email: string;
   password: string;
@@ -74,3 +75,6 @@ export interface axiosApi {
   message: string;
   user: FormRegisterType;
 }
+
+
+export type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];

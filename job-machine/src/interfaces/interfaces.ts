@@ -55,3 +55,12 @@ export type TypeActivePanel = 'sign-in' | 'sign-up';
 export type Severity = 'success' | 'error' | 'info' | 'warning';
 
 export type Dimension = number | string;
+
+
+export interface ProfileAdminType {
+  userName: string,
+  firstName: string,
+  lastName: string,
+  company: string,
+  email: string,
+}

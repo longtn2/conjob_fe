@@ -1,5 +1,5 @@
 import { TableColumnsType } from 'antd';
-import { CategoryData, Data, DataToogle } from '@/interfaces/interfaces';
+import { CategoryData, Data, DataToogle, ProfileAdminType } from '@/interfaces/interfaces';
 export const SIGNIN = 'SIGNIN';
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNUP = 'SIGNUP';
@@ -136,6 +136,7 @@ export const PATH_URL_ROUTER = {
   post: '/post',
   category: '/category',
   historyVideo: '/history',
+  profile: '/profile'
 };
 
 export const PATH_URL_AUTH_API = {
@@ -149,4 +150,11 @@ export const CONSTANT_COOKIES = {
   refreshToken: 'refreshToken',
 };
 
+export const PROFILE_ADMIN: ProfileAdminType = {
+  userName: 'Admin Đat',
+  firstName: 'Ngô',
+  lastName: 'Đức Phan Tiến Đạt',
+  company: 'Rikkeisoft',
+  email: 'kelvin.kiprop96@gmail.com',
+}
 

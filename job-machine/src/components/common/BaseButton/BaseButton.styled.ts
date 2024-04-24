@@ -49,12 +49,12 @@ export const CustomButton = styled(AntdButton)`
   }
   &.ant-btn-primary {
     background-color: var(--button-primary-color);
+    color: #ffffff;
     &.ant-btn-primary:hover {
       background-color: red;
       color: #ffffff;
     }
   }
-
   &.ant-btn-secondary {
     background-color: #ffffff;
     border: #000000;
@@ -64,4 +64,5 @@ export const CustomButton = styled(AntdButton)`
       color: #ffffff;
     }
   }
+
 `;

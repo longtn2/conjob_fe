@@ -1,4 +1,4 @@
-import { axiosApi } from '@/interfaces/index';
+import { FileType, axiosApi } from '@/interfaces/index';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -88,4 +88,25 @@ export const handleErrorShow = (error: any) => {
 
 export const handleSuccessShow = (response: AxiosResponse<axiosApi>) => {
   const { message } = handleSuccess(response);
+};
+
+
+
+export const getBase64 = (img: FileType, callback: (url: string) => void) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result as string));
+  reader.readAsDataURL(img);
+};
+
+export const base64ToFile = (base64: string, filename: string, mimeType: string): File => {
+  const arr = base64.split(',');
+  const data = arr[1];
+  const byteString = atob(data);
+  const buffer = new ArrayBuffer(byteString.length);
+  const view = new Uint8Array(buffer);
+  for (let i = 0; i < byteString.length; i++) {
+    view[i] = byteString.charCodeAt(i);
+  }
+  const file = new File([buffer], filename, { type: mimeType });
+  return file;
 };

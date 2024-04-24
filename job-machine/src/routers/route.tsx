@@ -5,6 +5,8 @@ import LayoutApp from '@/layout/Layout';
 import Category from '@/pages/Admin/Category/Category';
 import { PATH_URL_ROUTER } from '@/constants/constants';
 import PostContent from '@/pages/Admin/PostManage/Post';
+import AdminProfile from '@/pages/Admin/Profile/AdminProfile';
+
 
 
 const AdminLayout = () => {
@@ -14,13 +16,13 @@ const AdminLayout = () => {
 ;
 
 export const router = createBrowserRouter([
-  {
-    path: PATH_URL_ROUTER.login,
-    element: <AuthPage />,
-  },
-  {
-    element: <AdminLayout />,
-    children: [
+  // {
+  //   path: PATH_URL_ROUTER.login,
+  //   element: <AuthPage />,
+  // },
+  // {
+  //   element: <AdminLayout />,
+  //   children: [
       {
         element: <LayoutApp />,
         path: PATH_URL_ROUTER.home,
@@ -33,8 +35,12 @@ export const router = createBrowserRouter([
             element: <PostContent />,
             path: PATH_URL_ROUTER.post,
           },
+          {
+            element: <AdminProfile/>,
+            path: PATH_URL_ROUTER.profile,
+          },
         ],
       },
-    ],
-  },
+  //   ],
+  // },
 ]);
