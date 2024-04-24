@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 import { FormLoginType, FormRegisterType, InforPost } from './interfaces';
+import { GetProp, UploadProps } from 'antd';
 export interface User {
   email: string;
   password: string;
@@ -118,3 +119,5 @@ export interface DeleteFailureAction
   extends Action<PostActionTypes.DELETE_POST_FAILURE> {
   payload: InforPost;
 }
+
+export type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];

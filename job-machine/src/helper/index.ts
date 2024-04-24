@@ -1,4 +1,10 @@
-import { FormLoginType, FormRegisterType } from '@/interfaces/interfaces';
+import {
+  FormLoginType,
+  FormRegisterType,
+  MessageStatusType
+} from '@/interfaces/interfaces';
+import { getCookie } from '@/utils/utils';
+import { message } from 'antd';
 import dayjs from 'dayjs';
 
 export const fakeCallApi = ({
@@ -26,9 +32,95 @@ export const fakeCallApiRegister = ({
   });
 };
 
+export const getMessageStatus = (
+  messageResponse: string,
+  status: MessageStatusType
+) => {
+  message.open({
+    type: status,
+    content: messageResponse
+  });
+};
+
+export const getTokenAsync = async () => {
+  const token = await getCookie('token');
+  if (token) {
+    return token;
+  } else {
+    throw new Error('Token not found');
+  }
+};
+
 export const formatDayjs = (
   time: dayjs.Dayjs | string | undefined,
   format: string
 ): string => {
   return dayjs(time).format(format);
+};
+
+export const formatConvert = (values: string) => {
+  values.replace('T', '');
+};
+
+export const getStatusPost = (
+  isDeleted: boolean,
+  isActive: boolean
+): string => {
+  if (isActive) {
+    return 'active';
+  } else if (isDeleted) {
+    return 'reject';
+  } else {
+    return 'noAction';
+  }
+};
+
+export const statusCode = {
+  active: {
+    message: 'Được Duyệt',
+    color: '#52C41A'
+  },
+  reject: {
+    message: 'Vi phạm',
+    color: '#FF4D4F'
+  },
+  noAction: {
+    message: 'Chưa duyệt',
+    color: '#FF85C0'
+  }
+};
+
+export const jobTypeStatusCode = {
+  remote: {
+    message: 'REMOTE',
+    color: '#007bff'
+  },
+  fulltime: {
+    message: 'FULL TIME',
+    color: '#ffc107'
+  },
+  parttime: {
+    message: 'Part Time',
+    color: '#563dc1'
+  },
+  onsite: {
+    message: 'ONSITE',
+    color: '#28a745'
+  },
+  hybrid: {
+    message: 'Hybrid',
+    color: '#cfe2f3'
+  },
+  freelance: {
+    message: 'Freelancer',
+    color: '#03AC13'
+  }
+};
+
+export const getJobTypeStatusCode = (jobType: string | undefined) => {
+  if (jobType) {
+    return jobTypeStatusCode[jobType] || '';
+  } else {
+    return { message: '', color: '' };
+  }
 };

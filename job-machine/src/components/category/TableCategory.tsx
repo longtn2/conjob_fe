@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { TableProps } from 'antd';
 import { Form, Popconfirm, Table } from 'antd';
-import { originData } from '@/constants/constants';
+import { originData } from '@/api/mock/category.api';
 import { CategoryData } from '@/interfaces/interfaces';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 import EditableCell from './EditableCell';
@@ -12,26 +12,28 @@ const TableCategory: React.FC = () => {
   const [editingKey, setEditingKey] = useState('');
 
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: CategoryData[]) => {
-    },
+    onChange: (
+      selectedRowKeys: React.Key[],
+      selectedRows: CategoryData[]
+    ) => {},
     getCheckboxProps: (record: CategoryData) => ({
       disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
+      name: record.name
+    })
   };
 
   const isEditing = (record: CategoryData) => record.key === editingKey;
 
-  const edit = (record: Partial<CategoryData> & { key: React.Key }) => {
+  const onEdit = (record: Partial<CategoryData> & { key: React.Key }) => {
     form.setFieldsValue({ name: '', age: '', address: '', ...record });
     setEditingKey(record.key as string);
   };
 
-  const cancel = () => {
+  const onCancel = () => {
     setEditingKey('');
   };
 
-  const save = async (key: React.Key) => {
+  const onSave = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as CategoryData;
 
@@ -41,7 +43,7 @@ const TableCategory: React.FC = () => {
         const item = newData[index];
         newData.splice(index, 1, {
           ...item,
-          ...row,
+          ...row
         });
         setData(newData);
         setEditingKey('');
@@ -50,8 +52,7 @@ const TableCategory: React.FC = () => {
         setData(newData);
         setEditingKey('');
       }
-    } catch (errInfo) {
-    }
+    } catch (errInfo) {}
   };
   const handleDelete = (key: React.Key) => {
     const newData = originData.filter(item => item.key !== key);
@@ -62,19 +63,19 @@ const TableCategory: React.FC = () => {
       title: 'Name',
       dataIndex: 'name',
       width: '25%',
-      editable: true,
+      editable: true
     },
     {
       title: 'Description',
       dataIndex: 'description',
       width: '40%',
-      editable: true,
+      editable: true
     },
     {
       title: 'Count',
       dataIndex: 'count',
       width: '10%',
-      editable: false,
+      editable: false
     },
     {
       title: 'Action',
@@ -85,12 +86,12 @@ const TableCategory: React.FC = () => {
         return editable ? (
           <span>
             <BaseButton
-              onClick={() => save(record.key)}
+              onClick={() => onSave(record.key)}
               style={{ marginRight: 8 }}
             >
               Save
             </BaseButton>
-            <Popconfirm title='Sure to cancel?' onConfirm={cancel}>
+            <Popconfirm title="Sure to cancel?" onConfirm={onCancel}>
               <BaseButton>Cancel</BaseButton>
             </Popconfirm>
           </span>
@@ -98,22 +99,22 @@ const TableCategory: React.FC = () => {
           <span>
             <BaseButton
               disabled={editingKey !== ''}
-              onClick={() => edit(record)}
+              onClick={() => onEdit(record)}
               style={{ marginRight: '8px' }}
             >
               Edit
             </BaseButton>
 
             <Popconfirm
-              title='Sure to delete'
+              title="Sure to delete"
               onConfirm={() => handleDelete(record.key)}
             >
               <BaseButton disabled={editingKey !== ''}>Delete</BaseButton>
             </Popconfirm>
           </span>
         );
-      },
-    },
+      }
+    }
   ];
 
   const mergedColumns: TableProps['columns'] = columns.map(col => {
@@ -127,8 +128,8 @@ const TableCategory: React.FC = () => {
         inputType: 'text',
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record),
-      }),
+        editing: isEditing(record)
+      })
     };
   });
 
@@ -137,19 +138,19 @@ const TableCategory: React.FC = () => {
       <Table
         components={{
           body: {
-            cell: EditableCell,
-          },
+            cell: EditableCell
+          }
         }}
         rowSelection={{
           type: 'checkbox',
-          ...rowSelection,
+          ...rowSelection
         }}
         bordered
         dataSource={data}
         columns={mergedColumns}
-        rowClassName='editable-row'
+        rowClassName="editable-row"
         pagination={{
-          onChange: cancel,
+          onChange: onCancel
         }}
       />
     </Form>

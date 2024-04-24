@@ -21,7 +21,7 @@ const TooglePanel = ({ handleChange, returnTypePanel }: TooglePanelProps) => {
           isActive={state === SIGN_IN}
         />
         <ToogleImplement
-          state='sign-up'
+          state="sign-up"
           handleClick={onChange}
           isActive={state === SIGN_IN}
         />

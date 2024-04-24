@@ -1,11 +1,3 @@
-const avatar1 =
-  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
-const avatar2 =
-  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
-const avatar3 =
-  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
-const avatar4 =
-  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
 interface RejectReason {
   text: string;
   reject_prob: number;
@@ -72,3 +64,34 @@ export const getNews = (): Promise<Post[]> => {
     }, 1000);
   });
 };
+const avatar1 =
+  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
+const avatar2 =
+  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
+const avatar3 =
+  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
+const avatar4 =
+  'https://videos.pexels.com/video-files/15921892/15921892-uhd_3840_2160_50fps.mp4';
+interface RejectReason {
+  text: string;
+  reject_prob: number;
+  reject_reason: {
+    text: string;
+  };
+}
+
+export interface PostStatus {
+  action?: string;
+  rejectReason: RejectReason;
+}
+
+export interface Post {
+  key: string;
+  id?: string;
+  avatarUrl: string;
+  author: string;
+  title: string;
+  date: number;
+  text: string;
+  img: string;
+}

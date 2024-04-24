@@ -1,4 +1,5 @@
-import { axiosApi } from '@/interfaces/index';
+import { REGEX_BASE_64 } from '@/constants/constants';
+import { FileType, axiosApi } from '@/interfaces/index';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -54,7 +55,7 @@ export const handleError = (error: any) => {
       const { errors } = data;
 
       if (Array.isArray(errors)) {
-        if (errors?.length > 0) {
+        if (errors.length > 0) {
           const { error } = errors[0];
           return { status, message, error };
         }
@@ -88,4 +89,38 @@ export const handleErrorShow = (error: any) => {
 
 export const handleSuccessShow = (response: AxiosResponse<axiosApi>) => {
   const { message } = handleSuccess(response);
+};
+
+export const getBase64 = (img: FileType, callback: (url: string) => void) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result as string));
+  reader.readAsDataURL(img);
+};
+
+export const convertUrlToBase64 = (url: string) => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'blob';
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = (reader.result as string).split(',')[1];
+          resolve(base64String);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(xhr.response);
+      } else {
+        reject(new Error('Failed to load URL'));
+      }
+    };
+    xhr.onerror = reject;
+    xhr.send();
+  });
+};
+
+export const isBase64String = str => {
+  return REGEX_BASE_64.test(str);
 };
