@@ -1,17 +1,16 @@
-import styled from "styled-components";
-import { Typography } from "antd";
+import styled from 'styled-components';
+import { Typography } from 'antd';
 
 export const Header = styled.div`
-  height: 5.5rem;
-  margin-left: 1.5625rem;
+  left: 0;
   display: flex;
   align-items: center;
+  margin-left: 20px;
+  margin-bottom: -10px;
 `;
 
 export const AuthorWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 0.625rem;
+  left: 0;
 `;
 
 export const Wrapper = styled.div`
@@ -21,22 +20,18 @@ export const Wrapper = styled.div`
   position: relative;
   border-radius: 2px;
   transition: 0.3s;
-
-  .read-more {
-    color: var(--text-color-btn) !important;
-  }
+  overflow: visible;
 `;
 
 export const Author = styled.div`
-  font-size: 20px;
+  font-size: var(--fs-title);
   font-weight: 500;
-  color: #1f1f1f;
+  color: var(--text-color-dark);
   line-height: 1.5625rem;
+  width: 200px;
 `;
 
 export const InfoWrapper = styled.div`
-  padding: 1.25rem;
-
   @media only screen and (min-width: 1200px) {
     padding: 1rem;
   }
@@ -60,20 +55,16 @@ export const InfoHeader = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 16px;
+  font-size: var(--fs-title);
   font-weight: 500;
-  width: 80%;
+  width: 100%;
   line-height: 1.375rem;
-  color: #000;
-  margin-top: -20px;
-
-  @media only screen and (max-width: 768px) {
-    font-size: 24px;
-  }
+  color: var(--text-color-dark);
+  margin-top: -30px;
 `;
 
 export const DateTime = styled(Typography.Text)`
-  font-size: 16px;
+  font-size: 14px;
   color: #ccc;
   line-height: 1.25rem;
   margintop: 3rem;
@@ -81,12 +72,9 @@ export const DateTime = styled(Typography.Text)`
 `;
 
 export const Description = styled.div`
-  font-size: 16px;
-  color: #ccc;
-
-  @media only screen and (min-width: 1200px) {
-    font-size: 18px;
-  }
+  font-size: var(--fs-text);
+  margin-top: -20px;
+  text-align: justify;
 `;
 
 export const TagsWrapper = styled.div`

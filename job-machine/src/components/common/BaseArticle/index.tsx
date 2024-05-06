@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BaseAvatar } from "@/components/common/BaseAvatar/BaseAvatar";
+import React, { useState } from 'react';
+import { BaseAvatar } from '@/components/common/BaseAvatar/BaseAvatar';
 import {
   Header,
   Author,
@@ -9,18 +9,20 @@ import {
   InfoWrapper,
   Title,
   Wrapper,
-} from "./BaseArticle.styled";
-import { BaseCheckbox } from "@/components/common/BaseCheckbox/BaseCheckbox";
-import { Col, Flex } from "antd";
-
+  Description
+} from './BaseArticle.styled';
+import { Col, Row } from 'antd';
 export interface BaseArticleProps {
   author?: React.ReactNode;
   imgUrl?: string;
   title: string;
-  date: number;
+  date?: string;
   description: string;
   avatar?: string;
   className?: string;
+  postId?: string;
+  created_at: Date | string;
+  col: number;
 }
 
 export const BaseArticle: React.FC<BaseArticleProps> = ({
@@ -29,53 +31,48 @@ export const BaseArticle: React.FC<BaseArticleProps> = ({
   description,
   author,
   avatar,
-  className,
+  created_at,
+  col
 }) => {
   const [isShowFullText, setIsShowFullText] = useState(false);
 
   const getTruncatedDescription = (
     description: string,
     isShowFullText: boolean
-  ) =>
-    isShowFullText || !(description.length > 200)
-      ? description
-      : `${description.substring(0, 200)}...`;
-
-  const toggleReadMore = () => {
-    return setIsShowFullText(!isShowFullText);
+  ) => {
+    if (col === 6 && !isShowFullText && description?.length > 50) {
+      return `${description.substring(0, 50)}  ... `;
+    }
+    return description;
   };
-  
 
   return (
-    <Wrapper className={className}>
-      <Header>
-        {!!avatar && <BaseAvatar src={avatar} alt="author" size={60} />}
-        <Flex>
-          <Col>
-            <AuthorWrapper>
-              {author && <Author>{author}</Author>}
-              <DateTime>
-                {new Intl.DateTimeFormat("en-US", {
-                  dateStyle: "medium",
-                }).format(new Date(date))}
-              </DateTime>
-            </AuthorWrapper>
+    <Wrapper>
+      <Header className="header-card">
+        <Row>
+          {col !== 6 ? (
+            <Col span={6}>
+              {!!avatar && <BaseAvatar src={avatar} alt="author" size={60} />}
+            </Col>
+          ) : (
+            <Col span={1}></Col>
+          )}
+
+          <Col span={10}>
+            <AuthorWrapper>{author && <Author>{author}</Author>}</AuthorWrapper>
+            <DateTime>{created_at.toString().split('T')[0]}</DateTime>
           </Col>
-          <Col>
-            <BaseCheckbox className="btn-checkbox" />
-          </Col>
-        </Flex>
+        </Row>
       </Header>
       <InfoWrapper>
         <InfoHeader>
-          <Title>{title}</Title>
+          <Title className="card-title">
+            {getTruncatedDescription(title, isShowFullText)}
+          </Title>
         </InfoHeader>
-        <p id="read-more">
+        <Description className={col === 6 ? 'md-des' : 'xs-des'}>
           {getTruncatedDescription(description, isShowFullText)}
-        </p>
-        <p onClick={() => toggleReadMore()} className="read-more">
-          {isShowFullText ? "Ẩn bớt" : "Xem thêm"}
-        </p>
+        </Description>
       </InfoWrapper>
     </Wrapper>
   );

@@ -54,7 +54,7 @@ export const handleError = (error: any) => {
       const { errors } = data;
 
       if (Array.isArray(errors)) {
-        if (errors.length > 0) {
+        if (errors?.length > 0) {
           const { error } = errors[0];
           return { status, message, error };
         }

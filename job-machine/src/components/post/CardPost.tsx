@@ -1,69 +1,71 @@
-import { Flex, Popconfirm, Typography } from "antd";
-import { BaseSelect, Option } from "@/components/common/BaseSelect";
-import { BaseButton } from "@/components/common/BaseButton/BaseButton";
-import { CardCustom } from "@/pages/Admin/PostManage/PostManagement.styled";
-import { BaseInput } from "@/components/common/BaseInput/index";
+import { Col, Flex, Form } from 'antd';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
+import { BaseInput } from '@/components/common/BaseInput/index';
+import { RedoOutlined } from '@ant-design/icons';
+import { DatePicker } from 'antd';
+interface FilterPostProps {
+  handleFilter: (filter: string) => void;
+}
 
-const FilterPost = () => {
+const FilterPost: React.FC<FilterPostProps> = ({ handleFilter }) => {
+  const [form] = Form.useForm();
+
+  const { RangePicker } = DatePicker;
+
+  const handleSearchClick = (value: any) => {
+    handleFilter(value);
+  };
+  const onReset = () => {
+    form.resetFields();
+  };
+
   return (
     <>
-      <CardCustom
-        style={{ marginTop: "25px", marginRight: "10px" }}
-        size="small"
+      <Form
+        form={form}
+        layout="horizontal"
+        initialValues={{ actionType: 'all' }}
+        onFinish={handleSearchClick}
+        style={{ width: '100%', alignItems: 'center' }}
+        className="filter-section"
       >
-        <Flex gap={10} style={{ justifyContent: "center" }}>
-          <Flex>
-            <Popconfirm title={"Bạn có chắc muốn xoá không?"}>
-              <BaseButton size="large" className="btn-delete">
-                Xóa
-              </BaseButton>
-            </Popconfirm>
+        <Col>
+          <Flex style={{ justifyContent: 'space-between' }}>
+            <Col span={3}>
+              <Form.Item name="reset">
+                <BaseButton
+                  size="large"
+                  className="btn-reset"
+                  onClick={onReset}
+                >
+                  <RedoOutlined />
+                </BaseButton>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="titleContent" className="input-search">
+                <BaseInput
+                  placeholder="Nhập tên người dùng, nội dung bài..."
+                  style={{ width: '100%', height: '40px', marginLeft: '-58px' }}
+                  value="1000"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item name="datetime">
+                <RangePicker showTime className="search-date" />
+              </Form.Item>
+            </Col>
+            <Col span={3}>
+              <Form.Item name="search">
+                <BaseButton size="large" className="btn-find" htmlType="submit">
+                  Tìm kiếm
+                </BaseButton>
+              </Form.Item>
+            </Col>
           </Flex>
-          <Flex>
-            <BaseButton size="large" className="btn-accept">
-              Duyệt
-            </BaseButton>
-          </Flex>
-        </Flex>
-      </CardCustom>
-      <CardCustom
-        style={{ marginTop: "25px", marginRight: "10px" }}
-        size="small"
-      >
-        <Flex vertical gap="30px">
-          <Flex vertical align="flex-start" gap={10}>
-            <Typography.Title level={4} className="search">Tìm kiếm</Typography.Title>
-            <BaseInput placeholder="Nhập tên người dùng, nội dung bài..." />
-            <Typography.Title level={5}>Loại nội dung</Typography.Title>
-            <Flex gap={10}>
-              <BaseSelect
-                defaultValue="Tất cả"
-                allowClear
-                style={{ height: "40px", width: "110px" }}
-              >
-                <Option value="all">Tuyển dụng</Option>
-                <Option value="week">Ứng tuyển</Option>
-              </BaseSelect>
-              <BaseSelect
-                defaultValue="Tất cả"
-                allowClear
-                style={{ height: "40px", width: "140px" }}
-              >
-                <Option value="all">Video đã duyệt</Option>
-                <Option value="week">Video đã xoá</Option>
-              </BaseSelect>
-            </Flex>
-            <Flex gap={10} justify="center">
-              <BaseButton size="large" className="btn-reset">
-                Đặt lại 
-              </BaseButton>
-              <BaseButton size="large" className="btn-find">
-                Tìm kiếm
-              </BaseButton>
-            </Flex>
-          </Flex>
-        </Flex>
-      </CardCustom>
+        </Col>
+      </Form>
     </>
   );
 };

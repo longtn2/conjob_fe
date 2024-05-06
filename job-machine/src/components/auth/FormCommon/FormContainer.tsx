@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Typography, Form, Input } from 'antd';
-import { yupResolver } from '@hookform/resolvers/yup';
 import FormIcon from './FormIcon';
 import { ContainerForm } from './FormContainer.styled';
 import { WrapperFormItem } from './WrapperFormItem.styled';
@@ -12,10 +11,15 @@ import {
   Data,
   FormLoginType,
   FormRegisterType,
-  TypeActivePanel,
+  TypeActivePanel
 } from '@/interfaces/interfaces';
 import { schemaLogin, schemaRegister } from '@/utils/yup';
-import { PATH_URL_ROUTER, SIGN_IN, dataSignIn, dataSignUp } from '@/constants/constants';
+import {
+  PATH_URL_ROUTER,
+  SIGN_IN,
+  dataSignIn,
+  dataSignUp
+} from '@/constants/constants';
 import { AuthApi } from '@/api/auth/AuthApi';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 import { registerRequest } from '@/redux/actions/authAction';
@@ -37,11 +41,8 @@ const FormContainer = ({ state }: FormContainerProps) => {
     defaultValues: {
       name: '',
       email: '',
-      password: '',
-    },
-    resolver: yupResolver<FormLoginType | FormRegisterType>(
-      state === SIGN_IN ? schemaLogin : schemaRegister
-    ),
+      password: ''
+    }
   });
   let timeoutId: NodeJS.Timeout;
 
@@ -69,7 +70,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
       const { email, password } = values;
       const valuesLogin = {
         email: email,
-        password: password,
+        password: password
       };
       await AuthApi.apiLogin(valuesLogin)
         .then((res: any) => {
@@ -84,8 +85,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
         })
         .finally(() => {
           setLoading(false);
-        })
-        ;
+        });
     } else {
       dispatch(registerRequest(values as FormRegisterType));
     }
@@ -95,7 +95,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
     <ContainerForm className={`${state}`}>
       <Form onFinish={handleSubmit(handleSubmitForm)}>
         <Title level={1}>{formData.title}</Title>
-        <span className='sub-title'>{formData.subTitle1}</span>
+        <span className="sub-title">{formData.subTitle1}</span>
         <FormIcon />
         <WrapperFormItem>
           {formData.fieldInput.map(value => (
@@ -106,7 +106,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
               render={({ field, fieldState }) => {
                 return (
                   <Form.Item
-                    validateStatus={fieldState.error?.message && 'error' }
+                    validateStatus={fieldState.error?.message && 'error'}
                     help={fieldState.error?.message || null}
                     style={{ padding: 0 }}
                   >
@@ -121,8 +121,12 @@ const FormContainer = ({ state }: FormContainerProps) => {
             />
           ))}
         </WrapperFormItem>
-        <a href='#a'>{formData.subTitle2}</a>
-        <BaseButton htmlType='submit' className='ant-btn-primary' loading={loading}>
+        <a href="#a">{formData.subTitle2}</a>
+        <BaseButton
+          htmlType="submit"
+          className="ant-btn-primary"
+          loading={loading}
+        >
           {formData.contentButton}
         </BaseButton>
       </Form>
