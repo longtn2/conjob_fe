@@ -1,8 +1,9 @@
 import { FormLoginType, FormRegisterType } from '@/interfaces/interfaces';
+import dayjs from 'dayjs';
 
 export const fakeCallApi = ({
   email,
-  password,
+  password
 }: FormLoginType): Promise<string> => {
   return new Promise((resolve, reject) => {
     resolve('Fake API response');
@@ -15,7 +16,7 @@ export const fakeCallApi = ({
 export const fakeCallApiRegister = ({
   name,
   email,
-  password,
+  password
 }: FormRegisterType): Promise<string> => {
   return new Promise((resolve, reject) => {
     resolve('Fake API register response');
@@ -23,4 +24,11 @@ export const fakeCallApiRegister = ({
       reject('Not required');
     }
   });
+};
+
+export const formatDayjs = (
+  time: dayjs.Dayjs | string | undefined,
+  format: string
+): string => {
+  return dayjs(time).format(format);
 };
