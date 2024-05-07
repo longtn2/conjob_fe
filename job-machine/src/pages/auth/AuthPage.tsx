@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FormContainer from '@/components/auth/FormCommon/FormContainer';
 import TooglePanel from '@/components/auth/ToogleCommon/TooglePanel';
 import { getCookie } from '@/utils/utils';
-import { PATH_URL_ROUTER, SIGN_IN, SIGN_UP } from '@/constants/constants';
+import { SIGN_IN, SIGN_UP, pathUrlRouter } from '@/constants/constants';
 const AuthPage = () => {
   const [typePanel, setTypePanel] = useState<TypeActivePanel>('sign-in');
   const handleChange = () => {
@@ -30,7 +30,7 @@ const AuthPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (token && refreshToken) {
-      navigate(PATH_URL_ROUTER.home);
+      navigate(pathUrlRouter.HOME);
     }
   }, []);
 

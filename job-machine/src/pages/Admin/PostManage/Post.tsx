@@ -4,9 +4,7 @@ import { ContainerPost, CardCustom } from './PostManagement.styled';
 import { BaseArticle } from '@/components/common/BaseArticle';
 import ActionBtn from '@/components/post/ActionBtn';
 import VideoPlayer from '@/components/post/VideoPlayer';
-import { BaseTag } from '@/components/common/BaseTag/index';
 import { CloseCircleOutlined } from '@ant-design/icons';
-import { EmptyPage } from '../EmptyPage';
 import { PostApi } from '@/api/post/PostApi';
 import { BasePagination } from '@/components/common/BasePagination/BasePagination';
 import { IQuery, InforPost, ICheckbox } from '@/interfaces/interfaces';
@@ -17,6 +15,8 @@ import FilterSection from '@/components/post/FilterSection';
 import BulkActions from '@/components/post/BulkActions';
 import { formatDayjs } from '@/helper';
 import { formatDate } from '@/constants/constants';
+import { BaseTag } from '@/components/common/BaseTag';
+import { EmptyPage } from '../EmptyPage';
 
 const PostContent: React.FC<ICheckbox> = () => {
   const [news, setNews] = useState<InforPost[] | null>(null);

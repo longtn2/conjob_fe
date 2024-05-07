@@ -47,9 +47,7 @@ export const Container = styled.div`
   }
 
   .ant-btn {
-    font-size: 12px;
     padding: 10px 45px;
-
     border-radius: 8px;
     font-weight: 600;
     letter-spacing: 0.5px;

@@ -1,4 +1,10 @@
-import { CategoryData, Data, DataToogle } from '@/interfaces/interfaces';
+import { Button, Slider, TableColumnsType } from 'antd';
+import {
+  CategoryData,
+  Data,
+  DataToogle,
+  ProfileAdminType
+} from '@/interfaces/interfaces';
 export const SIGNIN = 'SIGNIN';
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNUP = 'SIGNUP';
@@ -68,39 +74,6 @@ export const SIGN_UP = 'sign-up';
 
 export const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-export const originData: CategoryData[] = [
-  {
-    key: '1',
-    name: 'Lap trinh vien',
-    description: '10 Downing Street',
-    count: 10
-  },
-  {
-    key: '3',
-    name: 'Lap trinh vien',
-    description: '10 Downing Street',
-    count: 10
-  },
-  {
-    key: '4',
-    name: 'Lap trinh vien',
-    description: '10 Downing Street',
-    count: 10
-  },
-  {
-    key: '5',
-    name: 'Lap trinh vien',
-    description: '10 Downing Street',
-    count: 10
-  },
-  {
-    key: '2',
-    name: 'Lap trinh vien',
-    description: '10 Downing Street',
-    count: 10
-  }
-];
-
 export const columns = [
   {
     title: 'Name',
@@ -129,18 +102,93 @@ export const columns = [
 
 export const COLOR = 'linear-gradient(180deg, #C5091F 0%, #870413 100%)';
 
-export const PATH_URL_ROUTER = {
-  login: '/login',
-  home: '/',
-  post: '/post',
-  category: '/category',
-  historyVideo: '/history'
+export const pathUrlRouter = {
+  LOGIN: '/login',
+  HOME: '/',
+  POST: '/post',
+  CATEGORY: '/category',
+  HISTORY_VIDEO: '/history',
+  PROFILE: '/profile'
 };
 
-export const PATH_URL_AUTH_API = {
-  login: 'api/v1/auth/login',
-  logout: 'api/v1/auth/logout',
-  refreshToken: 'api/v1/auth/refresh'
+export const pathUrlAuthApi = {
+  LOGIN: 'api/v1/auth/login',
+  LOGOUT: 'api/v1/auth/logout',
+  REFRESH_TOKEN: 'api/v1/auth/refresh'
+};
+
+export const pathUrlProfileApi = {
+  GET_PROFILE: 'api/v1/user/profile',
+  POST_PROFILE_IMAGE: 'api/v1/user/upload=avatar',
+  POST_PROFILE_CHANGE: 'api/v1/user/update-profile'
+};
+
+export const pathUrlHistoryApi = {
+  GET_HISTORY_POST: 'api/v1/admin/post',
+  GET_FILTER_POST: 'api/v1/admin/filter'
+};
+
+export const constantCookies = {
+  TOKEN: 'token',
+  REFRESH_TOKEN: 'refreshToken'
+};
+
+export const uploadStatusFile = {
+  DONE: 'done',
+  UPLOADING: 'uploading',
+  ERROR: 'error'
+};
+
+export const RESPONSE_SUCCESS = 'success';
+export const RESPONSE_ERROR = 'error';
+
+export const REGEX_BASE_64 =
+  /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/;
+
+export const TYPE_JPEG = 'image/jpeg';
+export const TYPE_PNG = 'image/png';
+
+export const OPTIONS_GENDER = [
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+  { value: 'other', label: 'Other' }
+];
+
+export const profileAdminData: ProfileAdminType = {
+  name: 'John Doe',
+  address: '123 Main Street',
+  avatar: 'https://example.com/avatar.png',
+  first_name: 'John',
+  last_name: 'Doe',
+  phone_number: '123-456-7890',
+  roles: [
+    { role_id: 1, role_name: 'Admin' },
+    { role_id: 2, role_name: 'Editor' }
+  ],
+  gender: 'Male',
+  dob: '1990-01-01',
+  email: 'johndoe@example.com'
+};
+
+export const STATUS_CENSOR = [
+  { value: 'accept', label: 'Đã duyệt' },
+  { value: 'deleted', label: 'Đã xóa' },
+  { value: 'not_yet_approved', label: 'Chưa duyệt' }
+];
+
+export const ORDER_BY_POST = [
+  { value: 'desc', label: 'DESC' },
+  { value: 'asc', label: 'ASC' }
+];
+
+export const PER_PAGE_CENSOR_HISTORY = 4;
+
+export const formatDate = {
+  DATE_TIME_SECONDS: 'DD-MM-YYYY HH:mm:ss',
+  DATE_TIME: 'DD-MM-YYYY HH:mm',
+  DATE: 'DD-MM-YYYY',
+  TIME: 'HH:mm',
+  TIME_SECONDS: 'HH:mm:ss'
 };
 
 export const PATH_URL_POST_API = {
@@ -149,11 +197,6 @@ export const PATH_URL_POST_API = {
   allpost: 'api/v1/admin/post'
 };
 
-// export const SIGHTENGINE = {
-//   workflow: process.env.REACT_APP_SIGHTENGINE_WORKFLOW,
-//   api_user: process.env.REACT_APP_SIGHTENGINE_API_USER,
-//   api_secret: process.env.REACT_APP_SIGHTENGINE_API_SECRET
-// };
 
 export const SIGHTENGINE = {
   workflow: 'wfl_g5IE1sK45fvgtphGpahhV',
@@ -166,11 +209,3 @@ export const URL_IMG_API_SIGHTENGINE =
 
 export const URL_VIDEO_API_SIGHTENGINE =
   'https://api.sightengine.com/1.0/video/check-workflow-sync.json';
-
-export const formatDate = {
-  DATE_TIME_SECONDS: 'DD-MM-YYYY HH:mm:ss',
-  DATE_TIME: 'DD-MM-YYYY HH:mm',
-  DATE: 'DD-MM-YYYY',
-  TIME: 'HH:mm',
-  TIME_SECONDS: 'HH:mm:ss'
-};

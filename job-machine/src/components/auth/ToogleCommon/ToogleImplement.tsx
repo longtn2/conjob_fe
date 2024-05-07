@@ -6,7 +6,7 @@ import { DataToogle, TypeActivePanel } from '@/interfaces/interfaces';
 import {
   SIGN_IN,
   dataToogleSignIn,
-  dataToogleSignUp,
+  dataToogleSignUp
 } from '@/constants/constants';
 const { Title, Paragraph } = Typography;
 
@@ -19,7 +19,7 @@ interface ToogleImplementProps {
 const ToogleImplement = ({
   state,
   handleClick,
-  isActive,
+  isActive
 }: ToogleImplementProps) => {
   const [toogleData, setToogleData] = useState<DataToogle>((): DataToogle => {
     return state === SIGN_IN ? dataToogleSignIn : dataToogleSignUp;
@@ -36,7 +36,11 @@ const ToogleImplement = ({
     >
       <Title>{toogleData.titleToogle}</Title>
       <Paragraph>{toogleData.subTitleToogle}</Paragraph>
-      <BaseButton onClick={handleClick} className='ant-btn-secondary'>
+      <BaseButton
+        onClick={handleClick}
+        className="ant-btn-secondary"
+        size="large"
+      >
         {toogleData.buttonToogle}
       </BaseButton>
     </ContainerToogleImplement>

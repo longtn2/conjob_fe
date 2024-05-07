@@ -1,10 +1,12 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import NotAuth from './NotAuth';
 import AuthPage from '@/pages/auth/AuthPage';
 import LayoutApp from '@/layout/Layout';
 import Category from '@/pages/Admin/Category/Category';
-import { PATH_URL_ROUTER } from '@/constants/constants';
+import { pathUrlAuthApi, pathUrlRouter } from '@/constants/constants';
 import PostContent from '@/pages/Admin/PostManage/Post';
+import AdminProfile from '@/pages/Admin/Profile/AdminProfile';
+import HistoryVIdeoPage from '@/pages/Admin/historyVIdeo/HistoryVIdeoPage';
 
 const AdminLayout = () => {
   return <NotAuth></NotAuth>;
@@ -12,7 +14,7 @@ const AdminLayout = () => {
 
 export const router = createBrowserRouter([
   {
-    path: PATH_URL_ROUTER.login,
+    path: pathUrlRouter.LOGIN,
     element: <AuthPage />
   },
   {
@@ -20,15 +22,23 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <LayoutApp />,
-        path: PATH_URL_ROUTER.home,
+        path: pathUrlRouter.HOME,
         children: [
           {
             element: <Category />,
-            path: PATH_URL_ROUTER.category
+            path: pathUrlRouter.CATEGORY
           },
           {
             element: <PostContent />,
-            path: PATH_URL_ROUTER.post
+            path: pathUrlRouter.POST
+          },
+          {
+            element: <AdminProfile />,
+            path: pathUrlRouter.PROFILE
+          },
+          {
+            element: <HistoryVIdeoPage />,
+            path: pathUrlRouter.HISTORY_VIDEO
           }
         ]
       }

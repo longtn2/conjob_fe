@@ -14,13 +14,12 @@ body {
 code {
   font-family: open sans, Helvetica, Arial, sans-serif;
 }
-
-
-
-
-
 :root {
   --font-family: 'Montserrat', sans-serif;
+  background: #f2f2f5;
+  width: 100vw;
+  margin: 0 auto;
+  overflow-x: hidden;
 }
 
 .ant-typography {

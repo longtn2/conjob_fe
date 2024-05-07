@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Typography, Form, Input } from 'antd';
+import { yupResolver } from '@hookform/resolvers/yup';
 import FormIcon from './FormIcon';
 import { ContainerForm } from './FormContainer.styled';
 import { WrapperFormItem } from './WrapperFormItem.styled';
@@ -15,14 +16,17 @@ import {
 } from '@/interfaces/interfaces';
 import { schemaLogin, schemaRegister } from '@/utils/yup';
 import {
-  PATH_URL_ROUTER,
+  RESPONSE_ERROR,
+  RESPONSE_SUCCESS,
   SIGN_IN,
   dataSignIn,
-  dataSignUp
+  dataSignUp,
+  pathUrlRouter
 } from '@/constants/constants';
 import { AuthApi } from '@/api/auth/AuthApi';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 import { registerRequest } from '@/redux/actions/authAction';
+import { getMessageStatus } from '@/helper';
 
 const { Title } = Typography;
 
@@ -42,7 +46,10 @@ const FormContainer = ({ state }: FormContainerProps) => {
       name: '',
       email: '',
       password: ''
-    }
+    },
+    resolver: yupResolver<FormLoginType | FormRegisterType>(
+      state === SIGN_IN ? schemaLogin : schemaRegister
+    )
   });
   let timeoutId: NodeJS.Timeout;
 
@@ -76,12 +83,15 @@ const FormContainer = ({ state }: FormContainerProps) => {
         .then((res: any) => {
           Cookies.set('token', res.data.token);
           Cookies.set('refreshToken', res.data.refreshToken);
-          localStorage.setItem('firstName', res.data.firstName);
-          localStorage.setItem('lastName', res.data.lastName);
-          navigate(PATH_URL_ROUTER.home);
+          localStorage.setItem('firstName', res.data.first_name);
+          localStorage.setItem('lastName', res.data.last_name);
+          localStorage.setItem('avatar', res.data.avatar);
+          navigate(pathUrlRouter.HOME);  
+          getMessageStatus(res.data.message, RESPONSE_SUCCESS);
         })
         .catch(err => {
-          // TODO show error.
+          const { message, status_code } = err;
+          getMessageStatus(message, RESPONSE_ERROR);
         })
         .finally(() => {
           setLoading(false);
@@ -93,7 +103,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
 
   return (
     <ContainerForm className={`${state}`}>
-      <Form onFinish={handleSubmit(handleSubmitForm)}>
+      <Form onFinish={handleSubmit(handleSubmitForm)} disabled={loading}>
         <Title level={1}>{formData.title}</Title>
         <span className="sub-title">{formData.subTitle1}</span>
         <FormIcon />
@@ -126,6 +136,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
           htmlType="submit"
           className="ant-btn-primary"
           loading={loading}
+          size="large"
         >
           {formData.contentButton}
         </BaseButton>
