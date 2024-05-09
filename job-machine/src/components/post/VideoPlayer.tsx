@@ -31,11 +31,11 @@ const VideoPlayer: React.FC<VideoProps> = ({ post, col }) => {
   }
   return (
     <div className="card__content">
-      {post?.type_file === 'Img' ? (
+      {post?.file_type === 'Img' ? (
         <Image
-          src={post.url_file}
+          src={post.file_url}
           className={getClassForCol(col)}
-          placeholder={<Image preview={false} src={post.url_file} />}
+          placeholder={<Image preview={false} src={post.file_url} />}
         />
       ) : (
         <div className={getClassForCol(col)} onClick={togglePlay}>
@@ -48,7 +48,7 @@ const VideoPlayer: React.FC<VideoProps> = ({ post, col }) => {
             muted={true}
             style={{ objectFit: 'fill' }}
           >
-            <source src={post.url_file} type="video/mp4" />
+            <source src={post.file_url} type="video/mp4" />
           </video>
         </div>
       )}

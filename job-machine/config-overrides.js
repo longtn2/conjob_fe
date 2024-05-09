@@ -18,5 +18,7 @@ module.exports = override(
     '@/api': resolve(__dirname, 'src/api'),
     '@/helper': resolve(__dirname, 'src/helper'),
     "@/style/*": resolve(__dirname, 'src/style'),
+    "@/locale/*": resolve(__dirname, 'src/locale'),
+    "@/i18n/*": resolve(__dirname, 'src/i18n'),
   })
 );

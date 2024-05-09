@@ -6,9 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import FormContainer from '@/components/auth/FormCommon/FormContainer';
 import TooglePanel from '@/components/auth/ToogleCommon/TooglePanel';
 import { getCookie } from '@/utils/utils';
-import { PATH_URL_ROUTER, SIGN_IN, SIGN_UP } from '@/constants/constants';
+import {
+  SIGN_IN,
+  SIGN_UP,
+  breakPointSize,
+  pathUrlRouter
+} from '@/constants/constants';
+import { useMediaQuery } from 'react-responsive';
 const AuthPage = () => {
   const [typePanel, setTypePanel] = useState<TypeActivePanel>('sign-in');
+  const isMobile = useMediaQuery({ maxWidth: breakPointSize.TABLET });
   const handleChange = () => {
     setTypePanel(prevPanel => (prevPanel === SIGN_IN ? SIGN_UP : SIGN_IN));
   };
@@ -19,8 +26,8 @@ const AuthPage = () => {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ['Montserrat', 'Roboto'],
-      },
+        families: ['Montserrat', 'Roboto']
+      }
     });
   }, []);
 
@@ -30,7 +37,7 @@ const AuthPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (token && refreshToken) {
-      navigate(PATH_URL_ROUTER.home);
+      navigate(pathUrlRouter.HOME);
     }
   }, []);
 
@@ -39,10 +46,12 @@ const AuthPage = () => {
       <Container>
         <div className={typePanel === 'sign-in' ? '' : 'active'}>
           <FormContainer state={typePanel} />
-          <TooglePanel
-            handleChange={handleChange}
-            returnTypePanel={returnTypeActive}
-          />
+          {!isMobile && (
+            <TooglePanel
+              handleChange={handleChange}
+              returnTypePanel={returnTypeActive}
+            />
+          )}
         </div>
       </Container>
     </Body>

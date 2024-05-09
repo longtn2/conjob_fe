@@ -1,11 +1,15 @@
 import { CategoryData } from '@/interfaces/interfaces';
 import { Form, Input, InputNumber } from 'antd';
+
+type GenericRecordData = {
+  [key: string]: CategoryData; // Allow properties of any type
+};
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
   dataIndex: string;
   title: any;
   inputType: 'number' | 'text';
-  record: CategoryData;
+  record: GenericRecordData;
   index: number;
   children: React.ReactNode;
 }
@@ -20,8 +24,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
-
   return (
     <td {...restProps}>
       {editing ? (
@@ -31,11 +33,11 @@ const EditableCell: React.FC<EditableCellProps> = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
-            },
+              message: `Please Input ${title}!`
+            }
           ]}
         >
-          {inputNode}
+          {inputType === 'number' ? <InputNumber /> : <Input />}
         </Form.Item>
       ) : (
         children

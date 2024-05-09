@@ -1,0 +1,14 @@
+import { styled } from 'styled-components';
+
+export const ContainerAdminProfile = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  .content-profile {
+    margin: 2rem 0 0 0;
+    max-width: fit-content;
+    max-height: fit-content;
+  }
+  .ant-card {
+    padding: 2%;
+  }
+`;

@@ -25,8 +25,18 @@ export const Container = styled.div`
   position: relative;
   overflow: hidden;
   width: 820px;
-  max-width: 100%;
   min-height: 550px;
+
+  @media screen and (max-width: 768px) {
+    width: 20rem;
+    font-size: 0.5vw;
+    .sign-in {
+      width: 20rem !important;
+    }
+    .ant-form-item-control-input-content {
+      margin: 8px !important;
+    }
+  }
 
   div.ant-typography {
     font-size: 14px;
@@ -47,9 +57,7 @@ export const Container = styled.div`
   }
 
   .ant-btn {
-    font-size: 12px;
     padding: 10px 45px;
-
     border-radius: 8px;
     font-weight: 600;
     letter-spacing: 0.5px;

@@ -1,91 +1,99 @@
-import {
-  DownOutlined,
-  LogoutOutlined,
-  UserOutlined,
-  MessageOutlined,
-} from '@ant-design/icons';
-import { PATH_URL_ROUTER } from '@/constants/constants';
-import { Avatar, Button, Dropdown, Menu, MenuProps, Modal, Space } from 'antd';
+import { SunOutlined, MoonOutlined } from '@ant-design/icons';
+import { Avatar, Button, Space, Switch, theme } from 'antd';
 import { Header } from 'antd/es/layout/layout';
-import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
- 
-const HeaderComponent = () => {
+import { ModeTheme } from '@/interfaces/interfaces';
+import LanguageSelect from '@/components/common/SelectFlag/LanguageSelectFlag';
+import { breakPointSize } from '@/constants/constants';
+import { useMediaQuery } from 'react-responsive';
+import { useEffect } from 'react';
+
+interface SliderComponentsProps {
+  handleChangeTheme: (value: ModeTheme) => void;
+}
+
+const HeaderComponent = ({ handleChangeTheme }: SliderComponentsProps) => {
   const navigator = useNavigate();
- 
-  const handleNavigate = (key: string) => {
-    if (key === 'logout') {
-      handleLogout();
-    } else {
-      navigator(key);
-    }
+  const { token } = theme.useToken();
+  const isMobile = useMediaQuery({
+    maxWidth: breakPointSize.TABLET - 1
+  });
+  const firstName = localStorage.getItem('firstName');
+  const lastName = localStorage.getItem('lastName');
+  const avatarAdmin = localStorage.getItem('avatar');
+  // const handleNavigate = (key: string) => {
+  //   if (key === 'logout') {
+  //     handleLogout();
+  //     navigator('/login');
+  //   } else {
+  //     navigator(key);
+  //   }
+  // };
+  const handleThemeChange = (checked: boolean) => {
+    handleChangeTheme(checked ? 'light' : 'dark');
   };
- 
-  const handleLogout = () => {
-    const cookies = Cookies.get();
-    localStorage.removeItem("firstName");
-    localStorage.removeItem("lastName");
-    for (const cookie in cookies) {
-      Cookies.remove(cookie);
-    }
-    navigator(PATH_URL_ROUTER.login);
-  };
-  const items: MenuProps['items'] = [
-    {
-      label: 'Infomaiton account',
-      icon: <UserOutlined />,
-      key: 'informationaccount',
-    },
-    {
-      label: 'Change password',
-      icon: <UserOutlined />,
-      key: 'changepassword',
-    },
-    {
-      label: ' Logout',
-      icon: <LogoutOutlined />,
-      key: 'logout',
-    },
-    {
-      label: 'Messenger',
-      icon: <MessageOutlined />,
-      key: 'messenger',
-    },
-  ];
+
+  // const items: MenuProps['items'] = [
+  //   {
+  //     label: 'Infomaiton account',
+  //     icon: <UserOutlined />,
+  //     key: 'informationaccount'
+  //   },
+  //   {
+  //     label: 'Change password',
+  //     icon: <UserOutlined />,
+  //     key: 'changepassword'
+  //   },
+  //   {
+  //     label: ' Logout',
+  //     icon: <LogoutOutlined />,
+  //     key: 'logout'
+  //   },
+  //   {
+  //     label: 'Messenger',
+  //     icon: <MessageOutlined />,
+  //     key: 'messenger'
+  //   }
+  // ];
   return (
     <>
-      <Header className='header-layout'>
-        <h1>ADMIN SITE</h1>
- 
-        <div style={{ display: 'flex' }}>
-          <Dropdown
-            overlay={
-              <Menu
-                onClick={({ key }) => {
-                  handleNavigate(key);
-                }}
-                selectable
-                items={items}
-              />
-            }
-            trigger={['click']}
-            arrow
-          >
-            <Button className='btn-account'>
-              <Space style={{ columnGap: 30 }}>
-                <Avatar
-                  style={{ marginLeft: 0 }}
-                  src='https://xsgames.co/randomusers/avatar.php?g=pixel&key=1'
-                />
-                ADMIN
-                <DownOutlined />
-              </Space>
-            </Button>
-          </Dropdown>
-        </div>
+      <Header
+        className="header-layout"
+        style={{
+          background: token.colorBgContainer,
+          borderRight: token.colorBorder
+        }}
+      >
+        {/* <Row> */}
+        {/* <Col span={24}> */}
+        {isMobile && (
+          <Button className="btn-account">
+            <Space
+              style={{ columnGap: 30, fontSize: '1vw' }}
+            >{`${firstName} ${lastName}`}</Space>
+            <Avatar src={avatarAdmin} />
+          </Button>
+        )}
+        {/* </Col> */}
+        {/* <Col span={24}> */}
+        <Space style={{ margin: '0.5rem 1rem' }}>
+          <LanguageSelect />
+        </Space>
+        {/* </Col> */}
+        {/* <Col span={24}> */}
+        <Space direction="vertical">
+          <Switch
+            checkedChildren={<SunOutlined />}
+            unCheckedChildren={<MoonOutlined />}
+            defaultChecked
+            onChange={handleThemeChange}
+          />
+        </Space>
+        {/* </Col> */}
+        {/* </Row> */}
       </Header>
     </>
   );
 };
- 
+
 export default HeaderComponent;
