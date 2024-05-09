@@ -227,12 +227,6 @@ const ContentCensorshiprVideo = ({
               }}
             >
               <Title level={2}>{t('pages.history.title')}</Title>
-              <BaseFormSelection
-                control={control}
-                options={ORDER_BY_POST}
-                name="order_by"
-                className="header-filter"
-              />
             </div>
           </Col>
           <Col span={24}>

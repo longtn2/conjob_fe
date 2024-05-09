@@ -173,6 +173,7 @@ export interface ResponseDataPostAPI {
   message?: string;
 }
 export interface InforPost {
+  data: any;
   status: string;
   title?: string;
   date: string;
@@ -271,4 +272,11 @@ export interface SelectFlags {
   value: ValueSelectFlags;
   label: string;
   flag: string;
+}
+export interface RangePickerType {
+  titleContent?: string;
+  dataRange: {
+    startDate?: Date;
+    endDate?: Date;
+  };
 }

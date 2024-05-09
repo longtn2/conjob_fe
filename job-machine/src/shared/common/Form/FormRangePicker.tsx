@@ -1,65 +1,61 @@
-import { useState } from 'react';
 import { formatDate } from '@/constants/constants';
-import { formatDayjsConvertTypeDayjs } from '@/helper';
+import { formatDayjs, formatDayjsConvertTypeDayjs } from '@/helper';
+import { RangePickerType } from '@/interfaces/interfaces';
 import { DatePicker, Form, FormItemProps } from 'antd';
-import dayjs, { Dayjs } from 'dayjs';
-import { Controller } from 'react-hook-form';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 
-type BaseFormDatePickerType = FormItemProps & {
-  control: any;
-  errors?: any;
-  format?: string;
-  placeholder?: string;
-};
 const { RangePicker } = DatePicker;
+
+type BaseFormRangePickerType = FormItemProps & {
+  control: Control<any>;
+  errors?: any;
+  placeholder?: [string, string];
+  format?: string;
+  className?: string;
+  renderExtraFooter: () => React.ReactNode;
+};
+
 const BaseFormRangePicker = ({
   control,
   errors,
-  format = formatDate.DATE,
   placeholder,
+  className = '',
+  renderExtraFooter,
+  format = formatDate.DATE_TIME_MINUTE_SECONDS,
   ...formItemProps
-}: BaseFormDatePickerType) => {
+}: BaseFormRangePickerType) => {
+  console.log('check error: ', errors);
+
   return (
     <Form.Item
-      name={formItemProps.name}
-      label={formItemProps.label}
-      validateStatus={errors && errors[formItemProps.name] && 'error'}
-      help={errors && errors[formItemProps.name]?.[0]?.message}
+      label={formItemProps.label?.toString()}
+      name={formItemProps.name.toString()}
+      validateStatus={
+        errors && errors[formItemProps.name?.toString()] && 'error'
+      }
+      help={errors && errors[formItemProps.name?.toString()]?.message}
     >
       <Controller
-        name={formItemProps.name.toString()}
         control={control}
-        rules={{ required: true }}
-        defaultValue={[null, null]}
+        name={formItemProps.name.toString()}
         render={({ field }) => {
-          const value: [Dayjs | null, Dayjs | null] = [
-            field.value && typeof field.value[0] === 'string'
-              ? formatDayjsConvertTypeDayjs(
-                  field.value[0],
-                  formatDate.DATE_TIME_SECONDS
-                )
-              : field.value
-              ? field.value[0]
-              : null,
-            field.value && typeof field.value[1] === 'string'
-              ? formatDayjsConvertTypeDayjs(
-                  field.value[1],
-                  formatDate.DATE_TIME_SECONDS
-                )
-              : field.value
-              ? field.value[1]
-              : null
-          ] || [null, null];
+          const value: any = [
+            field.value &&
+              field.value[0] &&
+              formatDayjsConvertTypeDayjs(field.value[0]),
+            field.value &&
+              field.value[1] &&
+              formatDayjsConvertTypeDayjs(field.value[1])
+          ];
 
           return (
             <RangePicker
+              renderExtraFooter={renderExtraFooter}
+              onChange={dates => field.onChange(dates)}
+              defaultValue={[null, null]}
+              value={field.value ? value : [null, null]}
               showTime
-              style={{ width: '80%' }}
-              value={value}
-              onChange={value => {
-                field.onChange(value);
-              }}
-              onBlur={() => field.onBlur()}
+              className={className}
             />
           );
         }}

@@ -20,7 +20,13 @@
     },
     "censor": {
       "checkAll": "Check All",
-      "layoutPost": "Post Layout"
+      "layoutPost": "Post Layout",
+      "emptyTitle": "There are no recent posts!",
+      "placeholderSearch": "Enter username, post content...",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "searchText": "Search",
+      "validateInput": "Enter username, post content cannot contain special characters"
     },
     "history": {
       "idContent": "Post ID",
@@ -61,8 +67,11 @@
   },
   "common": {
     "delete": "Delete",
+    "deleteAll": "Confirm deletion of all?",
     "accept": "Accept",
     "search": "Search",
-    "save": "Save"
+    "save": "Save",
+    "submitText": "Are you sure you want to delete?",
+    "close": "close"
   }
 }

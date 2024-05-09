@@ -1,73 +1,127 @@
-import { Col, Flex, Form } from 'antd';
+import { useForm, Controller } from 'react-hook-form';
+import { Col, DatePicker, Flex, theme } from 'antd';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
-import { BaseInput } from '@/components/common/BaseInput/index';
 import { RedoOutlined } from '@ant-design/icons';
-import { DatePicker } from 'antd';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { formatDayjsConvertTypeDayjs } from '@/helper';
+import { useState } from 'react';
+import BaseFormItemHook from '@/shared/common/Form/FormItem';
+import BaseFormRangePicker from '@/shared/common/Form/FormRangePicker';
 import { useTranslation } from 'react-i18next';
+
 interface FilterPostProps {
   handleFilter: (filter: string) => void;
 }
 
 const FilterPost: React.FC<FilterPostProps> = ({ handleFilter }) => {
-  const [form] = Form.useForm();
-  const { t } = useTranslation();
   const { RangePicker } = DatePicker;
+  const { token } = theme.useToken();
+  const [searchValue, setSearchValue] = useState('');
+  const { t } = useTranslation();
 
-  const handleSearchClick = (value: any) => {
-    handleFilter(value);
+  const messageRequired: string = t('pages.censor.validateInput');
+
+  const schema = yup.object().shape({
+    titleContent: yup
+      .string()
+      .transform(value => value.trim().replace(/\s+/g, ' '))
+      .matches(/^[\p{L}\d\s]*$/u, {
+        message: messageRequired,
+        excludeEmptyString: true
+      }),
+    dataRange: yup.array().of(
+      yup.object().shape({
+        startDate: yup.date(),
+        endDate: yup
+          .date()
+          .min(yup.ref('startDate'), 'End date must be after start date')
+      })
+    )
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  const handleSearchClick = (data: any) => {
+    handleFilter(data);
   };
+
   const onReset = () => {
-    form.resetFields();
+    reset();
   };
 
   return (
-    <>
-      <Form
-        form={form}
-        layout="horizontal"
-        initialValues={{ actionType: 'all' }}
-        onFinish={handleSearchClick}
-        style={{ width: '100%', alignItems: 'center' }}
-        className="filter-section"
-      >
-        <Col>
-          <Flex style={{ justifyContent: 'space-between' }}>
-            <Col span={3}>
-              <Form.Item name="reset">
-                <BaseButton
-                  size="large"
-                  className="btn-reset"
-                  onClick={onReset}
-                >
-                  <RedoOutlined />
-                </BaseButton>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="titleContent" className="input-search">
-                <BaseInput
-                  placeholder="Nhập tên người dùng, nội dung bài..."
-                  style={{ width: '100%', height: '40px', marginLeft: '-58px' }}
-                  value="1000"
-                />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item name="datetime">
-                <RangePicker showTime className="search-date" />
-              </Form.Item>
-            </Col>
-            <Col span={3}>
-              <Form.Item name="search">
-                <BaseButton size="large" className="btn-find" htmlType="submit">
-                  {t("common.search")}
-                </BaseButton>
-              </Form.Item>
-            </Col>
-          </Flex>
-        </Col>
-      </Form>
-    </>
+    <form
+      onSubmit={handleSubmit(handleSearchClick)}
+      className="filter-section"
+      style={{
+        width: '100%',
+        height: 'auto',
+        alignItems: 'center',
+        background: token ? token.colorBgContainer : '#ffffff'
+      }}
+    >
+      <Col>
+        <Flex
+          style={{ justifyContent: 'space-between' }}
+          className="filter-field"
+        >
+          <Col xs={24} lg={2}>
+            <div>
+              <BaseButton onClick={onReset} className="btn-reset">
+                <RedoOutlined />
+              </BaseButton>
+            </div>
+          </Col>
+
+          <Col xs={24} lg={10} className="input-section">
+            <div className="input-search">
+              <BaseFormItemHook
+                control={control}
+                name="titleContent"
+                error={errors['titleContent']}
+                placeholder={t('pages.censor.placeholderSearch')}
+                className="search-value"
+              />
+            </div>
+          </Col>
+
+          <Col xs={24} lg={9} className="input-section">
+            <div className="search-wrapper">
+              <BaseFormRangePicker
+                control={control}
+                name="dataRange"
+                errors={errors}
+                renderExtraFooter={() => (
+                  <>
+                    <div>{t('pages.censor.startDate')}</div>
+                    <div>{t('pages.censor.endDate')}</div>
+                  </>
+                )}
+                className="date-time-picker"
+              />
+              {errors?.dataRange && errors.dataRange[0]?.startDate && (
+                <span>{errors.dataRange[0].startDate.message}</span>
+              )}
+            </div>
+          </Col>
+          <Col xs={24} sm={24} lg={3}>
+            <div>
+              <BaseButton htmlType="submit" className="btn-find">
+                {t('pages.censor.searchText')}
+              </BaseButton>
+            </div>
+          </Col>
+        </Flex>
+      </Col>
+    </form>
   );
 };
 

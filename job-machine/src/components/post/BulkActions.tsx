@@ -34,16 +34,16 @@ const BulkActions: React.FC<BulkActionsProps> = ({
             onChange={handleCheckAll}
             checked={isAllSelected}
           >
-            {t("pages.censor.checkAll")}
+            {t('pages.censor.checkAll')}
           </Checkbox>
           {selectedPosts.length > 0 && (
-            <>
+            <div className="btn-action">
               <Popconfirm
-                title="Xác nhận xoá tất cả?"
+                title={t('common.deleteAll')}
                 onConfirm={handleDeleteAllSelected}
               >
                 <BaseButton size="large" className="btn-delete-all">
-                  Xóa
+                  {t('common.delete')}
                 </BaseButton>
               </Popconfirm>
               <BaseButton
@@ -51,9 +51,9 @@ const BulkActions: React.FC<BulkActionsProps> = ({
                 className="btn-accept-all"
                 onClick={handleActiveAllSelected}
               >
-                {t("common.accept")}
+                {t('common.accept')}
               </BaseButton>
-            </>
+            </div>
           )}
         </Flex>
       </Row>

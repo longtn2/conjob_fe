@@ -1,6 +1,8 @@
-import { Popconfirm } from 'antd';
+import { Popconfirm, theme } from 'antd';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 import { useTranslation } from 'react-i18next';
+import { BaseModal } from '../common/BaseModel';
+import { useState } from 'react';
 interface ActionBtnProps {
   handleDelete: (key: string | number) => void;
   handleAcceptPost: (id: string | number) => void;
@@ -15,24 +17,38 @@ const ActionBtn: React.FC<ActionBtnProps> = ({
   col
 }) => {
   const { t } = useTranslation();
+  const [modalOpen, setModalOpen] = useState(false);
+  const { token } = theme.useToken();
   return (
-    <div className={col === 6 ? 'card__action-top' : 'xs_card__action-top'}>
-      <Popconfirm
-        title={'Bạn có chắc muốn xoá không?'}
-        onConfirm={() => handleDelete(itemKey)}
+    <>
+      <div
+        className={col === 6 ? 'card__action-top' : 'xs_card__action-top'}
+        style={{ background: token ? token.colorBgContainer : '#ffffff' }}
       >
-        <BaseButton size="large" className="btn-delete">
-          {t("common.delete")}
+        <BaseButton
+          size="large"
+          className="btn-delete"
+          onClick={() => setModalOpen(true)}
+        >
+          {t('common.delete')}
         </BaseButton>
-      </Popconfirm>
-      <BaseButton
-        size="large"
-        className="btn-accept"
-        onClick={() => handleAcceptPost(itemKey)}
-      >
-        {t("common.accept")}
-      </BaseButton>
-    </div>
+        <BaseButton
+          size="large"
+          className="btn-accept"
+          onClick={() => handleAcceptPost(itemKey)}
+        >
+          {t('common.accept')}
+        </BaseButton>
+      </div>
+      <BaseModal
+        title={t('common.submitText')}
+        centered
+        open={modalOpen}
+        onOk={() => handleDelete(itemKey)}
+        onCancel={() => setModalOpen(false)}
+        className="modal-container"
+      />
+    </>
   );
 };
 

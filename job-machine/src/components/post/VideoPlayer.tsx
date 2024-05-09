@@ -46,7 +46,7 @@ const VideoPlayer: React.FC<VideoProps> = ({ post, col }) => {
             controls
             playsInline
             muted={true}
-            style={{ objectFit: 'fill' }}
+            style={{ objectFit: 'contain' }}
           >
             <source src={post.file_url} type="video/mp4" />
           </video>

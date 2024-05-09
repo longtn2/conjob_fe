@@ -57,4 +57,7 @@ export const ContainerHistoryVideo = styled.div`
     .ant-table-pagination {
     font-size: 0.8vw;
   }
+  .date-range {
+    width: 100%;
+  }
 `;

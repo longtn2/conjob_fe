@@ -5,7 +5,7 @@ import { ButtonProps } from 'antd';
 const buttonSizes = {
   small: { width: '70px', height: '20px' },
   middle: { width: '90px', height: '30px' },
-  large: { width: '120px', height: '40px' }
+  large: { width: '93px', height: '40px' }
 };
 
 export const BaseButton = forwardRef<HTMLButtonElement, ButtonProps>(

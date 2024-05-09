@@ -187,10 +187,11 @@ export const ORDER_BY_POST = [
   { value: 'asc', label: 'ASC', key: 'asc' }
 ];
 
-export const PER_PAGE_CENSOR_HISTORY = 5;
+export const PER_PAGE_CENSOR_HISTORY = 10;
 
 export const formatDate = {
   DATE_TIME_SECONDS: 'DD-MM-YYYY HH:mm:ss',
+  DATE_TIME_MINUTE_SECONDS: 'YYYY-MM-DD HH:mm:ss',
   DATE_TIME: 'DD-MM-YYYY HH:mm',
   DATE_TIME_YEAR: 'YYYY-MM-DD HH:mm',
   DATE: 'DD-MM-YYYY',
@@ -201,14 +202,16 @@ export const formatDate = {
 
 export const PATH_URL_POST_API = {
   delete: 'api/v1/admin/post/delete',
+  delete_list: 'api/v1/admin/post/delete-range',
   active: 'api/v1/admin/post/active',
+  active_list: 'api/v1/admin/post/active-list',
   allpost: 'api/v1/admin/post'
 };
 
 export const SIGHTENGINE = {
-  workflow: 'wfl_g5IE1sK45fvgtphGpahhV',
-  api_user: '268568153',
-  api_secret: 'Rqcp8zjVp4tcwjoygwfEmUwWuqiipqrk'
+  workflow: 'wfl_g5BuuJZA7cIDJcyBeYXks',
+  api_user: '1435148389',
+  api_secret: 'VHXYicBkyAe3Mq8jyQmHYLK6onohizDT'
 };
 
 export const URL_IMG_API_SIGHTENGINE =
@@ -245,8 +248,8 @@ export const REGEX_FILE_NAME = /\.[^.]+$/;
 
 export const LANGUAGES_OPTIONS: SelectFlags[] = [
   { value: 'vi', label: 'Vietnamese', flag: VietNameseFlags },
-  { value: 'en', label: 'England', flag: EnglishFlags },
-  { value: 'jp', label: 'Japan', flag: JanpaneseFlags }
+  { value: 'en', label: 'English', flag: EnglishFlags },
+  { value: 'jp', label: 'Japanese', flag: JanpaneseFlags }
 ];
 
 export const breakPointSize = {
