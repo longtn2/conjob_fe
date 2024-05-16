@@ -1,31 +1,79 @@
-import { useState } from 'react';
-import { Col, Image, Menu, Row, Typography, theme } from 'antd';
+import { useEffect, useState } from 'react';
+import { Avatar, Col, Image, Menu, Row, Typography, theme } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Slider from 'antd/es/layout/Sider';
 import LogoSvg from '@/assets/images/ConJob.svg';
 import CategorySvg from '@/assets/images/svg/Category.svg';
 import PlaySvg from '@/assets/images/svg/Play.svg';
-import Home from '@/assets/images/svg/Home.svg';
+import LogoutSVG from '@/assets/images/svg/Logout.svg';
 import Product from '@/assets/images/svg/Product.svg';
 import Profile from '@/assets/images/svg/Profile.svg';
 import ArrowRight from '@/assets/images/svg/Arrow - Right Circle.svg';
 import ArrorLeft from '@/assets/images/svg/Arrow - Left Circle.svg';
 import LogoCollapsed from '@/assets/images/CJ.svg';
-import { pathUrlRouter } from '@/constants/constants';
+import { breakPointSize, pathUrlRouter } from '@/constants/constants';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
-
+import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
+import { handleLogout } from '@/utils/utils';
+import { ProfileApi } from '@/api/profile/ProfileAPi';
+import { getMessageStatus } from '@/helper';
 const { Title } = Typography;
 
 const SliderComponent = () => {
+  const { t } = useTranslation();
+  const isTablet = useMediaQuery({
+    minWidth: breakPointSize.TABLET - 1,
+    maxWidth: breakPointSize.DESKTOP
+  });
+  const isMobile = useMediaQuery({
+    maxWidth: breakPointSize.TABLET - 1
+  });
   const { token } = theme.useToken();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState<boolean>(isTablet || isMobile);
+
   const navigator = useNavigate();
   const { pathname } = useLocation();
   const page = pathname.replace('/', '');
-  const firstName = localStorage.getItem('firstName');
-  const lastName = localStorage.getItem('lastName');
-  const avatar = localStorage.getItem('avatar');
+  const [isData, setIsData] = useState({
+    firstName: localStorage.getItem('firstName'),
+    lastName: localStorage.getItem('lastName'),
+    isAvatar: localStorage.getItem('avatar')
+  });
+  const fetchDataProfile = async () => {
+    await ProfileApi.getProfile()
+      .then(response => {
+        setIsData({
+          firstName: response.data.first_name,
+          lastName: response.data.last_name,
+          isAvatar: localStorage.getItem('avatar') || response.data.avatar
+        });
+      })
+      .catch(error => {
+        getMessageStatus(error.message, 'error');
+      });
+  };
+  useEffect(() => {
+    const handleResize = async () => {
+      if (isTablet) {
+        setCollapsed(true);
+      }
+      if (isMobile) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
 
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isTablet, isMobile]);
+
+  useEffect(() => {
+    fetchDataProfile();
+  }, []);
   const getMenuStyle = key => {
     return page === key
       ? {
@@ -41,162 +89,173 @@ const SliderComponent = () => {
   const getLabelMenuStyle = key => {
     return page === key && { fontWeight: '600' };
   };
-
   const handleToggleCollapse = () => {
     setCollapsed(!collapsed);
   };
 
   return (
-    <Slider
-      style={{
-        minHeight: '100vh',
-        borderRight: `1px solid ${token.colorBorder}`
-      }}
-      trigger={null}
-      theme="light"
-      width="13%"
-      collapsible
-      collapsed={collapsed}
-      onCollapse={value => setCollapsed(value)}
-      breakpoint="lg"
-      collapsedWidth="4%"
-    >
-      <div className="demo-logo-vertical">
-        <div className="logo-container">
-          <Image
-            src={collapsed ? LogoCollapsed : LogoSvg}
-            preview={false}
-            width="100%"
-            style={{ background: token ? token.colorBgContainer : '#ffffff' }}
-          />
-        </div>
-      </div>
-      {!collapsed && (
-        <div className={`profile-slider ${collapsed && 'hidden'}`}>
-          <div className="avatar-admin">
-            {avatar && <Image src={avatar} alt="Image Admin" preview={false} />}
-          </div>
-          <div className="content-profile">
-            <Title level={3}>{`${firstName} ${lastName}`}</Title>
-            <span style={{ color: token ? token.colorTextBase : '#000000' }}>
-              Dễ gần khó xa
-            </span>
-          </div>
-        </div>
-      )}
-      <Menu
-        className="menu"
-        onClick={({ key }) => {
-          navigator(key);
+    <>
+      <Slider
+        style={{
+          minHeight: '100vh',
+          borderRight: `1px solid ${token.colorBorder}`
         }}
+        trigger={null}
         theme="light"
-        mode="inline"
+        width="13%"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={value => setCollapsed(value)}
+        breakpoint="lg"
+        collapsedWidth={isTablet ? '10%' : isMobile ? '15%' : '4%'}
       >
-        <Menu.Item
-          title={'Dashboard'}
-          key={pathUrlRouter.HOME}
-          style={{
-            ...(page === '' &&
-              !collapsed && { background: '#dadada', color: 'black' })
-          }}
-          className="menu-item"
-        >
-          <div className="icon" style={getMenuStyle('')}>
-            <Image src={Home} preview={false} />
+        <div className="demo-logo-vertical">
+          <div className="logo-container">
+            <Image
+              src={collapsed ? LogoCollapsed : LogoSvg}
+              preview={false}
+              width="100%"
+              style={{
+                background: token ? token.colorBgContainer : '#ffffff'
+              }}
+            />
           </div>
-          {!collapsed && (
-            <span className="label" style={{ ...getLabelMenuStyle('') }}>
-              Dashboard
-            </span>
-          )}
-        </Menu.Item>
-        <Menu.Item
-          title={'Category'}
-          key={pathUrlRouter.CATEGORY}
-          style={{
-            ...(page === 'category' &&
-              !collapsed && {
+        </div>
+        {!collapsed && (
+          <div className={`profile-slider ${collapsed && 'hidden'}`}>
+            <div className="avatar-admin">
+              {isData.isAvatar && (
+                <Image
+                  src={isData.isAvatar || undefined}
+                  alt="Image Admin"
+                  preview={false}
+                />
+              )}
+            </div>
+            <div className="content-profile">
+              <Title
+                level={3}
+              >{`${isData.firstName} ${isData.lastName}`}</Title>
+              <span
+                style={{
+                  color: token ? token.colorTextBase : '#000000',
+                  textAlign: 'center'
+                }}
+              >
+                {t('pages.slider.introduce')}
+              </span>
+            </div>
+          </div>
+        )}
+        <Menu
+          onClick={({ key }) => {
+            if (key) {
+              navigator(key);
+            }
+            if (key === pathUrlRouter.LOG_OUT) {
+              handleLogout();
+              navigator('/login');
+            }
+          }}
+          theme="light"
+          mode="inline"
+        >
+          <Menu.Item
+            title={t('pages.slider.profile')}
+            key={pathUrlRouter.PROFILE}
+            style={{
+              ...(page === 'profile' && {
                 background: '#dadada',
                 color: 'black'
               })
-          }}
-        >
-          <div className="icon" style={getMenuStyle('category')}>
-            <Image src={CategorySvg} preview={false} />
-          </div>
-          {!collapsed && (
-            <span
-              className="label"
-              style={{ ...getLabelMenuStyle('category') }}
+            }}
+          >
+            <div className="icon" style={getMenuStyle('profile')}>
+              <Image src={Profile} preview={false} />
+            </div>
+            {!collapsed && (
+              <span
+                className="label"
+                style={{ ...getLabelMenuStyle('profile') }}
+              >
+                {t('pages.slider.profile')}
+              </span>
+            )}
+          </Menu.Item>
+          <Menu.Item
+            title={t('pages.slider.censor')}
+            key={pathUrlRouter.POST}
+            style={{
+              ...(page === 'post' && {
+                background: '#dadada',
+                color: 'black'
+              })
+            }}
+          >
+            <div className="icon" style={getMenuStyle('post')}>
+              <Image src={PlaySvg} preview={false} />
+            </div>
+            {!collapsed && (
+              <span className="label" style={{ ...getLabelMenuStyle('post') }}>
+                {t('pages.slider.censor')}
+              </span>
+            )}
+          </Menu.Item>
+          <Menu.Item
+            title={t('pages.slider.history')}
+            key={pathUrlRouter.HISTORY_VIDEO}
+            style={{
+              ...(page === 'history' && {
+                background: '#dadada',
+                color: 'black'
+              })
+            }}
+          >
+            <div className="icon" style={getMenuStyle('history')}>
+              <Image src={Product} preview={false} />
+            </div>
+            {!collapsed && (
+              <span
+                className="label"
+                style={{ ...getLabelMenuStyle('history') }}
+              >
+                {t('pages.slider.history')}
+              </span>
+            )}
+          </Menu.Item>
+          <Menu.Item
+            key={pathUrlRouter.LOG_OUT}
+            title={t('pages.slider.logout')}
+          >
+            <div className="icon" style={getMenuStyle('logout')}>
+              <Image src={LogoutSVG} preview={false} />
+            </div>
+            {!collapsed && (
+              <span
+                className="label"
+                style={{ ...getLabelMenuStyle('logout') }}
+              >
+                {t('pages.slider.logout')}
+              </span>
+            )}
+          </Menu.Item>
+        </Menu>
+        {!isMobile && (
+          <div className="button-container">
+            <BaseButton
+              className="toggle-button"
+              onClick={handleToggleCollapse}
+              style={{
+                background: token.colorInfoBg,
+                color: token.colorInfoText
+              }}
             >
-              Category
-            </span>
-          )}
-        </Menu.Item>
-        <Menu.Item
-          title={'Post'}
-          key={pathUrlRouter.POST}
-          style={{
-            ...(page === 'post' &&
-              !collapsed && { background: '#dadada', color: 'black' })
-          }}
-        >
-          <div className="icon" style={getMenuStyle('post')}>
-            <Image src={PlaySvg} preview={false} />
+              <Image src={collapsed ? ArrowRight : ArrorLeft} preview={false} />
+            </BaseButton>
           </div>
-          {!collapsed && (
-            <span className="label" style={{ ...getLabelMenuStyle('post') }}>
-              Post
-            </span>
-          )}
-        </Menu.Item>
-        <Menu.Item
-          title={'History Video'}
-          key={pathUrlRouter.HISTORY_VIDEO}
-          style={{
-            ...(page === 'history' && {
-              background: '#dadada',
-              color: 'black'
-            })
-          }}
-        >
-          <div className="icon" style={getMenuStyle('history')}>
-            <Image src={Product} preview={false} />
-          </div>
-          {!collapsed && (
-            <span className="label" style={{ ...getLabelMenuStyle('history') }}>
-              History Video
-            </span>
-          )}
-        </Menu.Item>
-        <Menu.Item
-          title={'Profile'}
-          key={pathUrlRouter.PROFILE}
-          style={{
-            ...(page === 'profile' &&
-              !collapsed && { background: '#dadada', color: 'black' })
-          }}
-        >
-          <div className="icon" style={getMenuStyle('profile')}>
-            <Image src={Profile} preview={false} />
-          </div>
-          {!collapsed && (
-            <span className="label" style={{ ...getLabelMenuStyle('profile') }}>
-              Profile
-            </span>
-          )}
-        </Menu.Item>
-      </Menu>
-      <div className="button-container">
-        <BaseButton
-          className="toggle-button"
-          onClick={handleToggleCollapse}
-          style={{ background: token.colorInfoBg, color: token.colorInfoText }}
-        >
-          <Image src={collapsed ? ArrowRight : ArrorLeft} preview={false} />
-        </BaseButton>
-      </div>
-    </Slider>
+        )}
+      </Slider>
+    </>
   );
 };
 

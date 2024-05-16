@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Col, Form, Row, theme } from 'antd';
+import { Col, Form, Row, Typography, theme } from 'antd';
 import { Card } from '@/components/common/BaseCard/Card';
 import { SaveOutlined } from '@ant-design/icons';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
@@ -11,12 +11,22 @@ import { formatDayjs, getMessageStatus } from '@/helper';
 import BaseFormSelection from '@/shared/common/Form/FormSelection';
 import { OPTIONS_GENDER, formatDate } from '@/constants/constants';
 import BaseFormDatePicker from '@/shared/common/Form/FormDatePicker';
+import { schemaProfile } from '@/utils/yup';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 interface ContentProfileProps {
   dataProfile: Partial<ProfileAdminType>;
   handleFlag: () => void;
+  handleChangeLoading: () => void;
 }
 
-const ContentProfile = ({ dataProfile, handleFlag }: ContentProfileProps) => {
+const { Text } = Typography;
+
+const ContentProfile = ({
+  dataProfile,
+  handleFlag,
+  handleChangeLoading
+}: ContentProfileProps) => {
   const { first_name, last_name, address, phone_number, gender, dob } =
     dataProfile;
   const defaultValues: ProfileAdminType = {
@@ -28,13 +38,15 @@ const ContentProfile = ({ dataProfile, handleFlag }: ContentProfileProps) => {
     gender: gender
   };
   const { token } = theme.useToken();
+  const { t } = useTranslation();
   const {
     handleSubmit,
     control,
     reset,
     formState: { isDirty, errors }
   } = useForm<ProfileAdminType>({
-    defaultValues: defaultValues
+    defaultValues: defaultValues,
+    resolver: yupResolver(schemaProfile)
   });
 
   useEffect(() => {
@@ -49,13 +61,25 @@ const ContentProfile = ({ dataProfile, handleFlag }: ContentProfileProps) => {
   }, [address, dob, first_name, gender, last_name, phone_number, reset]);
 
   const onFinish = async (values: ProfileAdminType) => {
-    await ProfileApi.postDataProfile(values)
-      .then(response => {
+    handleChangeLoading();
+    await ProfileApi.putDataProfile({
+      ...values,
+      dob: formatDayjs(values.dob, formatDate.DATE_REVERSE)
+    })
+      .then((response: any) => {
+        getMessageStatus(response.message, 'success');
+        if (values.first_name) {
+          localStorage.setItem('firstName', values.first_name);
+        } else if (values.last_name) {
+          localStorage.setItem('firstName', values.last_name);
+        }
         handleFlag();
-        getMessageStatus(response.data.message, 'success');
       })
       .catch(err => {
-        getMessageStatus(err, 'error');
+        getMessageStatus(err.message, 'error');
+      })
+      .finally(() => {
+        handleChangeLoading();
       });
   };
 
@@ -74,57 +98,64 @@ const ContentProfile = ({ dataProfile, handleFlag }: ContentProfileProps) => {
         requiredMark={false}
       >
         <Row gutter={[32, 0]}>
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} lg={12}>
             <BaseFormItemHook
               control={control}
               name="first_name"
-              label="First Name: "
+              label={<Text>{t('pages.profile.firstName')}</Text>}
               error={errors['first_name']}
             />
           </Col>
 
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} lg={12}>
             <BaseFormItemHook
               control={control}
               name="last_name"
-              label="Last Name"
+              label={<Text>{t('pages.profile.lastName')}</Text>}
               error={errors['last_name']}
             />
           </Col>
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} lg={12}>
             <BaseFormDatePicker
               control={control}
               name="dob"
-              label="Day of Birth: "
+              label={<Text>{t('pages.profile.dob')}</Text>}
               errors={errors}
             />
           </Col>
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} lg={12}>
             <BaseFormItemHook
               control={control}
               name="address"
-              label="Address: "
+              label={<Text>{t('pages.profile.address')}</Text>}
               error={errors['address']}
             />
           </Col>
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} lg={12}>
             <BaseFormItemHook
               control={control}
               name="phone_number"
-              label="Phone Number: "
+              label={<Text>{t('pages.profile.phone')}</Text>}
               error={errors['phone_number']}
             />
           </Col>
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} lg={12}>
             <BaseFormSelection
               control={control}
               name="gender"
-              label="Gender: "
+              label={<Text>{t('pages.profile.gender')}</Text>}
               errors={errors}
               options={OPTIONS_GENDER}
             />
           </Col>
-          <Col sm={16} lg={8} offset={21}>
+          <Col
+            span={24}
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end'
+            }}
+          >
             <Form.Item>
               <BaseButton
                 type="primary"
@@ -134,7 +165,7 @@ const ContentProfile = ({ dataProfile, handleFlag }: ContentProfileProps) => {
                 disabled={!isDirty}
                 size="middle"
               >
-                Lưu
+                {t('common.save')}
               </BaseButton>
             </Form.Item>
           </Col>

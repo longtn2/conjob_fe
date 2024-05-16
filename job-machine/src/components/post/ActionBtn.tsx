@@ -1,5 +1,6 @@
 import { Popconfirm } from 'antd';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
+import { useTranslation } from 'react-i18next';
 interface ActionBtnProps {
   handleDelete: (key: string | number) => void;
   handleAcceptPost: (id: string | number) => void;
@@ -13,6 +14,7 @@ const ActionBtn: React.FC<ActionBtnProps> = ({
   itemKey,
   col
 }) => {
+  const { t } = useTranslation();
   return (
     <div className={col === 6 ? 'card__action-top' : 'xs_card__action-top'}>
       <Popconfirm
@@ -20,7 +22,7 @@ const ActionBtn: React.FC<ActionBtnProps> = ({
         onConfirm={() => handleDelete(itemKey)}
       >
         <BaseButton size="large" className="btn-delete">
-          Xóa
+          {t("common.delete")}
         </BaseButton>
       </Popconfirm>
       <BaseButton
@@ -28,7 +30,7 @@ const ActionBtn: React.FC<ActionBtnProps> = ({
         className="btn-accept"
         onClick={() => handleAcceptPost(itemKey)}
       >
-        Duyệt
+        {t("common.accept")}
       </BaseButton>
     </div>
   );

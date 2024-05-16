@@ -1,4 +1,5 @@
 import { Post, PostStatus } from '@/api/mock/news.api';
+import dayjs from 'dayjs';
 
 export interface PaymentCard {
   cvc: string;
@@ -64,9 +65,9 @@ export interface ApiResponse {
 //   title?: string;
 //   caption?: string;
 //   author?: string;
-//   type_file?: string;
-//   name_file?: string;
-//   url_file?: string;
+//   file_type?: string;
+//   file_name?: string;
+//   file_url?: string;
 //   created_at?: Date;
 //   like?: number;
 //   centersor: PostStatus;
@@ -181,9 +182,9 @@ export interface InforPost {
   job_type?: string;
   job_title?: string;
   avatar_author?: string;
-  type_file?: string;
-  name_file?: string;
-  url_file?: string;
+  file_type?: string;
+  file_name?: string;
+  file_url?: string;
   created_at?: string;
   statusPost: string;
   is_deleted: boolean;
@@ -224,11 +225,50 @@ export type FilterType =
   | undefined;
 
 export interface ParamsPostVideo {
-  SearchTerm?: string;
+  search_term?: string;
   Page?: number;
   Limit?: number;
   OrderBy?: string;
   start_date?: string;
   end_date?: string;
   status_filter?: FilterType;
+}
+
+export interface DatesInterfaces {
+  start_date: dayjs.Dayjs;
+  end_date: dayjs.Dayjs;
+}
+
+export interface DateErrors {
+  start_date: string;
+  end_date: string;
+}
+
+export interface HistoryVideoFormValues {
+  dates?: {
+    start_date: dayjs.Dayjs | null;
+    end_date: dayjs.Dayjs | null;
+  };
+  id_content?: string;
+  name_author?: string;
+  id_censor?: string;
+  status_censor?: FilterType;
+}
+
+export interface DatesSchemaInterfaces {
+  start_date?: string;
+  end_date?: string;
+}
+
+export interface valueGetUrlS3 {
+  file_name: string;
+  file_type: string;
+}
+
+export type ValueSelectFlags = 'vi' | 'en' | 'jp';
+
+export interface SelectFlags {
+  value: ValueSelectFlags;
+  label: string;
+  flag: string;
 }

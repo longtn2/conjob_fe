@@ -13,7 +13,7 @@ import { BaseCheckbox } from '@/components/common/BaseCheckbox/BaseCheckbox';
 import layoutIcon from '@/assets/images/layout.png';
 import FilterSection from '@/components/post/FilterSection';
 import BulkActions from '@/components/post/BulkActions';
-import { formatDayjs } from '@/helper';
+import { formatDayjs, getMessageStatus } from '@/helper';
 import { formatDate } from '@/constants/constants';
 import { BaseTag } from '@/components/common/BaseTag';
 import { EmptyPage } from '../EmptyPage';
@@ -66,8 +66,8 @@ const PostContent: React.FC<ICheckbox> = () => {
               }
             };
 
-            if (item.type_file === 'Img') {
-              return SightengineApi.getImg(item.url_file)
+            if (item.file_type === 'Img') {
+              return SightengineApi.getImg(item.file_url)
                 .then(res => {
                   item.centersor.action = res.data.summary.action;
                   if (item.centersor.action === 'reject') {
@@ -77,7 +77,7 @@ const PostContent: React.FC<ICheckbox> = () => {
                   return item;
                 })
                 .catch(error => {
-                  console.error('Error processing image:', error);
+                  getMessageStatus(error.message, 'error');
                   return item;
                 });
             }
@@ -90,7 +90,7 @@ const PostContent: React.FC<ICheckbox> = () => {
         setNews(updatedNews);
       })
       .catch(error => {
-        console.error('Error fetching posts:', error);
+        getMessageStatus(error.message, 'error');
       })
       .finally(() => {
         setLoading(false);
@@ -104,7 +104,7 @@ const PostContent: React.FC<ICheckbox> = () => {
           fetchData();
         })
         .catch(error => {
-          console.log('Error fetching posts:', error);
+          getMessageStatus(error.message, 'error');
         });
     } else {
       Promise.all(
@@ -114,7 +114,9 @@ const PostContent: React.FC<ICheckbox> = () => {
           setSelectedPosts([]);
           fetchData();
         })
-        .catch();
+        .catch(error => {
+          getMessageStatus(error.message, 'error');
+        });
     }
   };
 
@@ -125,7 +127,7 @@ const PostContent: React.FC<ICheckbox> = () => {
           fetchData();
         })
         .catch(error => {
-          console.error('Failed to accept post:', error);
+          getMessageStatus(error.message, 'error');
         });
     } else {
       Promise.all(
@@ -136,7 +138,7 @@ const PostContent: React.FC<ICheckbox> = () => {
           fetchData();
         })
         .catch(error => {
-          console.log('Failed to active seleted posts:', error);
+          getMessageStatus(error.message, 'error');
         });
     }
   };
@@ -281,7 +283,7 @@ const PostContent: React.FC<ICheckbox> = () => {
                               description={post.caption || ''}
                               date={post.date || ''}
                               author={post.author}
-                              avatar={post.url_file}
+                              avatar={post.file_url}
                               postId={String(post.id)}
                               col={getColSpan()}
                             />
@@ -316,7 +318,7 @@ const PostContent: React.FC<ICheckbox> = () => {
                               description={post.caption || ''}
                               date={post.date || ''}
                               author={post.author}
-                              avatar={post.url_file}
+                              avatar={post.file_url}
                               postId={String(post.id)}
                               col={getColSpan()}
                             />

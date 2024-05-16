@@ -3,13 +3,14 @@ import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 import { BaseInput } from '@/components/common/BaseInput/index';
 import { RedoOutlined } from '@ant-design/icons';
 import { DatePicker } from 'antd';
+import { useTranslation } from 'react-i18next';
 interface FilterPostProps {
   handleFilter: (filter: string) => void;
 }
 
 const FilterPost: React.FC<FilterPostProps> = ({ handleFilter }) => {
   const [form] = Form.useForm();
-
+  const { t } = useTranslation();
   const { RangePicker } = DatePicker;
 
   const handleSearchClick = (value: any) => {
@@ -59,7 +60,7 @@ const FilterPost: React.FC<FilterPostProps> = ({ handleFilter }) => {
             <Col span={3}>
               <Form.Item name="search">
                 <BaseButton size="large" className="btn-find" htmlType="submit">
-                  Tìm kiếm
+                  {t("common.search")}
                 </BaseButton>
               </Form.Item>
             </Col>
