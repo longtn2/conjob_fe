@@ -10,7 +10,9 @@ export const CustomButton = styled(AntdButton)`
   transition-duration: 0.3s;
   outline: none;
   border: none;
+  line-height: normal;
   min-width: 60px;
+  text-align: center;
 
   &.btn-delete-all {
     color: var(--text-color);

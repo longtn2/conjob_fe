@@ -40,7 +40,7 @@ export const SelectContainer = styled(AntSelect)<InternalSelectProps>`
     }
 
     .ant-select-selector {
-      padding-inline-start: 11px;
+      padding: 11px;
     }
   }
 `;

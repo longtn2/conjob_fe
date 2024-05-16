@@ -14,9 +14,14 @@ const BaseFormItemHook = ({
   placeholder,
   ...formItemProps
 }: BaseFormItemHookProps) => {
+  const onTrim = value => {
+    const trimmedValue = value.replace(/[ ]{2,}/gi, ' ').replace(/\n +/, '\n');
+    return trimmedValue;
+  };
+
   return (
     <Form.Item
-      label={formItemProps.label?.toString()}
+      label={formItemProps.label}
       name={formItemProps.name.toString()}
       validateStatus={error && 'error'}
       help={error || null}
@@ -25,8 +30,19 @@ const BaseFormItemHook = ({
         name={formItemProps.name.toString()}
         control={control}
         rules={{ required: true }}
-        render={({ field }) => {
-          return <Input {...field} placeholder={placeholder} />;
+        render={({ field: { onChange, ...fieldProps } }) => {
+          const handleChange = e => {
+            const trimmedValue = onTrim(e.target.value);
+            onChange(trimmedValue);
+          };
+
+          return (
+            <Input
+              {...fieldProps}
+              placeholder={placeholder}
+              onChange={handleChange}
+            />
+          );
         }}
       />
     </Form.Item>

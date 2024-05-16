@@ -42,6 +42,9 @@ export const ContainerLayout = styled.div`
   .ant-layout-sider {
     padding: 5px;
   }
+  span.label {
+    font-size: 1vw;
+  }
   .ant-menu {
     margin-top: 7%;
     font-size: 16px;
@@ -51,23 +54,26 @@ export const ContainerLayout = styled.div`
   }
   ul.ant-menu.ant-menu-root {
     border: none !important;
+    margin-left: 0.2rem;
+    padding: 3rem 0.2rem;
   }
   .header-layout {
     height: 5rem;
   }
   .ant-layout-sider .icon {
-    display: inline-flex;
+    display: flex;
     width: 40px;
     height: 40px;
     box-shadow: 0 4px 6px rgb(0 0 0 0/12%);
     border-radius: 6px;
     justify-content: center;
     align-items: center;
-    margin-right: 11px;
-    vertical-align: middle;
   }
   .ant-menu-item {
-    margin: 10px 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
   }
   .ant-menu-title-content {
     display: flex;
@@ -78,6 +84,16 @@ export const ContainerLayout = styled.div`
   }
   .header-layout {
     justify-content: flex-end;
+  }
+
+  @media screen and (max-width: 768px) {
+    .header-layout {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
   }
 
   .demo-logo-vertical {
@@ -122,6 +138,9 @@ export const ContainerLayout = styled.div`
     align-items: center;
     flex-direction: column;
   }
+  .content-profile {
+    text-align: center;
+  }
   h3.ant-typhography {
     color: #dadada;
   }
@@ -144,5 +163,8 @@ export const ContainerLayout = styled.div`
   }
   .ant-menu-item .ant-menu-item-selected .ant-menu-item-only-child {
     width: 50%;
+  }
+  li.ant-menu-item .menu-item {
+    margin-top: 0.5rem;
   }
 `;

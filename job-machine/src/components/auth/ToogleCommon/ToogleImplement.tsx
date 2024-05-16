@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { ContainerToogleImplement } from './ToogleImplement.styled';
 import { DataToogle, TypeActivePanel } from '@/interfaces/interfaces';
 import {
@@ -8,6 +8,7 @@ import {
   dataToogleSignIn,
   dataToogleSignUp
 } from '@/constants/constants';
+import { useTranslation } from "react-i18next";
 const { Title, Paragraph } = Typography;
 
 interface ToogleImplementProps {
@@ -21,6 +22,7 @@ const ToogleImplement = ({
   handleClick,
   isActive
 }: ToogleImplementProps) => {
+  const { t } = useTranslation();
   const [toogleData, setToogleData] = useState<DataToogle>((): DataToogle => {
     return state === SIGN_IN ? dataToogleSignIn : dataToogleSignUp;
   });
@@ -34,15 +36,15 @@ const ToogleImplement = ({
         isActive || 'active'
       }`}
     >
-      <Title>{toogleData.titleToogle}</Title>
-      <Paragraph>{toogleData.subTitleToogle}</Paragraph>
-      <BaseButton
+      <Title>{t("pages.auth.welcome")}</Title>
+      <Paragraph>{t("pages.auth.hello")}</Paragraph>
+      {/* <BaseButton
         onClick={handleClick}
         className="ant-btn-secondary"
         size="large"
       >
         {toogleData.buttonToogle}
-      </BaseButton>
+      </BaseButton> */}
     </ContainerToogleImplement>
   );
 };
