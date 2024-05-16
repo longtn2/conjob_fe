@@ -1,5 +1,6 @@
-import { EMAIL_REGEX } from '@/constants/constants';
+
 import * as yup from 'yup';
+import { EMAIL_REGEX } from '../constants/constants';
 
 export const schemaRegister = yup.object().shape({
   name: yup.string().min(8).max(32).required(),

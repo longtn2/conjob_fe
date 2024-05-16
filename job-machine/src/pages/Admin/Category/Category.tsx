@@ -1,9 +1,8 @@
 import React from 'react';
 import { ContainerCategory } from './Category.styled';
 import { Flex } from 'antd';
-import FormAddCategory from '@/components/category/FormAddCategory';
-import SearchCategory from '@/components/category/SearchCategory';
-import TableCategory from '@/components/category/TableCategory';
+import FormAddCategory from '../../../components/category/FormAddCategory';
+import TableCategory from '../../../components/category/TableCategory';
 
 const Category = () => {
   return (

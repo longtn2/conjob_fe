@@ -1,12 +1,13 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
-import { TypeActivePanel } from '@/interfaces/interfaces';
+import { TypeActivePanel } from '../../interfaces/interfaces';
 import WebFont from 'webfontloader';
 import { Body, Container } from './Auth.styled';
-import { useNavigate } from 'react-router-dom';
 import FormContainer from '@/components/auth/FormCommon/FormContainer';
 import TooglePanel from '@/components/auth/ToogleCommon/TooglePanel';
-import { getCookie } from '@/utils/utils';
-import { SIGN_IN, SIGN_UP, pathUrlRouter } from '@/constants/constants';
+import { SIGN_IN, SIGN_UP } from '@/constants/constants';
+
+
 const AuthPage = () => {
   const [typePanel, setTypePanel] = useState<TypeActivePanel>('sign-in');
   const handleChange = () => {
@@ -23,21 +24,10 @@ const AuthPage = () => {
       },
     });
   }, []);
-
-  const token = getCookie('token');
-  const refreshToken = getCookie('refreshToken');
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (token && refreshToken) {
-      navigate(pathUrlRouter.HOME);
-    }
-  }, []);
-
   return (
     <Body>
       <Container>
-        <div className={typePanel === 'sign-in' ? '' : 'active'}>
+        <div className={`${typePanel === SIGN_IN || 'active'}`}>
           <FormContainer state={typePanel} />
           <TooglePanel
             handleChange={handleChange}

@@ -1,10 +1,11 @@
+// sagas.js
 import { take, call, put } from 'redux-saga/effects';
 import {
   LoginSuccessAction,
   LogoutAction,
   RegisterSuccessAction,
-} from '@/interfaces';
-import { fakeCallApi, fakeCallApiRegister } from '@/helper';
+} from '../../interfaces';
+import { fakeCallApi, fakeCallApiRegister } from '../../helper';
 import { SagaIterator } from 'redux-saga';
 import {
   loginFail,
@@ -12,7 +13,7 @@ import {
   logout,
   registerFail,
   registerSuccess,
-} from '@/redux/actions/authAction';
+} from '../actions/authAction';
 import { AuthApi } from '@/api/auth/AuthApi';
 
 function* loginSaga(action: LoginSuccessAction): SagaIterator {
@@ -28,9 +29,9 @@ function* loginSaga(action: LoginSuccessAction): SagaIterator {
 }
 
 function* registerSaga(action: RegisterSuccessAction): SagaIterator {
-
   try {
     const { name, email, password } = action.payload;
+
     const response = yield call(fakeCallApiRegister, {
       name,
       email,

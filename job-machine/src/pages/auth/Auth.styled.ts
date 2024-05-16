@@ -47,7 +47,17 @@ export const Container = styled.div`
   }
 
   .ant-btn {
+<<<<<<< HEAD
+    font-size: 12px;
     padding: 10px 45px;
+
+=======
+    background-color: #512da8;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 3px solid #fff;
+>>>>>>> 11f5256072df7c1444641586ebb2a5999feaac00
     border-radius: 8px;
     font-weight: 600;
     letter-spacing: 0.5px;

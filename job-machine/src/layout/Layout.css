@@ -25,6 +25,7 @@
   margin-top: 13px;
   margin-left: 13px;
   padding: 24px;
-  min-height: 700px;
+  min-height: 850px;
+  background-color: white;
   z-index: 0;
 }

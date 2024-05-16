@@ -1,32 +1,24 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Typography, Form, Input } from 'antd';
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import FormIcon from './FormIcon';
 import { ContainerForm } from './FormContainer.styled';
 import { WrapperFormItem } from './WrapperFormItem.styled';
 import { useDispatch } from 'react-redux';
+import {
+  loginRequest,
+  registerRequest,
+} from '../../../redux/actions/authAction';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import {
-  Data,
-  FormLoginType,
-  FormRegisterType,
-  TypeActivePanel
-} from '@/interfaces/interfaces';
+import { Data, FormLoginType, FormRegisterType, TypeActivePanel } from '@/interfaces/interfaces';
+import { SIGN_IN, dataSignIn, dataSignUp } from '@/constants/constants';
 import { schemaLogin, schemaRegister } from '@/utils/yup';
-import {
-  RESPONSE_ERROR,
-  RESPONSE_SUCCESS,
-  SIGN_IN,
-  dataSignIn,
-  dataSignUp,
-  pathUrlRouter
-} from '@/constants/constants';
 import { AuthApi } from '@/api/auth/AuthApi';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
-import { registerRequest } from '@/redux/actions/authAction';
-import { getMessageStatus } from '@/helper';
 
 const { Title } = Typography;
 
@@ -35,9 +27,10 @@ type FormContainerProps = {
 };
 
 const FormContainer = ({ state }: FormContainerProps) => {
-  const [formData, setFormData] = useState<Data>(dataSignIn);
-  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [formData, setFormData] = useState<Data>(dataSignIn);
+  const checkSignIn = state === 'sign-in';
+
   const dispatch = useDispatch();
   const { handleSubmit, control, reset } = useForm<
     FormLoginType | FormRegisterType
@@ -45,11 +38,11 @@ const FormContainer = ({ state }: FormContainerProps) => {
     defaultValues: {
       name: '',
       email: '',
-      password: ''
+      password: '',
     },
     resolver: yupResolver<FormLoginType | FormRegisterType>(
       state === SIGN_IN ? schemaLogin : schemaRegister
-    )
+    ),
   });
   let timeoutId: NodeJS.Timeout;
 
@@ -72,29 +65,22 @@ const FormContainer = ({ state }: FormContainerProps) => {
   }, [state]);
 
   const handleSubmitForm = async (values: FormRegisterType | FormLoginType) => {
-    setLoading(true);
-    if (state === 'sign-in') {
+    if (checkSignIn) {
       const { email, password } = values;
       const valuesLogin = {
         email: email,
-        password: password
+        password: password,
       };
       await AuthApi.apiLogin(valuesLogin)
         .then((res: any) => {
           Cookies.set('token', res.data.token);
           Cookies.set('refreshToken', res.data.refreshToken);
-          localStorage.setItem('firstName', res.data.first_name);
-          localStorage.setItem('lastName', res.data.last_name);
-          localStorage.setItem('avatar', res.data.avatar);
-          navigate(pathUrlRouter.HOME);  
-          getMessageStatus(res.data.message, RESPONSE_SUCCESS);
+          localStorage.setItem('firstName', res.data.firstName);
+          localStorage.setItem('lastName', res.data.lastName);
+          navigate('/');
         })
         .catch(err => {
-          const { message, status_code } = err;
-          getMessageStatus(message, RESPONSE_ERROR);
-        })
-        .finally(() => {
-          setLoading(false);
+          //TODO handle Error
         });
     } else {
       dispatch(registerRequest(values as FormRegisterType));
@@ -103,9 +89,9 @@ const FormContainer = ({ state }: FormContainerProps) => {
 
   return (
     <ContainerForm className={`${state}`}>
-      <Form onFinish={handleSubmit(handleSubmitForm)} disabled={loading}>
+      <Form onFinish={handleSubmit(handleSubmitForm)}>
         <Title level={1}>{formData.title}</Title>
-        <span className="sub-title">{formData.subTitle1}</span>
+        <span className='sub-title'>{formData.subTitle1}</span>
         <FormIcon />
         <WrapperFormItem>
           {formData.fieldInput.map(value => (
@@ -116,7 +102,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
               render={({ field, fieldState }) => {
                 return (
                   <Form.Item
-                    validateStatus={fieldState.error?.message && 'error'}
+                    validateStatus={fieldState.error?.message ? 'error' : ''}
                     help={fieldState.error?.message || null}
                     style={{ padding: 0 }}
                   >
@@ -131,15 +117,8 @@ const FormContainer = ({ state }: FormContainerProps) => {
             />
           ))}
         </WrapperFormItem>
-        <a href="#a">{formData.subTitle2}</a>
-        <BaseButton
-          htmlType="submit"
-          className="ant-btn-primary"
-          loading={loading}
-          size="large"
-        >
-          {formData.contentButton}
-        </BaseButton>
+        <a href='#a'>{formData.subTitle2}</a>
+        <BaseButton htmlType='submit'>{formData.contentButton}</BaseButton>
       </Form>
     </ContainerForm>
   );

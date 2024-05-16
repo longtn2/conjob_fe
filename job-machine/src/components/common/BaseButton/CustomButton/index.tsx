@@ -4,6 +4,7 @@ import {
   ButtonProps as AntButtonProps,
   Button,
 } from 'antd';
+
 import { BtnContainer } from './CustomButton.styled';
 import { Severity } from '@/interfaces/interfaces';
 

@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
-import { authInitialState } from '@/constants/index';
-import { AuthAction, AuthActionTypes, AuthState } from '@/interfaces';
+import { AuthAction, AuthActionTypes, AuthState } from '../../interfaces';
+import { authInitialState } from '../../constants';
 
 const authReducer: Reducer<AuthState, AuthAction> = (
   state = authInitialState,

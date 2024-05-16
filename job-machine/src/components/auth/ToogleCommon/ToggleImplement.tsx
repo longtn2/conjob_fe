@@ -1,13 +1,14 @@
+import React from 'react';
 import { Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { ContainerToogleImplement } from './ToogleImplement.styled';
 import { DataToogle, TypeActivePanel } from '@/interfaces/interfaces';
-import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 import {
   SIGN_IN,
   dataToogleSignIn,
   dataToogleSignUp,
 } from '@/constants/constants';
+import { BaseButton } from '@/components/common/BaseButton/BaseButton';
 const { Title, Paragraph } = Typography;
 
 interface ToogleImplementProps {
@@ -28,13 +29,13 @@ const ToogleImplement = ({
   }, [state]);
   return (
     <ContainerToogleImplement
-      className={`${state === SIGN_IN ? "toogle-left" : "toogle-right"} ${
-        isActive || "active"
+      className={`${state === SIGN_IN ? 'toogle-left' : 'toogle-right'} ${
+        isActive || 'active'
       }`}
     >
       <Title>{toogleData.titleToogle}</Title>
       <Paragraph>{toogleData.subTitleToogle}</Paragraph>
-      <BaseButton onClick={handleClick} className='ant-btn-secondary'>
+      <BaseButton onClick={handleClick} className='hidden'>
         {toogleData.buttonToogle}
       </BaseButton>
     </ContainerToogleImplement>
