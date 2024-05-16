@@ -1,0 +1,69 @@
+{
+  "pages": {
+    "auth": {
+      "title": "Đăng nhập",
+      "placeholderPassword": "Mật khẩu",
+      "welcome": "Chào bạn đã đến",
+      "hello": "Nhập thông tin của bạn để được đi tới Conjob",
+      "buttonSignIn": "Đăng nhập",
+      "validateEmailRequired": "Không được để trống",
+      "validateEmailRegex": "Email của bạn không chứa các ký tự @ .com",
+      "validatePasswordRequired": "Không được để trống ô này",
+      "validatePasswordRegex": "Mật khẩu phải chứa ký tự in hoa, ký tự đặc biệt"
+    },
+    "slider": {
+      "introduce": "Dễ gần khó xa",
+      "censor": "Kiểm duyệt",
+      "history": "Lịch sử kiểm duyệt",
+      "profile": "Hồ sơ",
+      "logout": "Đăng xuất"
+    },
+    "censor": {
+      "checkAll": "Duyệt tất cả",
+      "layoutPost": "Bố cục bài viết"
+    },
+    "history": {
+      "idContent": "Mã bài viết",
+      "nameAuthor": "Tên tác giả",
+      "reset": "Đặt lại",
+      "title": "Danh sach nội dung",
+      "table": {
+        "index": "STT",
+        "content": "Nội dung",
+        "genre": "Thể loại: ",
+        "see": "Xem",
+        "creator_at": "Thời gian tạo",
+        "author": "Người đăng bài",
+        "statusPost": "Trạng thái kiểm duyệt",
+        "active": "Đã Duyệt",
+        "noAction": "Chưa Duyệt",
+        "reject": "Vi Phạm",
+        "desc": "DESC",
+        "asc": "ASC"
+      },
+      "modal": {
+        "content": "Bạn có muốn xóa bài viết {{author}} này không ???"
+      },
+      "name_author": "Tên người đăng bài"
+    },
+    "profile": {
+      "fullName": "Họ và tên",
+      "firstName": "Họ",
+      "lastName": "Tên",
+      "dob": "Ngày sinh",
+      "roleName": "Vai trò",
+      "gender": "Giới tính",
+      "address": "Địa chỉ",
+      "phone": "Số điện thoại",
+      "choose": "Chọn 1 bức ảnh",
+      "upload": "Tải lên"
+    }
+  },
+  "common": {
+    "delete": "Xoá",
+    "accept": "Duyệt",
+    "search": "Tìm kiếm",
+    "save": "Lưu",
+    "close": "Đóng"
+  }
+}

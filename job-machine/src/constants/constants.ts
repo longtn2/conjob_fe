@@ -1,10 +1,13 @@
-import { Button, Slider, TableColumnsType } from 'antd';
+import { Breakpoint } from 'antd';
 import {
-  CategoryData,
   Data,
   DataToogle,
-  ProfileAdminType
+  ProfileAdminType,
+  SelectFlags
 } from '@/interfaces/interfaces';
+import VietNameseFlags from '@/assets/flags/VietNamFlag.svg';
+import EnglishFlags from '@/assets/flags/EnglandFlag.svg';
+import JanpaneseFlags from '@/assets/flags/JapanFlag.svg';
 export const SIGNIN = 'SIGNIN';
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNUP = 'SIGNUP';
@@ -73,6 +76,8 @@ export const SIGN_IN = 'sign-in';
 export const SIGN_UP = 'sign-up';
 
 export const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+export const PASSWORD_REGEX =
+  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,}$/;
 
 export const columns = [
   {
@@ -108,7 +113,8 @@ export const pathUrlRouter = {
   POST: '/post',
   CATEGORY: '/category',
   HISTORY_VIDEO: '/history',
-  PROFILE: '/profile'
+  PROFILE: '/profile',
+  LOG_OUT: '/logout'
 };
 
 export const pathUrlAuthApi = {
@@ -119,7 +125,7 @@ export const pathUrlAuthApi = {
 
 export const pathUrlProfileApi = {
   GET_PROFILE: 'api/v1/user/profile',
-  POST_PROFILE_IMAGE: 'api/v1/user/upload=avatar',
+  POST_PROFILE_IMAGE: 'api/v1/user/upload-avatar',
   POST_PROFILE_CHANGE: 'api/v1/user/update-profile'
 };
 
@@ -149,9 +155,9 @@ export const TYPE_JPEG = 'image/jpeg';
 export const TYPE_PNG = 'image/png';
 
 export const OPTIONS_GENDER = [
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' },
-  { value: 'other', label: 'Other' }
+  { value: 'male', label: 'Male', key: 'male' },
+  { value: 'female', label: 'Female', key: 'female' },
+  { value: 'other', label: 'Other', key: 'other' }
 ];
 
 export const profileAdminData: ProfileAdminType = {
@@ -171,22 +177,24 @@ export const profileAdminData: ProfileAdminType = {
 };
 
 export const STATUS_CENSOR = [
-  { value: 'accept', label: 'Đã duyệt' },
-  { value: 'deleted', label: 'Đã xóa' },
-  { value: 'not_yet_approved', label: 'Chưa duyệt' }
+  { value: 'is_actived', label: 'Active', key: 'active' },
+  { value: 'is_deleted', label: 'Deleted', key: 'reject' },
+  { value: 'not_yet_approved', label: 'No Action', key: 'noAction' }
 ];
 
 export const ORDER_BY_POST = [
-  { value: 'desc', label: 'DESC' },
-  { value: 'asc', label: 'ASC' }
+  { value: 'desc', label: 'DESC', key: 'desc' },
+  { value: 'asc', label: 'ASC', key: 'asc' }
 ];
 
-export const PER_PAGE_CENSOR_HISTORY = 4;
+export const PER_PAGE_CENSOR_HISTORY = 5;
 
 export const formatDate = {
   DATE_TIME_SECONDS: 'DD-MM-YYYY HH:mm:ss',
   DATE_TIME: 'DD-MM-YYYY HH:mm',
+  DATE_TIME_YEAR: 'YYYY-MM-DD HH:mm',
   DATE: 'DD-MM-YYYY',
+  DATE_REVERSE: 'YYYY-MM-DD',
   TIME: 'HH:mm',
   TIME_SECONDS: 'HH:mm:ss'
 };
@@ -196,7 +204,6 @@ export const PATH_URL_POST_API = {
   active: 'api/v1/admin/post/active',
   allpost: 'api/v1/admin/post'
 };
-
 
 export const SIGHTENGINE = {
   workflow: 'wfl_g5IE1sK45fvgtphGpahhV',
@@ -209,3 +216,41 @@ export const URL_IMG_API_SIGHTENGINE =
 
 export const URL_VIDEO_API_SIGHTENGINE =
   'https://api.sightengine.com/1.0/video/check-workflow-sync.json';
+
+export const INPUT_REGEX = /\s+/g;
+
+export const RESPONSIVE_BREAK_POINT: Breakpoint[] = [
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'xxl'
+];
+
+export const PHONE_REGEX = /^(84|0)(3|5|7|8|9)\d{8}$/;
+
+export const NOT_NUMBER_REGEX = /^[^\d]+$/;
+
+export const BREAK_POINT_DESCRIPTION = {
+  xs: 1,
+  sm: 1,
+  md: 1,
+  lg: 1,
+  xl: 1,
+  xxl: 1
+};
+
+export const REGEX_FILE_NAME = /\.[^.]+$/;
+
+export const LANGUAGES_OPTIONS: SelectFlags[] = [
+  { value: 'vi', label: 'Vietnamese', flag: VietNameseFlags },
+  { value: 'en', label: 'England', flag: EnglishFlags },
+  { value: 'jp', label: 'Japan', flag: JanpaneseFlags }
+];
+
+export const breakPointSize = {
+  MOBILE: 0,
+  TABLET: 768,
+  DESKTOP: 1024
+};

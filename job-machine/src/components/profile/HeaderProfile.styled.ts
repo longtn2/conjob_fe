@@ -2,10 +2,11 @@ import { Card } from 'antd';
 import { styled } from 'styled-components';
 
 export const ContainerHeaderProfile = styled(Card)`
-  .ant-row {
-    flex-flow: nowrap;
+  @media screen and (max-width: 768px) {
+    .ant-row {
+      margin: 0 auto;
+    }
   }
-
   .ant-col
     .col-image
     .ant-col-xs-24
@@ -29,6 +30,18 @@ export const ContainerHeaderProfile = styled(Card)`
     border-radius: 50%;
     bottom: -2%;
     right: 15%;
+  }
+  @media screen and (max-width: 641px) {
+    .icons {
+      bottom: 0;
+      right: 24%;
+    }
+  }
+
+  @media screen and (min-width: 641px) and (max-width: 1024px) {
+    .icons {
+      right: 19%;
+    }
   }
   .icons:hover {
     background-color: #f2f5f2;

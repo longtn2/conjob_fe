@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 
 export const ContainerAdminProfile = styled.div`
   max-width: 1200px;
-  max-height: 600px;
   margin: 0 auto;
   .content-profile {
     margin: 2rem 0 0 0;
@@ -10,6 +9,6 @@ export const ContainerAdminProfile = styled.div`
     max-height: fit-content;
   }
   .ant-card {
-    padding: 5%;
+    padding: 2%;
   }
 `;

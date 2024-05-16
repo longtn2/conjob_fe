@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { historyApi } from '@/api/history/historyApi';
+import React, { useState } from 'react';
+import { InforPost, ResponseDataPostAPI } from '@/interfaces/interfaces';
 import {
-  InforPost,
-  ParamsPostVideo,
-  ResponseDataPostAPI
-} from '@/interfaces/interfaces';
-import {
+  Button,
   Card,
   Col,
-  Pagination,
+  Modal,
   Row,
+  Spin,
   Table,
   Tag,
   theme,
@@ -20,14 +17,30 @@ import { useForm } from 'react-hook-form';
 import {
   ORDER_BY_POST,
   PER_PAGE_CENSOR_HISTORY,
-  formatDate
+  RESPONSIVE_BREAK_POINT
 } from '@/constants/constants';
-import { formatDayjs, getStatusPost, statusCode } from '@/helper';
+import { getMessageStatus, statusCode } from '@/helper';
 import DrawerCensorshipVideo from './DrawerCensorshipVideo';
+import { PostApi } from '@/api/post/PostApi';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Link, Text } = Typography;
 
-const ContentCensorshiprVideo = () => {
+interface ContentCensorshipVideoProps {
+  dataHistory: ResponseDataPostAPI;
+  handlePage: (number: number) => void;
+  page: number;
+  getLoading: () => boolean;
+  handleFlag: () => void;
+}
+
+const ContentCensorshiprVideo = ({
+  dataHistory,
+  handlePage,
+  handleFlag,
+  page,
+  getLoading
+}: ContentCensorshipVideoProps) => {
   const { token } = theme.useToken();
   const {
     handleSubmit,
@@ -35,124 +48,108 @@ const ContentCensorshiprVideo = () => {
     reset,
     formState: { errors }
   } = useForm();
-  const [dataHistory, setDataHistory] = useState<
-    ResponseDataPostAPI | undefined
-  >(undefined);
-
-  const [page, setPage] = useState(1);
+  const { t } = useTranslation();
   const [selectedItems, setSelectedItems] = useState<InforPost | undefined>(
     undefined
   );
   const [isOpen, setIsOpen] = useState(false);
-
-  const getParams = () => {
-    return {
-      Page: page,
-      Limit: PER_PAGE_CENSOR_HISTORY,
-      status_filter: undefined
-    };
-  };
-  const fetchData = async () => {
-    await historyApi.apiGetAll(getParams()).then(res => {
-      if (res.data) {
-        const formattedDataHistory: ResponseDataPostAPI = {
-          ...res.data,
-          items: res.data.items.map(values => {
-            const formattedCreatedAt = formatDayjs(
-              values.created_at,
-              formatDate.DATE_TIME_SECONDS
-            );
-            const status = getStatusPost(values.is_actived, values.is_deleted);
-            return {
-              ...values,
-              created_at: formattedCreatedAt,
-              statusPost: status
-            };
-          })
-        };
-        setDataHistory(formattedDataHistory);
-      }
-    });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [page]);
-
+  const loading = getLoading();
   const columns = [
     {
-      title: 'STT',
+      title: <Title level={5}>{t('pages.history.table.index')}</Title>,
       key: 'index',
       dataIndex: 'index',
-      render: (text, listUsers, index) =>
-        index + 1 + (pagination.current - 1) * pagination.pageSize
+      render: (text, listUsers, index) => (
+        <span className="responsive-content-table">
+          {index + 1 + (pagination.current - 1) * pagination.pageSize}
+        </span>
+      )
     },
     {
-      title: 'Nội dung',
+      title: <Title level={5}>{t('pages.history.table.content')}</Title>,
       dataIndex: 'title',
       key: 'title',
       width: '40%',
       render: ({ title }, items) => {
         return (
           <div>
-            <div className="content-caption">
+            <div className="responsive-content-table">
               <Text>
-                Thể loại: <span>{items.title}</span>
+                {t('pages.history.table.genre')} <span>{items.title}</span>
               </Text>
             </div>
-            <div className="action-caption">
+            <div
+              className={`${items.statusPost === 'active' && 'action-caption'}`}
+            >
               <Link
                 className="read-more"
                 onClick={() => handleClickShowMore(items)}
               >
-                Xem
+                {t('pages.history.table.see')}
               </Link>
-              <Link>Xóa</Link>
+              {items.statusPost === 'active' && (
+                <Link onClick={() => modalShowDelete(items)}>
+                  {t('common.delete')}
+                </Link>
+              )}
             </div>
           </div>
         );
       },
-      ellipsis: true
+      ellipsis: true,
+      responsive: RESPONSIVE_BREAK_POINT
     },
     {
-      title: 'Thời gian tạo',
+      title: <Title level={5}>{t('pages.history.table.creator_at')}</Title>,
       dataIndex: 'created_at',
       key: 'created_at',
-      width: '15%'
+      width: '15%',
+      render: created_at => (
+        <span className="responsive-content-table">{created_at}</span>
+      ),
+      responsive: RESPONSIVE_BREAK_POINT
     },
     {
-      title: 'Người đăng bài',
+      title: <Title level={5}>{t('pages.history.table.author')}</Title>,
       dataIndex: 'author',
       key: 'author',
       width: '15%',
-      ellipsis: true
+      ellipsis: true,
+      render: text => <span className="responsive-content-table">{text}</span>,
+      responsive: RESPONSIVE_BREAK_POINT
     },
     {
-      title: 'Trạng thái kiểm duyệt',
+      title: <Title level={5}>{t('pages.history.table.statusPost')}</Title>,
       dataIndex: 'statusPost',
       key: 'statusPost',
       width: '20%',
       render: statusPost => {
         const { color, message } = statusCode[statusPost];
         return (
-          <Tag color={color} key={message}>
-            {message.toUpperCase()}
+          <Tag
+            color={color}
+            key={message}
+            className="responsive-content-table"
+            style={{ padding: '0.4vw', borderRadius: '0.25vw' }}
+          >
+            {t(`pages.history.table.${statusPost}`)}
           </Tag>
         );
       },
-      ellipsis: true
+      ellipsis: true,
+      responsive: RESPONSIVE_BREAK_POINT
     }
   ];
 
   const handleChangePage = newPage => {
-    setPage(newPage);
+    handlePage(newPage);
   };
 
   const handlePageSizeChange = (pageSize: number) => {
     const newPerPage = pageSize;
     const newCurrentPage =
       Math.ceil(((page - 2) * PER_PAGE_CENSOR_HISTORY) / newPerPage) + 1;
-    setPage(newCurrentPage);
+    handlePage(newCurrentPage);
   };
   const pagination = {
     current: page,
@@ -165,53 +162,96 @@ const ContentCensorshiprVideo = () => {
     setSelectedItems(values);
     setIsOpen(true);
   };
-
+  const handleDeleteItems = (id: number) => {
+    PostApi.apiDelete(id)
+      .then((response: any) => {
+        handleFlag();
+        Modal.destroyAll();
+        getMessageStatus(response.message, 'success');
+      })
+      .catch(error => {
+        getMessageStatus(error.message, 'error');
+      });
+  };
+  const modalShowDelete = (item: InforPost) => {
+    Modal.warning({
+      title: <Title level={4}>{t('common.delete')}</Title>,
+      content: (
+        <Text>{t('pages.history.modal.content', { author: item.author })}</Text>
+      ),
+      footer: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            marginTop: '0.8rem'
+          }}
+        >
+          <Button
+            type="primary"
+            danger
+            onClick={() => handleDeleteItems(item.id)}
+            style={{ marginRight: '10px' }}
+          >
+            {t('common.delete')}
+          </Button>
+          <Button type="default" onClick={() => Modal.destroyAll()}>
+            {t('common.close')}
+          </Button>
+        </div>
+      )
+    });
+  };
   const handleCloseDrawer = () => {
     setIsOpen(false);
     setSelectedItems(undefined);
   };
+
   return (
-    <Card
-      style={{
-        padding: '0 24px',
-        background: token ? token.colorBgContainer : '#ffffff'
-      }}
-    >
-      <Row gutter={[64, 32]}>
-        <Col span={24}>
-          <div
-            className="header-title"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <Title level={2}>Danh sách nội dung</Title>
-            <BaseFormSelection
-              control={control}
-              options={ORDER_BY_POST}
-              name="order_by"
-              className="header-filter"
+    <Spin spinning={loading} className="spin-loading-content">
+      <Card
+        style={{
+          padding: '0 24px',
+          background: token ? token.colorBgContainer : '#ffffff'
+        }}
+      >
+        <Row gutter={[64, 32]}>
+          <Col span={24}>
+            <div
+              className="header-title"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Title level={2}>{t('pages.history.title')}</Title>
+              <BaseFormSelection
+                control={control}
+                options={ORDER_BY_POST}
+                name="order_by"
+                className="header-filter"
+              />
+            </div>
+          </Col>
+          <Col span={24}>
+            <Table
+              columns={columns}
+              dataSource={dataHistory?.items}
+              pagination={pagination}
             />
-          </div>
-        </Col>
-        <Col span={24}>
-          <Table
-            columns={columns}
-            dataSource={dataHistory?.items}
-            pagination={pagination}
+          </Col>
+        </Row>
+        {selectedItems && (
+          <DrawerCensorshipVideo
+            open={isOpen}
+            data={selectedItems}
+            onClose={handleCloseDrawer}
           />
-        </Col>
-      </Row>
-      {selectedItems && (
-        <DrawerCensorshipVideo
-          open={isOpen}
-          data={selectedItems}
-          onClose={handleCloseDrawer}
-        />
-      )}
-    </Card>
+        )}
+      </Card>
+    </Spin>
   );
 };
 

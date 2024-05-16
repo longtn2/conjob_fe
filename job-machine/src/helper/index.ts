@@ -5,7 +5,7 @@ import {
 } from '@/interfaces/interfaces';
 import { getCookie } from '@/utils/utils';
 import { message } from 'antd';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const fakeCallApi = ({
   email,
@@ -53,13 +53,23 @@ export const getTokenAsync = async () => {
 
 export const formatDayjs = (
   time: dayjs.Dayjs | string | undefined,
-  format: string
-): string => {
-  return dayjs(time).format(format);
+  format?: string
+) => {
+  return time ? dayjs(time).format(format) : '';
 };
 
+export const formatDayjsConvertTypeDayjs = (
+  time: dayjs.Dayjs | string | undefined,
+  format?: string
+) => {
+  return time ? dayjs(time, format) : '';
+};
 export const formatConvert = (values: string) => {
   values.replace('T', '');
+};
+
+export const convertTypeDayjs = (time: string) => {
+  return dayjs(time);
 };
 
 export const getStatusPost = (
@@ -123,4 +133,34 @@ export const getJobTypeStatusCode = (jobType: string | undefined) => {
   } else {
     return { message: '', color: '' };
   }
+};
+
+// export const formatRangeValues = (
+//   values: dayjs.Dayjs[] | undefined,
+//   format: string
+// ): dayjs.Dayjs[] | undefined => {
+//   if (!values) return undefined;
+//   return values.map(value => formatDayjs(value, format));
+// };
+
+export const formatDayjsArray = (
+  value: Dayjs | [Dayjs, Dayjs],
+  format?: string
+): string | [string, string] => {
+  if (Array.isArray(value)) {
+    return [value[0]?.format(format) || '', value[1]?.format(format) || ''];
+  } else {
+    return value?.format(format) || '';
+  }
+};
+
+export const formatStringArrayToDayjsArray = (
+  value: (string | undefined)[],
+  format?: string
+): (Dayjs | '')[] => {
+  if (!Array.isArray(value)) {
+    throw new Error('Invalid input: Expected an array of strings');
+  }
+
+  return value.map(str => formatDayjsConvertTypeDayjs(str, format));
 };
