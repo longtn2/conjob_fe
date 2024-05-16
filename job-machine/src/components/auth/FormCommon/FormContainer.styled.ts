@@ -5,6 +5,7 @@ export const ContainerForm = styled.div`
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
+  max-width: 1200px;
 
   .sign-in {
     left: 0;

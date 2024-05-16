@@ -4,8 +4,9 @@ import HeaderProfile from '@/components/profile/HeaderProfile';
 import { ContainerAdminProfile } from './AdminProfile.styled';
 import { ProfileAdminType } from '@/interfaces/interfaces';
 import { ProfileApi } from '@/api/profile/ProfileAPi';
-import { formatDayjs } from '@/helper';
-import { formatDate, profileAdminData } from '@/constants/constants';
+import { formatDayjs, getMessageStatus } from '@/helper';
+import { formatDate } from '@/constants/constants';
+import { Spin } from 'antd';
 
 const AdminProfile = () => {
   const [dataProfile, setDataProfile] = useState<
@@ -13,7 +14,6 @@ const AdminProfile = () => {
   >(undefined);
   const [loading, setLoading] = useState(false);
   const [isFlag, setIsFlag] = useState(false);
-
   const handleChangeLoading = () => {
     setLoading(prevLoading => !prevLoading);
   };
@@ -23,12 +23,16 @@ const AdminProfile = () => {
   };
 
   const fetchDataProfile = async () => {
+    setLoading(true);
     await ProfileApi.getProfile()
       .then(response => {
         setDataProfile(response.data);
       })
       .catch(error => {
-        setDataProfile(profileAdminData);
+        getMessageStatus(error.message, 'error');
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -37,32 +41,35 @@ const AdminProfile = () => {
 
   return (
     <ContainerAdminProfile>
-      <div className="header">
-        {dataProfile && (
-          <HeaderProfile
-            first_name={dataProfile?.first_name}
-            last_name={dataProfile?.last_name}
-            address={dataProfile?.address}
-            dob={
-              dataProfile?.dob && formatDayjs(dataProfile?.dob, formatDate.DATE)
-            }
-            email={dataProfile?.email}
-            roles={dataProfile?.roles}
-            phone_number={dataProfile?.phone_number}
-            gender={dataProfile?.gender}
-            avatar={dataProfile?.avatar}
-          />
-        )}
-      </div>
+      <Spin spinning={loading}>
+        <div className="header">
+          {dataProfile && (
+            <HeaderProfile
+              first_name={dataProfile?.first_name}
+              last_name={dataProfile?.last_name}
+              address={dataProfile?.address}
+              dob={
+                dataProfile.dob && formatDayjs(dataProfile.dob, formatDate.DATE)
+              }
+              email={dataProfile?.email}
+              roles={dataProfile?.roles}
+              phone_number={dataProfile?.phone_number}
+              gender={dataProfile?.gender}
+              avatar={dataProfile?.avatar}
+            />
+          )}
+        </div>
 
-      <div className="content-profile">
-        {dataProfile && (
-          <ContentProfile
-            dataProfile={dataProfile}
-            handleFlag={handleChangeFlag}
-          />
-        )}
-      </div>
+        <div className="content-profile">
+          {dataProfile && (
+            <ContentProfile
+              dataProfile={dataProfile}
+              handleFlag={handleChangeFlag}
+              handleChangeLoading={handleChangeLoading}
+            />
+          )}
+        </div>
+      </Spin>
     </ContainerAdminProfile>
   );
 };

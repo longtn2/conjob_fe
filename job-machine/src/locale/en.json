@@ -1,0 +1,68 @@
+{
+  "pages": {
+    "auth": {
+      "title": "Sign In",
+      "placeholderPassword": "Password",
+      "buttonSignIn": "Sign In",
+      "welcome": "Welcome Back !!!",
+      "hello": "Enter your information to proceed to Conjob site pages",
+      "validateEmailRequired": "Email is required",
+      "validateEmailRegex": "Your email should contain @ and .com",
+      "validatePasswordRequired": "This field is required",
+      "validatePasswordRegex": "Password must contain uppercase letters and special characters"
+    },
+    "slider": {
+      "introduce": "Easy come, hard go",
+      "censor": "Censor",
+      "history": "Censor History",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "censor": {
+      "checkAll": "Check All",
+      "layoutPost": "Post Layout"
+    },
+    "history": {
+      "idContent": "Post ID",
+      "nameAuthor": "Author Name",
+      "reset": "Reset",
+      "title": "Content List",
+      "name_author": "Input Name Author",
+      "table": {
+        "index": "No.",
+        "content": "Content",
+        "genre": "Genre: ",
+        "see": "View",
+        "creator_at": "Creation Time",
+        "author": "Post Author",
+        "statusPost": "Approval Status",
+        "active": "Approved",
+        "noAction": "Not Approved",
+        "reject": "Violation",
+        "desc": "DESC",
+        "asc": "ASC"
+      },
+      "modal": {
+        "content": "Do you want to delete this post by {{author}}?"
+      }
+    },
+    "profile": {
+      "fullName": "Full Name",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "dob": "Date of Birth",
+      "address": "Address",
+      "roleName": "Role Name",
+      "gender": "Gender",
+      "phone": "Phone Number",
+      "choose": "Choose an Image",
+      "upload": "Upload"
+    }
+  },
+  "common": {
+    "delete": "Delete",
+    "accept": "Accept",
+    "search": "Search",
+    "save": "Save"
+  }
+}

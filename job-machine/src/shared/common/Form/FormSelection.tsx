@@ -1,11 +1,12 @@
 import { ProfileAdminType } from '@/interfaces/interfaces';
 import { Form, FormItemProps, Select } from 'antd';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 type BaseFormSelectionType = FormItemProps & {
-  control: Control<ProfileAdminType, any>;
-  errors?: FieldErrors<ProfileAdminType>;
-  options: Array<{ value: string; label: string }>;
+  control: any;
+  errors?: any;
+  options: Array<{ value: string; label: string; key: string }>;
 };
 
 const { Option } = Select;
@@ -16,9 +17,10 @@ const BaseFormSelection = ({
   options,
   ...formItemProps
 }: BaseFormSelectionType) => {
+  const { t } = useTranslation();
   return (
     <Form.Item
-      label={formItemProps.label?.toString()}
+      label={formItemProps.label}
       name={formItemProps.name.toString()}
       validateStatus={errors && errors[formItemProps.name] && 'error'}
       help={errors && errors[formItemProps.name]?.message}

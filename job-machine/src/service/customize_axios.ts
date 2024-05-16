@@ -11,7 +11,7 @@ export interface ApiErrorData {
 }
 
 export const httpApi = axios.create({
-  baseURL: 'https://0625-210-245-110-144.ngrok-free.app/'
+  baseURL: 'https://eager-toucan-rich.ngrok-free.app/'
 });
 
 httpApi.interceptors.request.use(
@@ -36,19 +36,16 @@ httpApi.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response) {
       const responseData = error.response.data as ApiErrorData;
-      const { status_code } = responseData;
+      const { status_code, message } = responseData;
       if (status_code === 401) {
-        AuthApi.apiRefreshToken().then((res: any) => {
-          Cookies.set('token', res.token);
-        });
+        throw new AxiosError<ApiErrorData>(message, undefined);
       }
-
-      throw new ApiError<ApiErrorData>(
+      throw new AxiosError<ApiErrorData>(
         responseData.message || error.message,
         responseData.errors
       );
     } else {
-      throw new ApiError<ApiErrorData>(error.message, undefined);
+      throw new AxiosError<ApiErrorData>(error.message, undefined);
     }
   }
 );

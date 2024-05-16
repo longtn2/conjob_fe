@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Flex, Segmented } from 'antd';
 import FilterPost from '@/components/post/CardPost';
+import { useTranslation } from 'react-i18next';
 
 interface FilterSectionProps {
   col: number;
@@ -17,6 +18,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   options,
   layoutIcon
 }) => {
+  const { t } = useTranslation();
   return (
     <Row className={col === 24 ? 'middle-container-row' : 'container-row'}>
       <Col span={19}>
@@ -28,7 +30,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
             {col === 24 ? (
               <img src={layoutIcon} alt="Layout Icon" className="icon-layout" />
             ) : (
-              <h4>Bố cục bài viết: </h4>
+              <h4>{t("pages.censor.layoutPost")}</h4>
             )}
             <Segmented options={options} onChange={handleOptionChange} />
           </div>
