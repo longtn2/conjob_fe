@@ -1,7 +1,11 @@
+import { convertTypeDayjs, formatDayjs } from '@/helper';
 import { REGEX_BASE_64 } from '@/constants/constants';
 import { FileType, axiosApi } from '@/interfaces/index';
+import { DateErrors, DatesInterfaces } from '@/interfaces/interfaces';
 import { AxiosResponse } from 'axios';
+import dayjs from 'dayjs';
 import Cookies from 'js-cookie';
+import { useMediaQuery } from 'react-responsive';
 
 export const getTokenAsync = async () => {
   try {
@@ -123,4 +127,19 @@ export const convertUrlToBase64 = (url: string) => {
 
 export const isBase64String = str => {
   return REGEX_BASE_64.test(str);
+};
+
+export const dateIsValid = (value: string) => {
+  const today = new dayjs.Dayjs();
+  return !value || convertTypeDayjs(value) <= today;
+};
+
+export const handleLogout = () => {
+  const cookies = Cookies.get();
+  localStorage.removeItem('firstName');
+  localStorage.removeItem('lastName');
+  localStorage.removeItem('avatar');
+  for (const cookie in cookies) {
+    Cookies.remove(cookie);
+  }
 };

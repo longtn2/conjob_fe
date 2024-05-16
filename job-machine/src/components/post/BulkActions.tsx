@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Flex, Popconfirm, Checkbox } from 'antd';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
+import { useTranslation } from 'react-i18next';
 
 interface BulkActionsProps {
   col: number;
@@ -19,6 +20,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({
   handleActiveAllSelected,
   isAllSelected
 }) => {
+  const { t } = useTranslation();
   return (
     <Col span={24}>
       <Row className={col === 24 ? 'middle-container-row' : ''}>
@@ -32,7 +34,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({
             onChange={handleCheckAll}
             checked={isAllSelected}
           >
-            Check All
+            {t("pages.censor.checkAll")}
           </Checkbox>
           {selectedPosts.length > 0 && (
             <>
@@ -49,7 +51,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({
                 className="btn-accept-all"
                 onClick={handleActiveAllSelected}
               >
-                Duyệt
+                {t("common.accept")}
               </BaseButton>
             </>
           )}

@@ -1,0 +1,68 @@
+{
+  "pages": {
+    "auth": {
+      "title": "ログイン",
+      "placeholderPassword": "パスワード",
+      "buttonSignIn": "ログイン",
+      "validateEmailRequired": "入力してください",
+      "welcome": "ようこそ",
+      "hello": "Conjob へ進むために情報を入力してください",
+      "validateEmailRegex": "メールアドレスには @ と .com を含めてください",
+      "validatePasswordRequired": "このフィールドは必須です",
+      "validatePasswordRegex": "パスワードには大文字のアルファベットと特殊文字を含めてください"
+    },
+    "slider": {
+      "introduce": "簡単にやって、難しくなく去る",
+      "censor": "検閲",
+      "history": "検閲履歴",
+      "profile": "プロフィール",
+      "logout": "ログアウト"
+    },
+    "censor": {
+      "checkAll": "すべてをチェック",
+      "layoutPost": "投稿レイアウト"
+    },
+    "history": {
+      "idContent": "投稿ID",
+      "nameAuthor": "著者名",
+      "reset": "リセット",
+      "title": "コンテンツリスト",
+      "table": {
+        "index": "No.",
+        "content": "コンテンツ",
+        "genre": "ジャンル:",
+        "see": "表示",
+        "creator_at": "作成日時",
+        "author": "投稿者",
+        "statusPost": "承認ステータス",
+        "active": "承認済み",
+        "noAction": "未承認",
+        "reject": "違反",
+        "desc": "降順",
+        "asc": "昇順"
+      },
+      "modal": {
+        "content": "{{author}}さんのこの投稿を削除しますか？"
+      },
+      "name_author": "投稿者"
+    },
+    "profile": {
+      "fullName": "フルネーム",
+      "firstName": "名",
+      "lastName": "姓",
+      "dob": "生年月日",
+      "roleName": "役割",
+      "address": "住所",
+      "gender": "性別",
+      "phone": "電話番号",
+      "choose": "画像を選択",
+      "upload": "アップロード"
+    }
+  },
+  "common": {
+    "delete": "削除",
+    "accept": "承認",
+    "search": "検索",
+    "save": "保存"
+  }
+}

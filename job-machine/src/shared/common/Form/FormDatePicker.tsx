@@ -1,5 +1,5 @@
 import { formatDate } from '@/constants/constants';
-import { formatDayjs } from '@/helper';
+import { formatDayjsConvertTypeDayjs } from '@/helper';
 import { ProfileAdminType } from '@/interfaces/interfaces';
 import { DatePicker, Form, FormItemProps } from 'antd';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
@@ -7,18 +7,20 @@ import { Control, Controller, FieldErrors } from 'react-hook-form';
 type BaseFormDatePickerType = FormItemProps & {
   control: Control<ProfileAdminType, any>;
   errors?: FieldErrors<ProfileAdminType>;
+  format?: string;
   placeholder?: string;
 };
 
 const BaseFormDatePicker = ({
   control,
   errors,
+  format = formatDate.DATE,
   placeholder,
   ...formItemProps
 }: BaseFormDatePickerType) => {
   return (
     <Form.Item
-      label={formItemProps.label?.toString()}
+      label={formItemProps.label}
       name={formItemProps.name.toString()}
       validateStatus={errors && errors[formItemProps.name] && 'error'}
       help={errors && errors[formItemProps.name]?.message}
@@ -31,13 +33,12 @@ const BaseFormDatePicker = ({
           return (
             <DatePicker
               defaultValue={
-                field.value ? formatDayjs(field.value, formatDate.DATE) : null
+                field.value && formatDayjsConvertTypeDayjs(field.value, format)
               }
-              onChange={date =>
-                field.onChange(date && formatDayjs(date, formatDate.DATE))
-              }
+              onChange={date => field.onChange(date && date.format(format))}
               onBlur={field.onBlur}
               placeholder={placeholder}
+              style={{ width: '100%' }}
             />
           );
         }}

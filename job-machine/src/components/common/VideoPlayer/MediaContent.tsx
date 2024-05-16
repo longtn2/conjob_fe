@@ -1,35 +1,38 @@
-import { Post } from '@/api/mock/news.api';
-import { InforPost } from '@/interfaces/interfaces';
-import { Avatar } from 'antd';
 import React from 'react';
+import { ContainerMedia } from '@/components/common/VideoPlayer/MediaContent.styled';
 
 interface MediaContentProps {
-  type_file: string | undefined;
-  url_file: string | undefined;
-  name_file: string | undefined;
+  file_type: string | undefined;
+  file_url: string | undefined;
+  file_name: string | undefined;
 }
 
 const MediaContent: React.FC<MediaContentProps> = ({
-  type_file,
-  url_file,
-  name_file
+  file_type,
+  file_url,
+  file_name
 }) => {
   return (
-    <div className="card__content">
-      {type_file &&
-        (type_file === 'Video' ? (
-          <video width="100%" controls playsInline preload="metadata">
-            <source src={url_file} type="video/mp4" />
+    <ContainerMedia>
+      {file_type &&
+        (file_type === 'Video' ? (
+          <video
+            className="video-source"
+            controls
+            playsInline
+            preload="metadata"
+          >
+            <source src={file_url} type="video/mp4" />
           </video>
         ) : (
           <img
-            src={url_file}
-            alt={name_file}
+            src={file_url}
+            alt={file_name}
             style={{ width: '100%', height: '300px', objectFit: 'cover' }}
           />
         ))}
-      {!type_file && <p>No file attached.</p>}
-    </div>
+      {!file_type && <p>No file attached.</p>}
+    </ContainerMedia>
   );
 };
 
