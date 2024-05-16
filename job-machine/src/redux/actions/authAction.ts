@@ -1,13 +1,15 @@
 import {
+  LogoutAction,
+  RegisterFailureAction,
+  RegisterSuccessAction,
+} from './../../interfaces/index';
+import {
   AuthActionTypes,
   LoginFailureAction,
   LoginRequestAction,
   LoginSuccessAction,
-  LogoutAction,
-  RegisterFailureAction,
   RegisterRequestAction,
-  RegisterSuccessAction,
-} from '@/interfaces';
+} from '../../interfaces';
 import { FormLoginType, FormRegisterType } from '@/interfaces/interfaces';
 
 export const loginRequest = (user: FormLoginType): LoginRequestAction => ({

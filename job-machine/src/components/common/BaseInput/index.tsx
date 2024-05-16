@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input, InputProps, InputRef } from 'antd';
-import {InputContainer} from './BaseInput.styled';
+import * as S from './BaseInput.styled';
 
 export type BaseInputRef = InputRef;
 
@@ -14,9 +14,9 @@ interface BaseInputInterface extends React.ForwardRefExoticComponent<InputProps 
 }
 
 const InternalInput = React.forwardRef<BaseInputRef, BaseInputProps>(({ className, children, ...props }, ref) => (
-  <InputContainer ref={ref} className={className} {...props}>
+  <S.Input ref={ref} className={className} {...props}>
     {children}
-  </InputContainer>
+  </S.Input>
 ));
 
 export const BaseInput = InternalInput as BaseInputInterface;

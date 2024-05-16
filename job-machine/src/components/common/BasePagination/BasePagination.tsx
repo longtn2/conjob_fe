@@ -1,14 +1,14 @@
 import { PaginationProps, ConfigProvider } from 'antd';
-import { PaginationContainer } from './BasePagination.styles';
+import * as S from './BasePagination.styles';
 
 export type BasePaginationProps = PaginationProps;
 
-export const BasePagination: React.FC<BasePaginationProps> = props => {
+export const BasePagination: React.FC<BasePaginationProps> = (props) => {
   const wireframe = props.size !== 'small';
 
   return (
     <ConfigProvider theme={{ components: { Pagination: { wireframe } } }}>
-      <PaginationContainer {...props} />
+      <S.Pagination {...props} />
     </ConfigProvider>
   );
 };

@@ -1,24 +1,33 @@
-import { FormLoginType } from '@/interfaces/interfaces';
-import { httpApi } from '@/service/customize_axios';
-import { pathUrlAuthApi } from '@/constants/constants';
-import { getCookie } from '@/utils/utils';
+import { FormLoginType } from "@/interfaces/interfaces";
+import { httpApi } from "@/service/customize_axios";
 
-const refreshToken = getCookie('refreshToken');
 
 export const AuthApi = {
   apiLogin: (values: FormLoginType): Promise<FormLoginType> => {
-    return httpApi.post(pathUrlAuthApi.LOGIN, values);
+    const url = '/login';
+    return new Promise((resolve, reject) => {
+      httpApi
+        .post(url, values)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
   },
 
   apiLogout: () => {
-    return httpApi.post(pathUrlAuthApi.LOGOUT);
-  },
-
-  apiRefreshToken: () => {
-    return httpApi.get(pathUrlAuthApi.REFRESH_TOKEN, {
-      params: {
-        token: refreshToken,
-      },
+    const url = '/logout';
+    return new Promise((resolve, reject) => {
+      httpApi
+        .post(url)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
   },
 };

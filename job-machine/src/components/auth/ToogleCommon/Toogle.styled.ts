@@ -23,6 +23,10 @@ export const ContainerToogle = styled.div`
     transition: all 0.6s ease-in-out;
   }
 
+  .ant-typography {
+    padding: 10px 30px;
+  }
+
   &.active {
     transform: translateX(-100%);
     border-radius: 0 150px 100px 0;
