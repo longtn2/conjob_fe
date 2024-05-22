@@ -20,7 +20,13 @@
     },
     "censor": {
       "checkAll": "Duyệt tất cả",
-      "layoutPost": "Bố cục bài viết"
+      "layoutPost": "Bố cục bài viết",
+      "emptyTitle": "Không có bài đăng nào gần đây !",
+      "placeholderSearch": "Nhập tên người dùng, nội dung bài...",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày kết thúc",
+      "searchText": "Tìm kiếm",
+      "validateInput": "Nhập tên người dùng, nội dung bài không được chứa ký tự đặc biệt"
     },
     "history": {
       "idContent": "Mã bài viết",
@@ -61,9 +67,11 @@
   },
   "common": {
     "delete": "Xoá",
+    "deleteAll": "Xác nhận xoá tất cả?",
     "accept": "Duyệt",
     "search": "Tìm kiếm",
     "save": "Lưu",
-    "close": "Đóng"
+    "close": "Đóng",
+    "submitText": "Bạn có chắc muốn xoá không?"
   }
 }

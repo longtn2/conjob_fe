@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Col, Row, Spin } from 'antd';
+import { Col, Row, Spin, message, theme, Image } from 'antd';
 import { ContainerPost, CardCustom } from './PostManagement.styled';
 import { BaseArticle } from '@/components/common/BaseArticle';
 import ActionBtn from '@/components/post/ActionBtn';
@@ -14,9 +14,15 @@ import layoutIcon from '@/assets/images/layout.png';
 import FilterSection from '@/components/post/FilterSection';
 import BulkActions from '@/components/post/BulkActions';
 import { formatDayjs, getMessageStatus } from '@/helper';
-import { formatDate } from '@/constants/constants';
+import {
+  RESPONSE_ERROR,
+  RESPONSE_SUCCESS,
+  formatDate
+} from '@/constants/constants';
 import { BaseTag } from '@/components/common/BaseTag';
 import { EmptyPage } from '../EmptyPage';
+import menuHorizon from '@/assets/menu/4.svg';
+import menuVertical from '@/assets/menu/1.svg';
 
 const PostContent: React.FC<ICheckbox> = () => {
   const [news, setNews] = useState<InforPost[] | null>(null);
@@ -25,6 +31,25 @@ const PostContent: React.FC<ICheckbox> = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [col, setCol] = useState(6);
+  const [filterOptions, setFilterOptions] = useState([
+    {
+      label: (
+        <div>
+          <Image src={menuVertical} preview={false} className="icon-layout" />
+        </div>
+      ),
+      value: 1
+    },
+    {
+      label: (
+        <div>
+          <Image src={menuHorizon} preview={false} className="icon-layout" />
+        </div>
+      ),
+      value: 4
+    }
+  ]);
+  const { token } = theme.useToken();
 
   const [query, setQuery] = useState<IQuery>({
     page: 1,
@@ -35,18 +60,28 @@ const PostContent: React.FC<ICheckbox> = () => {
   });
   const spanMapping = {
     1: 24,
-    2: 12,
+    // 2: 12,
     4: 6
   };
-  const options = [1, 2, 4];
 
   useEffect(() => {
     fetchData();
   }, [query]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const handleResizeWidth = () => {
+  //     const width = window.innerWidth;
+  //     if (width < 992) {
+  //       setFilterOptions([1, 2]);
+  //     } else {
+  //       setFilterOptions([1, 2, 4]);
+  //     }
+  //   };
+
+  //   handleResizeWidth();
+  //   window.addEventListener('resize', handleResizeWidth);
+  //   return () => window.removeEventListener('resize', handleResizeWidth);
+  // }, []);
 
   const fetchData = () => {
     setLoading(true);
@@ -72,12 +107,15 @@ const PostContent: React.FC<ICheckbox> = () => {
                   item.centersor.action = res.data.summary.action;
                   if (item.centersor.action === 'reject') {
                     item.centersor.rejectReason.text =
-                      res.data.summary.reject_reason[0].text;
+                      res.data.summary.reject_reason
+                        .slice(0, 2)
+                        .map(reason => reason.text)
+                        .join(', ');
                   }
                   return item;
                 })
                 .catch(error => {
-                  getMessageStatus(error.message, 'error');
+                  // getMessageStatus(error.message, 'error');
                   return item;
                 });
             }
@@ -97,11 +135,12 @@ const PostContent: React.FC<ICheckbox> = () => {
       });
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = (id: number) => {
     if (id) {
       PostApi.apiDelete(id)
-        .then(() => {
+        .then((res: any) => {
           fetchData();
+          getMessageStatus(res.message, RESPONSE_SUCCESS);
         })
         .catch(error => {
           getMessageStatus(error.message, 'error');
@@ -120,22 +159,25 @@ const PostContent: React.FC<ICheckbox> = () => {
     }
   };
 
+  const handleDeleteList = (ids: number[]) => {
+    PostApi.apiDeleteList(ids)
+      .then((res: any) => {
+        setSelectedPosts([]);
+        fetchData();
+        getMessageStatus(res.message, RESPONSE_SUCCESS);
+      })
+      .catch(err => {
+        const { message } = err;
+        getMessageStatus(message, RESPONSE_ERROR);
+      });
+  };
+
   const handleAcceptPost = (id: number) => {
     if (id) {
       PostApi.apiActive(id)
-        .then(() => {
+        .then((res: any) => {
           fetchData();
-        })
-        .catch(error => {
-          getMessageStatus(error.message, 'error');
-        });
-    } else {
-      Promise.all(
-        selectedPosts.map(postId => PostApi.apiActive(parseInt(postId)))
-      )
-        .then(() => {
-          setSelectedPosts([]);
-          fetchData();
+          getMessageStatus(res.message, RESPONSE_SUCCESS);
         })
         .catch(error => {
           getMessageStatus(error.message, 'error');
@@ -143,8 +185,23 @@ const PostContent: React.FC<ICheckbox> = () => {
     }
   };
 
+  const handleAcceptPostList = (ids: number[]) => {
+    PostApi.apiActiveList(ids)
+      .then((res: any) => {
+        setSelectedPosts([]);
+        fetchData();
+        getMessageStatus(res.message, RESPONSE_SUCCESS);
+      })
+      .catch(err => {
+        const { message } = err;
+        getMessageStatus(message, RESPONSE_ERROR);
+      });
+  };
+
   const handleFilter = value => {
     const { titleContent, datetime } = value;
+    console.log('check datatime form post', datetime);
+
     const newQuery = { ...query };
 
     if (datetime && datetime.length > 0 && datetime[0]) {
@@ -153,11 +210,11 @@ const PostContent: React.FC<ICheckbox> = () => {
 
       const formattedStartDate = formatDayjs(
         startDate.toISOString(),
-        formatDate.DATE_TIME_SECONDS
+        formatDate.DATE_TIME_MINUTE_SECONDS
       );
       const formattedEndDate = formatDayjs(
         endDate.toISOString(),
-        formatDate.DATE_TIME_SECONDS
+        formatDate.DATE_TIME_MINUTE_SECONDS
       );
 
       newQuery.start_date = formattedStartDate;
@@ -192,17 +249,13 @@ const PostContent: React.FC<ICheckbox> = () => {
   const getColSpan = () => col;
 
   const handleDeleteAllSelected = async () => {
-    for (const postId of selectedPosts) {
-      await handleDelete(Number(postId));
-    }
+    await handleDeleteList(selectedPosts.map(Number));
     setSelectedPosts([]);
     fetchData();
   };
 
   const handleActiveAllSelected = async () => {
-    for (const postId of selectedPosts) {
-      await handleAcceptPost(Number(postId));
-    }
+    await handleAcceptPostList(selectedPosts.map(Number));
     setSelectedPosts([]);
     fetchData();
   };
@@ -224,6 +277,10 @@ const PostContent: React.FC<ICheckbox> = () => {
     setIsChecked(!isChecked);
   };
 
+  const getCol = (col: number) => {
+    return col;
+  };
+
   return (
     <>
       <ContainerPost>
@@ -231,17 +288,19 @@ const PostContent: React.FC<ICheckbox> = () => {
           col={col}
           handleFilter={handleFilter}
           handleOptionChange={handleOptionChange}
-          options={options}
+          options={filterOptions}
           layoutIcon={layoutIcon}
         />
-        <BulkActions
-          col={col}
-          selectedPosts={selectedPosts}
-          handleCheckAll={handleCheckAll}
-          handleDeleteAllSelected={handleDeleteAllSelected}
-          handleActiveAllSelected={handleActiveAllSelected}
-          isAllSelected={selectedPosts.length > 0}
-        />
+        {news && news.length > 0 && (
+          <BulkActions
+            col={col}
+            selectedPosts={selectedPosts}
+            handleCheckAll={handleCheckAll}
+            handleDeleteAllSelected={handleDeleteAllSelected}
+            handleActiveAllSelected={handleActiveAllSelected}
+            isAllSelected={selectedPosts.length > 0}
+          />
+        )}
         {loading ? (
           <Spin
             spinning={true}
@@ -258,7 +317,13 @@ const PostContent: React.FC<ICheckbox> = () => {
               <Col span={24}>
                 <Row gutter={[16, 16]} style={{ marginTop: '24px' }}>
                   {news?.map((post, index) => (
-                    <Col span={getColSpan()} key={post.id}>
+                    <Col
+                      span={getColSpan()}
+                      key={post.id}
+                      xs={getCol(col) === 6 || 24 ? 24 : ''}
+                      sm={getCol(col) === 6 ? 12 : getCol(col) === 12 ? 12 : ''}
+                      lg={getCol(col) === 6 ? 6 : ''}
+                    >
                       <CardCustom>
                         {col === 6 ? (
                           <div className="md-card-item">
@@ -274,7 +339,7 @@ const PostContent: React.FC<ICheckbox> = () => {
                                 color="error"
                                 key={`reject-reason-${index}`}
                               >
-                                {post.centersor.rejectReason.text}
+                                {post.centersor.rejectReason.text.split(',')[0]}
                               </BaseTag>
                             ) : null}
                             <BaseArticle
@@ -283,7 +348,7 @@ const PostContent: React.FC<ICheckbox> = () => {
                               description={post.caption || ''}
                               date={post.date || ''}
                               author={post.author}
-                              avatar={post.file_url}
+                              avatar={post.avatar_author}
                               postId={String(post.id)}
                               col={getColSpan()}
                             />
@@ -318,7 +383,7 @@ const PostContent: React.FC<ICheckbox> = () => {
                               description={post.caption || ''}
                               date={post.date || ''}
                               author={post.author}
-                              avatar={post.file_url}
+                              avatar={post.avatar_author}
                               postId={String(post.id)}
                               col={getColSpan()}
                             />
@@ -327,6 +392,17 @@ const PostContent: React.FC<ICheckbox> = () => {
                               post={post}
                               col={getColSpan()}
                             />
+                            {post.centersor?.action === 'reject' &&
+                            post.centersor?.rejectReason ? (
+                              <BaseTag
+                                icon={<CloseCircleOutlined />}
+                                color="error"
+                                key={`reject-reason-${index}`}
+                                className="reject-tag"
+                              >
+                                {post.centersor.rejectReason.text}
+                              </BaseTag>
+                            ) : null}
                             <ActionBtn
                               handleDelete={() => handleDelete(post.id)}
                               handleAcceptPost={() => handleAcceptPost(post.id)}
@@ -348,6 +424,9 @@ const PostContent: React.FC<ICheckbox> = () => {
                     handlePagination(page);
                   }}
                   className="pagination"
+                  style={{
+                    background: token ? token.colorBgContainer : '#ffffff'
+                  }}
                 />
               </Col>
             ) : (

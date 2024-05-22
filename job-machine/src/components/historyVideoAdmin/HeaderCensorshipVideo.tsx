@@ -80,38 +80,33 @@ const HeaderCensorshipVideo = ({
         <Row gutter={[48, 16]}>
           <Col xs={24} sm={8} lg={6}>
             <BaseFormItemHook
-              name="id_content"
+              name="name_author"
               control={control}
-              placeholder={t('pages.history.idContent')}
+              placeholder={t('pages.history.name_author')}
             />
           </Col>
           <Col xs={24} sm={8} lg={12}>
             <BaseFormRangePicker
               name="dates"
               control={control}
-              placeholder="dd/mm/yyyy - dd/mm/yyyy"
+              style={{ width: '100%', padding: '0' }}
+              placeholder={['dd/mm/yyyy', 'dd/mm/yyyy']}
               errors={errors}
+              className="date-range"
+              renderExtraFooter={() => (
+                <>
+                  <div>{t('pages.censor.startDate')}</div>
+                  <div>{t('pages.censor.endDate')}</div>
+                </>
+              )}
             />
-          </Col>
-          <Col xs={24} sm={8} lg={6}>
-            <BaseFormItemHook
-              name="name_author"
-              control={control}
-              placeholder={t('pages.history.name_author')}
-            />
-          </Col>
-          <Col xs={24} sm={8} lg={6}>
-            {/* <BaseFormItemHook
-              name="id_censor"
-              control={control}
-              placeholder="ID kiểm duyệt viên"
-            /> */}
           </Col>
           <Col xs={24} sm={8} lg={6}>
             <BaseFormSelection
               name="status_censor"
               control={control}
               options={STATUS_CENSOR}
+              placeholder="Select status"
             />
           </Col>
         </Row>

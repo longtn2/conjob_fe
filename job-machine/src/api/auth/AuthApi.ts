@@ -17,8 +17,8 @@ export const AuthApi = {
   apiRefreshToken: () => {
     return httpApi.get(pathUrlAuthApi.REFRESH_TOKEN, {
       params: {
-        token: refreshToken,
-      },
+        token: refreshToken
+      }
     });
-  },
+  }
 };

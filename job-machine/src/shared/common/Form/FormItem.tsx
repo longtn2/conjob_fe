@@ -6,12 +6,14 @@ type BaseFormItemHookProps = FormItemProps &
     control: any;
     error?: any;
     placeholder?: string;
+    className?: string;
   };
 
 const BaseFormItemHook = ({
   control,
   error,
   placeholder,
+  className = '',
   ...formItemProps
 }: BaseFormItemHookProps) => {
   const onTrim = value => {
@@ -24,7 +26,7 @@ const BaseFormItemHook = ({
       label={formItemProps.label}
       name={formItemProps.name.toString()}
       validateStatus={error && 'error'}
-      help={error || null}
+      help={(error && error.message) || null}
     >
       <Controller
         name={formItemProps.name.toString()}
@@ -38,6 +40,7 @@ const BaseFormItemHook = ({
 
           return (
             <Input
+              className={className}
               {...fieldProps}
               placeholder={placeholder}
               onChange={handleChange}

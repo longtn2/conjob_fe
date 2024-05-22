@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Flex, Segmented } from 'antd';
+import { Row, Col, Flex, Segmented, theme } from 'antd';
 import FilterPost from '@/components/post/CardPost';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ interface FilterSectionProps {
   col: number;
   handleFilter: (value: any) => void;
   handleOptionChange: (selectedOption: number) => void;
-  options: number[];
+  options: { label: JSX.Element; value: number }[];
   layoutIcon: string;
 }
 
@@ -19,19 +19,20 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   layoutIcon
 }) => {
   const { t } = useTranslation();
+  const { token } = theme.useToken();
   return (
-    <Row className={col === 24 ? 'middle-container-row' : 'container-row'}>
-      <Col span={19}>
+    <Row className="container-row">
+      <Col xs={24} sm={24} lg={24} className="search-section">
         <FilterPost handleFilter={handleFilter} />
       </Col>
-      <Col span={5}>
+      <Col xs={24} sm={24}>
         <Flex style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
-          <div className="frame-section">
-            {col === 24 ? (
-              <img src={layoutIcon} alt="Layout Icon" className="icon-layout" />
-            ) : (
-              <h4>{t("pages.censor.layoutPost")}</h4>
-            )}
+          <div
+            className="frame-section"
+            style={{ background: token ? token.colorBgContainer : '#ffffff' }}
+          >
+            <h4>{t('pages.censor.layoutPost')}</h4>
+
             <Segmented options={options} onChange={handleOptionChange} />
           </div>
         </Flex>

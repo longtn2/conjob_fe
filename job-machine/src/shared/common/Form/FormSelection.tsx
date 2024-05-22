@@ -7,6 +7,7 @@ type BaseFormSelectionType = FormItemProps & {
   control: any;
   errors?: any;
   options: Array<{ value: string; label: string; key: string }>;
+  placeholder?: string;
 };
 
 const { Option } = Select;
@@ -15,6 +16,7 @@ const BaseFormSelection = ({
   control,
   errors,
   options,
+  placeholder = '',
   ...formItemProps
 }: BaseFormSelectionType) => {
   const { t } = useTranslation();
@@ -31,7 +33,12 @@ const BaseFormSelection = ({
         rules={{ required: true }}
         render={({ field }) => {
           return (
-            <Select {...field} {...formItemProps} status={undefined}>
+            <Select
+              {...field}
+              {...formItemProps}
+              status={undefined}
+              placeholder={placeholder}
+            >
               {options.map(option => (
                 <Option key={option.value} value={option.value}>
                   {option.label}

@@ -5,6 +5,10 @@ import {
 } from '@/interfaces/interfaces';
 import { getCookie } from '@/utils/utils';
 import { message } from 'antd';
+import { Locale } from 'antd/lib/locale';
+import jaJP from 'antd/locale/ja_JP';
+import viVN from 'antd/locale/vi_VN';
+import enUS from 'antd/locale/en_US';
 import dayjs, { Dayjs } from 'dayjs';
 
 export const fakeCallApi = ({
@@ -163,4 +167,28 @@ export const formatStringArrayToDayjsArray = (
   }
 
   return value.map(str => formatDayjsConvertTypeDayjs(str, format));
+};
+
+export const updateLocalStorage = (key, value) => {
+  localStorage.setItem(key, value);
+  const customEvent = new CustomEvent('customStorage', {
+    detail: {
+      key,
+      newValue: value
+    }
+  });
+  window.dispatchEvent(customEvent);
+};
+
+export const handleLanguageAntd = (str: string) => {
+  switch (str) {
+    case 'vi':
+      return viVN;
+    case 'en':
+      return enUS;
+    case 'jp':
+      return jaJP;
+    default:
+      return enUS;
+  }
 };

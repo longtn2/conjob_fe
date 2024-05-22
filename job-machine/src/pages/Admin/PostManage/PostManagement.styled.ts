@@ -7,6 +7,7 @@ export const ContainerPost = styled.div`
   flex-wrap: wrap;
   .container-row {
     width: 100% !important;
+    margin-right: 20px;
   }
 
   .description-scroll {
@@ -22,25 +23,15 @@ export const ContainerPost = styled.div`
     border-radius: 20px;
   }
 
-  .md-card-item:hover .card__action-top {
-    transform: translateY(-10px);
-    visibility: visible;
-    opacity: 1;
-    bottom: 0;
-  }
-
   .card__action-top {
     display: flex;
     justify-content: flex-start;
-    margin-top: 60px;
     gap: 10px;
     bottom: 10px;
     background-size: contain;
-    margin-left: 30px;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
+    margin-left: 21px;
     position: absolute;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
   }
 
   .card__action-top button:hover {
@@ -54,7 +45,7 @@ export const ContainerPost = styled.div`
 
   .xs-card-item {
     display: block;
-    height: 400px;
+    height: 450px;
     border-radius: 20px;
     position: relative;
 
@@ -66,7 +57,7 @@ export const ContainerPost = styled.div`
       position: sticky;
       top: 0;
       height: 5rem;
-      z-index: 1000;
+      z-index: 1;
       background: white;
     }
     .card-title {
@@ -96,11 +87,17 @@ export const ContainerPost = styled.div`
       position: sticky;
       bottom: -1px;
     }
+    .reject-tag {
+      margin-left: 28px;
+    }
   }
 
   .xl-card-item {
     .ant-image-mask {
       margin: 0 !important;
+    }
+    .reject-tag {
+      margin-left: 0;
     }
   }
 
@@ -134,11 +131,15 @@ export const ContainerPost = styled.div`
     // object-fit: cover;
   }
 
+  .btn-find {
+    font-weight: bold;
+  }
+
   .btn-checkbox {
     right: 8px;
     position: absolute;
     top: 14px;
-    z-index: 99999;
+    z-index: 2;
     margin-right: 7px;
   }
 
@@ -149,19 +150,16 @@ export const ContainerPost = styled.div`
   .filter-section {
     background: var(--container-color-white);
     border-radius: 10px;
-    height: 50px;
     padding: 5px 0 0 5px;
+    margin-bottom: 14px;
   }
 
   .frame-section {
-    background: var(--container-color-white);
     border-radius: 10px;
     display: flex;
     align-items: center;
-    padding: 5px 9px;
-    height: 50px;
+    padding: 0 4px;
     gap: 20px;
-    margin-right: 16px;
   }
 
   .pagination {
@@ -177,12 +175,6 @@ export const ContainerPost = styled.div`
 
   .search-date {
     padding: 8px 10px;
-    margin-left: -51px;
-    margin-right: -30px;
-  }
-
-  .btn-find {
-    margin-left: 36px;
   }
 
   .check-all {
@@ -214,19 +206,6 @@ export const CardCustom = styled(Card)`
 
   &::-webkit-scrollbar {
     width: 0px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #555;
   }
 
   @media only screen and (min-width: 1200px) {

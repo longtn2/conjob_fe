@@ -30,7 +30,19 @@ export const PostApi = {
     return httpApi.put(`${PATH_URL_POST_API.active}/${id}`);
   },
 
+  apiActiveList: (ids: number[]): Promise<InforPost> => {
+    return httpApi.put(
+      `${PATH_URL_POST_API.active_list}?${ids.map(id => `id=${id}`).join('&')}`
+    );
+  },
+
   apiDelete: (id: number): Promise<InforPost> => {
     return httpApi.delete(`${PATH_URL_POST_API.delete}/${id}`);
+  },
+
+  apiDeleteList: (ids: number[]): Promise<InforPost> => {
+    return httpApi.delete(
+      `${PATH_URL_POST_API.delete_list}?${ids.map(id => `id=${id}`).join('&')}`
+    );
   }
 };

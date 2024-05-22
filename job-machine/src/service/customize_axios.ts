@@ -11,7 +11,7 @@ export interface ApiErrorData {
 }
 
 export const httpApi = axios.create({
-  baseURL: 'https://eager-toucan-rich.ngrok-free.app/'
+  baseURL: 'https://evident-skink-enormously.ngrok-free.app/'
 });
 
 httpApi.interceptors.request.use(

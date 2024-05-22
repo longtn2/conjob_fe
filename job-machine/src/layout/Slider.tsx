@@ -35,24 +35,55 @@ const SliderComponent = () => {
   const navigator = useNavigate();
   const { pathname } = useLocation();
   const page = pathname.replace('/', '');
-  const [isData, setIsData] = useState({
-    firstName: localStorage.getItem('firstName'),
-    lastName: localStorage.getItem('lastName'),
-    isAvatar: localStorage.getItem('avatar')
-  });
-  const fetchDataProfile = async () => {
-    await ProfileApi.getProfile()
-      .then(response => {
-        setIsData({
-          firstName: response.data.first_name,
-          lastName: response.data.last_name,
-          isAvatar: localStorage.getItem('avatar') || response.data.avatar
-        });
-      })
-      .catch(error => {
-        getMessageStatus(error.message, 'error');
-      });
+  const [firstName, setFirstName] = useState(
+    () => localStorage.getItem('firstName') || ''
+  );
+  const [lastName, setLastName] = useState(
+    () => localStorage.getItem('lastName') || ''
+  );
+  const [avatar, setAvatar] = useState(
+    () => localStorage.getItem('avatar') || ''
+  );
+  const handleStorageChange = event => {
+    if (event.key === 'firstName') {
+      setFirstName(() => localStorage.getItem(firstName) || '');
+    }
+    if (event.key === 'lastName') {
+      setLastName(() => localStorage.getItem(lastName) || '');
+    }
+    if (event.key === 'avatar') {
+      setAvatar(() => localStorage.getItem(avatar) || '');
+    }
   };
+  useEffect(() => {
+    const customStorageEvent = new CustomEvent('customStorage', {
+      detail: {
+        key: null,
+        newValue: null
+      }
+    });
+
+    const handleCustomStorageChange = event => {
+      const { key, newValue } = event.detail;
+      if (key === 'firstName') {
+        setFirstName(newValue || '');
+      }
+      if (key === 'lastName') {
+        setLastName(newValue || '');
+      }
+      if (key === 'avatar') {
+        setAvatar(newValue || '');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('customStorage', handleCustomStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('customStorage', handleCustomStorageChange);
+    };
+  }, []);
   useEffect(() => {
     const handleResize = async () => {
       if (isTablet) {
@@ -71,9 +102,6 @@ const SliderComponent = () => {
     };
   }, [isTablet, isMobile]);
 
-  useEffect(() => {
-    fetchDataProfile();
-  }, []);
   const getMenuStyle = key => {
     return page === key
       ? {
@@ -124,18 +152,16 @@ const SliderComponent = () => {
         {!collapsed && (
           <div className={`profile-slider ${collapsed && 'hidden'}`}>
             <div className="avatar-admin">
-              {isData.isAvatar && (
+              {avatar && (
                 <Image
-                  src={isData.isAvatar || undefined}
+                  src={avatar || undefined}
                   alt="Image Admin"
                   preview={false}
                 />
               )}
             </div>
             <div className="content-profile">
-              <Title
-                level={3}
-              >{`${isData.firstName} ${isData.lastName}`}</Title>
+              <Title level={3}>{`${firstName} ${lastName}`}</Title>
               <span
                 style={{
                   color: token ? token.colorTextBase : '#000000',

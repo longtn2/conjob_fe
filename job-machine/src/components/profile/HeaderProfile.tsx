@@ -28,7 +28,7 @@ import {
   uploadStatusFile
 } from '@/constants/constants';
 import { ProfileApi } from '@/api/profile/ProfileAPi';
-import { getMessageStatus } from '@/helper';
+import { getMessageStatus, updateLocalStorage } from '@/helper';
 import { ProfileAdminType, valueGetUrlS3 } from '@/interfaces/interfaces';
 import { uploadAvatarApi } from '@/api/s3/uploadAvatar';
 import { useTranslation } from 'react-i18next';
@@ -50,7 +50,7 @@ const HeaderProfile = ({ ...dataProfile }: ProfileAdminType) => {
     gender,
     dob
   } = dataProfileHeader;
-
+  const [isUrl, setIsUrl] = useState<File | undefined>();
   const avatarImage = localStorage.getItem('avatar');
   const [imageAvatar, setImageAvatar] = useState<string | undefined>(
     avatarImage || undefined
@@ -126,6 +126,7 @@ const HeaderProfile = ({ ...dataProfile }: ProfileAdminType) => {
         'error'
       );
     }
+    setIsUrl(file);
     const reader = new FileReader();
 
     reader.readAsText(file);
@@ -133,12 +134,12 @@ const HeaderProfile = ({ ...dataProfile }: ProfileAdminType) => {
   };
 
   const handleOk = async () => {
-    if (isUrlS3 && imageAvatar) {
+    if (isUrlS3 && imageAvatar && isUrl) {
       setLoading(true);
       await uploadAvatarApi
-        .uploadAvatar(isUrlS3, imageAvatar, fileLength)
+        .uploadAvatar(isUrlS3, isUrl, fileLength)
         .then(() => {
-          localStorage.setItem('avatar', imageAvatar);
+          updateLocalStorage('avatar', imageAvatar);
           setShowModal(false);
           getMessageStatus('Upload Successfully', 'success');
         })

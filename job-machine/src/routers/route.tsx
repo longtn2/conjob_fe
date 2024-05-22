@@ -1,9 +1,9 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import NotAuth from './NotAuth';
 import AuthPage from '@/pages/auth/AuthPage';
 import LayoutApp from '@/layout/Layout';
 import Category from '@/pages/Admin/Category/Category';
-import { pathUrlAuthApi, pathUrlRouter } from '@/constants/constants';
+import { pathUrlRouter } from '@/constants/constants';
 import PostContent from '@/pages/Admin/PostManage/Post';
 import AdminProfile from '@/pages/Admin/Profile/AdminProfile';
 import HistoryVIdeoPage from '@/pages/Admin/historyVIdeo/HistoryVIdeoPage';

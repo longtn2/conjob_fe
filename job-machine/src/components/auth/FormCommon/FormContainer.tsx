@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import FormIcon from './FormIcon';
 import { ContainerForm } from './FormContainer.styled';
 import { WrapperFormItem } from './WrapperFormItem.styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -25,10 +25,11 @@ import {
 } from '@/constants/constants';
 import { AuthApi } from '@/api/auth/AuthApi';
 import { BaseButton } from '@/components/common/BaseButton/BaseButton';
-import { registerRequest } from '@/redux/actions/authAction';
 import { getMessageStatus } from '@/helper';
 import { useTranslation } from 'react-i18next';
 import LanguageSelect from '@/components/common/SelectFlag/LanguageSelectFlag';
+import { loginRequest } from '@/redux/actions/authAction';
+import { AppDispatch, RootState } from '@/redux/store';
 
 const { Title } = Typography;
 
@@ -40,9 +41,10 @@ const FormContainer = ({ state }: FormContainerProps) => {
   const [formData, setFormData] = useState<Data>(dataSignIn);
   const { t } = useTranslation();
 
-  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
+  const loading = useSelector((state: RootState) => state);
+  const error = useSelector((state: RootState) => console.log(state));
   const { handleSubmit, control, reset } = useForm<
     FormLoginType | FormRegisterType
   >({
@@ -76,7 +78,6 @@ const FormContainer = ({ state }: FormContainerProps) => {
   }, [state]);
 
   const handleSubmitForm = async (values: FormRegisterType | FormLoginType) => {
-    setLoading(true);
     if (state === 'sign-in') {
       const { email, password } = values;
       const valuesLogin = {
@@ -97,16 +98,19 @@ const FormContainer = ({ state }: FormContainerProps) => {
           getMessageStatus(err.message, RESPONSE_ERROR);
         })
         .finally(() => {
-          setLoading(false);
+          // setLoading(false);
         });
-    } else {
-      dispatch(registerRequest(values as FormRegisterType));
     }
   };
 
+  const handleLogin = (values: { email: string; password: string }) => {
+    const action: any = loginRequest(values);
+    dispatch(action);
+  };
+  console.log('Đây là lỗi của tôi: ', loading);
   return (
     <ContainerForm className={`${state}`}>
-      <Form onFinish={handleSubmit(handleSubmitForm)} disabled={loading}>
+      <Form onFinish={handleSubmit(handleLogin)}>
         <div>
           <Row gutter={[32, 32]} justify="center">
             <Col span={24}>
@@ -141,7 +145,14 @@ const FormContainer = ({ state }: FormContainerProps) => {
                 />
               ))}
             </Col>
-            <Col span={24} style={{ display: 'flex', justifyContent: 'end' }}>
+            <Col
+              span={24}
+              style={{
+                display: 'flex',
+                justifyContent: 'end',
+                marginLeft: '-20px'
+              }}
+            >
               <LanguageSelect />
             </Col>
             <Col
@@ -151,7 +162,7 @@ const FormContainer = ({ state }: FormContainerProps) => {
               <BaseButton
                 htmlType="submit"
                 className="ant-btn-primary"
-                loading={loading}
+                // loading={loading}
                 size="large"
                 style={{ padding: '1.3rem' }}
               >

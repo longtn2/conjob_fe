@@ -1,5 +1,5 @@
 import { formatDate } from '@/constants/constants';
-import { formatDayjsConvertTypeDayjs } from '@/helper';
+import { formatDayjs, formatDayjsConvertTypeDayjs } from '@/helper';
 import { ProfileAdminType } from '@/interfaces/interfaces';
 import { DatePicker, Form, FormItemProps } from 'antd';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
@@ -14,8 +14,8 @@ type BaseFormDatePickerType = FormItemProps & {
 const BaseFormDatePicker = ({
   control,
   errors,
-  format = formatDate.DATE,
   placeholder,
+  format = formatDate.DATE,
   ...formItemProps
 }: BaseFormDatePickerType) => {
   return (

@@ -1,49 +1,52 @@
-import {
-  AuthActionTypes,
-  LoginFailureAction,
-  LoginRequestAction,
-  LoginSuccessAction,
-  LogoutAction,
-  RegisterFailureAction,
-  RegisterRequestAction,
-  RegisterSuccessAction,
-} from '@/interfaces';
-import { FormLoginType, FormRegisterType } from '@/interfaces/interfaces';
+// src/redux/actions/authAction.ts
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-export const loginRequest = (user: FormLoginType): LoginRequestAction => ({
-  type: AuthActionTypes.LOGIN_REQUEST,
-  payload: user,
+interface LoginRequestAction {
+  type: typeof LOGIN_REQUEST;
+  payload: { email: string; password: string };
+}
+
+interface LoginSuccessAction {
+  type: typeof LOGIN_SUCCESS;
+  payload: {
+    userName: string;
+    role: string;
+    token: string;
+    refreshToken: string;
+  };
+}
+
+interface LoginFailureAction {
+  type: typeof LOGIN_FAILURE;
+  payload: { error: string };
+}
+
+export type AuthActionTypes =
+  | LoginRequestAction
+  | LoginSuccessAction
+  | LoginFailureAction;
+
+export const loginRequest = (values: {
+  email: string;
+  password: string;
+}): LoginRequestAction => ({
+  type: LOGIN_REQUEST,
+  payload: values
 });
 
-export const loginSuccess = (user: FormRegisterType): LoginSuccessAction => ({
-  type: AuthActionTypes.LOGIN_SUCCESS,
-  payload: user,
+export const loginSuccess = (
+  userName: string,
+  role: string,
+  token: string,
+  refreshToken: string
+): LoginSuccessAction => ({
+  type: LOGIN_SUCCESS,
+  payload: { userName, role, token, refreshToken }
 });
 
-export const loginFail = (error: string): LoginFailureAction => ({
-  type: AuthActionTypes.LOGIN_FAILURE,
-  payload: error,
-});
-
-export const registerRequest = (
-  user: FormRegisterType
-): RegisterRequestAction => ({
-  type: AuthActionTypes.REGISTER_REQUEST,
-  payload: user,
-});
-
-export const registerSuccess = (
-  user: FormRegisterType
-): RegisterSuccessAction => ({
-  type: AuthActionTypes.REGISTER_SUCCESS,
-  payload: user,
-});
-
-export const registerFail = (error: string): RegisterFailureAction => ({
-  type: AuthActionTypes.REGISTER_FAILURE,
-  payload: error,
-});
-
-export const logout = (): LogoutAction => ({
-  type: AuthActionTypes.LOGOUT,
+export const loginFailure = (error: string): LoginFailureAction => ({
+  type: LOGIN_FAILURE,
+  payload: { error }
 });

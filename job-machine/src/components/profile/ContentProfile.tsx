@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import BaseFormItemHook from '@/shared/common/Form/FormItem';
 import { ProfileAdminType } from '@/interfaces/interfaces';
 import { ProfileApi } from '@/api/profile/ProfileAPi';
-import { formatDayjs, getMessageStatus } from '@/helper';
+import { formatDayjs, getMessageStatus, updateLocalStorage } from '@/helper';
 import BaseFormSelection from '@/shared/common/Form/FormSelection';
 import { OPTIONS_GENDER, formatDate } from '@/constants/constants';
 import BaseFormDatePicker from '@/shared/common/Form/FormDatePicker';
@@ -69,9 +69,9 @@ const ContentProfile = ({
       .then((response: any) => {
         getMessageStatus(response.message, 'success');
         if (values.first_name) {
-          localStorage.setItem('firstName', values.first_name);
+          updateLocalStorage('firstName', values.first_name);
         } else if (values.last_name) {
-          localStorage.setItem('firstName', values.last_name);
+          updateLocalStorage('firstName', values.last_name);
         }
         handleFlag();
       })

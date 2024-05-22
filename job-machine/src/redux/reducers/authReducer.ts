@@ -1,34 +1,54 @@
-import { Reducer } from 'redux';
-import { authInitialState } from '@/constants/index';
-import { AuthAction, AuthActionTypes, AuthState } from '@/interfaces';
+// src/redux/reducers/authReducer.ts
+import {
+  AuthActionTypes,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE
+} from '../actions/authAction';
 
-const authReducer: Reducer<AuthState, AuthAction> = (
-  state = authInitialState,
-  action
-) => {
+interface AuthState {
+  userName: string | null;
+  role: string | null;
+  token: string | null;
+  refreshToken: string | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: AuthState = {
+  userName: '',
+  role: '',
+  token: '',
+  refreshToken: '',
+  loading: false,
+  error: ''
+};
+
+const authReducer = (
+  state = initialState,
+  action: AuthActionTypes
+): AuthState => {
   switch (action.type) {
-    case AuthActionTypes.LOGIN_SUCCESS:
-    case AuthActionTypes.REGISTER_SUCCESS:
+    case LOGIN_REQUEST:
       return {
         ...state,
-        user: action.payload,
-        error: null,
-        isLoggedIn: true,
+        loading: true,
+        error: null
       };
-    case AuthActionTypes.LOGIN_FAILURE:
-    case AuthActionTypes.REGISTER_FAILURE:
+    case LOGIN_SUCCESS:
       return {
         ...state,
-        user: null,
-        error: action.payload,
-        isLoggedIn: false,
+        loading: false,
+        userName: action.payload.userName,
+        role: action.payload.role,
+        token: action.payload.token,
+        refreshToken: action.payload.refreshToken
       };
-    case AuthActionTypes.LOGOUT:
+    case LOGIN_FAILURE:
       return {
         ...state,
-        user: null,
-        error: null,
-        isLoggedIn: false,
+        loading: false,
+        error: action.payload.error
       };
     default:
       return state;
